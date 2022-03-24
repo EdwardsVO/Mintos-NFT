@@ -1,0 +1,4 @@
+/build
+/node_modules
+/rust-contract/contract/target
+/rust-contract/near-contract-standards-3.2.0/target

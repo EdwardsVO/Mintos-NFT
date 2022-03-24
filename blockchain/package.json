@@ -1,0 +1,21 @@
+{
+  "name": "nft-culturas-latinas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "clean": "rm -rf ./build/",
+    "compile": "truffle compile",
+    "deploy:aurora": "npm run clean   && truffle migrate --reset --network auroraTestnet",
+    "test": "truffle test"
+  },
+  "author": "Jorge Ibarra y Cristian Zambrano",
+  "license": "ISC",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.1.0",
+    "@truffle/hdwallet-provider": "^1.4.1"
+  }
+}
