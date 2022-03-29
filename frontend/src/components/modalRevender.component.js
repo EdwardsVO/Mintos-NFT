@@ -99,7 +99,7 @@ export default function ModalRevender(props) {
                       htmlFor="price"
                       className="leading-7 text-sm text-gray-600"
                     >
-                      Precio en {props.currency}
+                      Price in {props.currency}
                     </label>
                     {formik.touched.price && formik.errors.price ? (
                       <div className="leading-7 text-sm text-red-600">
@@ -123,7 +123,7 @@ export default function ModalRevender(props) {
                       type="submit"
                       disabled={state.disabled}
                     >
-                      Revender
+                      Resell
                     </button>
                   )}
                 </form>

@@ -17,10 +17,10 @@ function LightFooterB(props) {
              
           </a>
           <p className="mt-2 text-sm text-gray-500">
-            Agradecemos tu visita y preferencia
+            Thanks for being here!
           </p>
           <div className="flex  items-center justify-between mt-8 ">
-            <p>hecho con</p>
+            <p>only here</p>
             <a href="https://near.org" target="_blank" className="mr-7">
               <img src={nearicon} />
             </a>
@@ -29,12 +29,12 @@ function LightFooterB(props) {
         <div className="flex-grow flex flex-wrap md:pr-20 -mb-10 md:text-left text-center order-first">
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
             <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-              RECURSOS
+              RESOURCES
             </h2>
             <nav className="list-none mb-10">
             <li>
                 <a href="https://drive.google.com/file/d/1IHNp3aHcUDjn8Iws8cObC3qWWVEVcj-7/view" target="_blank" className="text-gray-600 hover:text-gray-800">
-                  Mapa de ruta
+                  Roadmap
                 </a>
             </li>
               
@@ -43,7 +43,7 @@ function LightFooterB(props) {
 
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
             <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-              COMPAÑIA
+              Company
             </h2>
             <nav className="list-none mb-10">
               <li>
@@ -51,7 +51,7 @@ function LightFooterB(props) {
                   href="/contacto"
                   className="text-gray-600 hover:text-gray-800"
                 >
-                  Contacto
+                  Contact
                 </a>
               </li>
               <li>
@@ -59,7 +59,7 @@ function LightFooterB(props) {
                   href="acercade"
                   className="text-gray-600 hover:text-gray-800"
                 >
-                  Acerca de
+                  About
                 </a>
               </li>
 
@@ -68,7 +68,7 @@ function LightFooterB(props) {
                   href="/terminos"
                   className="text-gray-600 hover:text-gray-800"
                 >
-                  Términos (S)
+                  Policies (S)
                 </a>
               </li>
               <li>
@@ -76,7 +76,7 @@ function LightFooterB(props) {
                   href="/politicas"
                   className="text-gray-600 hover:text-gray-800"
                 >
-                  Política (P)
+                  Politics (P)
                 </a>
               </li>
             </nav>
@@ -86,7 +86,7 @@ function LightFooterB(props) {
       <div className="bg-gray-100">
         <div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
           <p className="text-gray-500 text-sm text-center sm:text-left">
-            © 2021 NATIVO NFT-MARKETPLACE
+            © 2022 MINTOS NFT-MARKETPLACE
           </p>
           <span className="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start">
             <a href="https://github.com/cloudmex/Nativo-NFT" target="_blank" className="text-gray-500">

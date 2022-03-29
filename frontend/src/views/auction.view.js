@@ -307,7 +307,7 @@ function LightEcommerceB(props) {
             <div
               className={`flex border-l-4 border-${props.theme}-500 py-2 px-2 my-2 bg-gray-50`}
             >
-              <span className="text-gray-500">Cultura</span>
+              <span className="text-gray-500">Culture</span>
               <span className="ml-auto text-gray-900">
                 <span
                   className={`inline-flex items-center justify-center px-2 py-1  text-xs font-bold leading-none ${state?.jdata.culture
@@ -323,7 +323,7 @@ function LightEcommerceB(props) {
             <div
               className={`flex border-l-4 border-${props.theme}-500 py-2 px-2 my-2 bg-gray-50`}
             >
-              <span className="text-gray-500">País de origen</span>
+              <span className="text-gray-500">Country</span>
               <span className="ml-auto text-gray-900">
                 <span
                   className={`inline-flex items-center justify-center px-2 py-1  text-xs font-bold leading-none ${state?.jdata.country
@@ -339,7 +339,7 @@ function LightEcommerceB(props) {
             <div
               className={`flex border-l-4 border-${props.theme}-500 py-2 px-2 bg-gray-50`}
             >
-              <span className="text-gray-500">Propietario</span>
+              <span className="text-gray-500">Owner</span>
               <span className="ml-auto text-gray-900 text-xs self-center">
                 {state?.owner}
               </span>
@@ -348,7 +348,7 @@ function LightEcommerceB(props) {
             <div
               className={`flex border-l-4 border-${props.theme}-500 py-2 px-2 my-2 bg-gray-50`}
             >
-              <span className="text-gray-500">Creador</span>
+              <span className="text-gray-500">Creator</span>
               <span className="ml-auto text-gray-900 text-xs self-center">
                 {state?.jdata.creator}
               </span>
@@ -357,7 +357,7 @@ function LightEcommerceB(props) {
             <div
               className={`flex border-l-4 border-${props.theme}-500 py-2 px-2 my-2 bg-gray-50`}
             >
-              <span className="text-gray-500">Postor</span>
+              <span className="text-gray-500">Bidder</span>
               <span className="ml-auto text-gray-900 text-xs self-center">
                 {state?.jdata.postor}
               </span>
@@ -366,7 +366,7 @@ function LightEcommerceB(props) {
             <div
               className={`flex border-l-4 border-${props.theme}-500 py-2 px-2 my-2 bg-gray-50`}
             >
-              <span className="text-gray-500">Precio inicial</span>
+              <span className="text-gray-500">Initial Price</span>
               <span className="ml-auto text-gray-900">
 
                 {state?.jdata.lowestbidder} Near
@@ -377,7 +377,7 @@ function LightEcommerceB(props) {
             <div
               className={`flex border-l-4 border-${props.theme}-500 py-2 px-2 my-2 bg-gray-50`}
             >
-              <span className="text-gray-500">Ultima puja</span>
+              <span className="text-gray-500">Last bid</span>
               <span className="ml-auto text-gray-900">
 
                 {state?.jdata.highestbidder} Near
@@ -388,7 +388,7 @@ function LightEcommerceB(props) {
             <div
               className={`flex border-l-4 border-${props.theme}-500 py-2 px-2 my-2 bg-gray-50`}
             >
-              <span className="text-gray-500">Tiempo restante</span>
+              <span className="text-gray-500">Time left</span>
               <span className="ml-auto text-gray-900">
 
                 {Time}
@@ -419,7 +419,7 @@ function LightEcommerceB(props) {
                                 sendOfert();
                               }}
                             >
-                              Puja
+                              Bid
                             </button>
                           </div>
                           : 
@@ -430,7 +430,7 @@ function LightEcommerceB(props) {
                             nearSignIn(window.location.href);
                           }}
                           >
-                            Iniciar Sesión para Ofertar
+                            Login
                           </button>
               }
           </div>

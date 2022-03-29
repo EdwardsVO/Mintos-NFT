@@ -85,13 +85,13 @@ function LightHeaderB(props) {
         </a>
         <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
           <a href="/galeria" className="mr-5 hover:text-gray-900">
-            Galeria
+            Gallery
           </a>
           <a href="/minar" className="mr-5 hover:text-gray-900">
-            Minar
+            Mint
           </a>
           <a href="/mis_nfts" className="mr-5 hover:text-gray-900">
-            Mis Nfts
+            My NFTs
           </a>
         </nav>
         <Menu as="div" className="relative inline-block text-left">
@@ -169,7 +169,7 @@ function LightHeaderB(props) {
       </div>
     </header>
       <div className={`beta ${Beta ? "h-auto": ""}`}>
-      <p>Esta es una versión beta pública - Úselo bajo su propio riesgo - Código no auditado</p>
+      <p>Beta Version, Use It by Your Own Risk</p>
         <img src="x.png" title="Cerrar" onClick={e=>closeBeta()}/>
       </div>
     </>

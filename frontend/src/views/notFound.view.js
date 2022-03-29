@@ -9,7 +9,7 @@ export default function notFound() {
     <>
       <div className="container mx-auto flex  my- md:flex-row flex-col  justify-center h-96 items-center text-3xl">
         <div className="flex flex-col justify-center">
-          <h1 className="text-center">no encontramos esa ruta :(</h1>
+          <h1 className="text-center">Nothing to show here :(</h1>
           <a href="/" className="text-center mt-8">
             <svg className=" h-12 w-full" viewBox="0 0 11 20" version="1.1">
               <g
