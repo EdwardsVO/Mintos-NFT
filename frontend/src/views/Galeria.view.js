@@ -148,7 +148,7 @@ function LightEcommerceA() {
         {/* Arroja un mensaje si no hay tokens disponibles en venta*/}
         {!Landing.tokens.length > 0 ? (
           <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-            Actualmente no hay tokens NFT disponibles.
+             There's nothing to show yet!
           </p>
         ) : null}
         <div className="flex flex-wrap -m-4">

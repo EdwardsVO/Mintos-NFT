@@ -11,11 +11,11 @@ function LightHeroE(props) {
         </div>
         <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center ">
           <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
-            Explora, crea y vende tokens NFT hechos por artistas de culturas indígenas en
-            América latina.
+          Explore, create, sell nft tokens made by Native American Artists.
+
           </h1>
           <p className="mb-8 leading-relaxed">
-            Captura el valor del arte a través de un token NFT y se parte de la revolución de blockchain.
+          Capture art’s value through NFTs and be part of the blockchain revolution
           </p>
 
           <div className="flex  justify-between">
@@ -36,7 +36,7 @@ function LightHeroE(props) {
                   <path d="m21.5 2h-15c-1.378 0-2.5 1.122-2.5 2.5v11c0 1.378 1.122 2.5 2.5 2.5h15c1.378 0 2.5-1.122 2.5-2.5v-11c0-1.378-1.122-2.5-2.5-2.5zm-15 2h15c.276 0 .5.224.5.5v7.099l-3.159-3.686c-.335-.393-.82-.603-1.341-.615-.518.003-1.004.233-1.336.631l-3.714 4.458-1.21-1.207c-.684-.684-1.797-.684-2.48 0l-2.76 2.759v-9.439c0-.276.224-.5.5-.5z" />
                 </svg>
                 <span className="ml-4 flex items-start flex-col leading-none">
-                  <span className="title-font font-medium">Galeria</span>
+                  <span className="title-font font-medium">Gallery</span>
                 </span>
               </button>
             </Link>

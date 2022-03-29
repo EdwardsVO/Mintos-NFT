@@ -201,17 +201,16 @@ function MisTokens(props) {
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-col text-center w-full mb-20">
             <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
-              Mis piezas de arte NFT
+              My NFT art pieces
             </h1>
             <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-              En esta sección aparecen los token nfts que has creado o
-              adquirido.
+            In this section will appear the nfts tokens that you have created or acquired
             </p>
 
             {/* Arroj un mensaje si no hay tokens en mi pertenencia*/}
             {nfts.nfts.length > 0 ? null : (
               <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-                Actualmente no tienes tokens en tu pertenencia.
+                Currently, you don't have tokens to show
               </p>
             )}
           </div>
@@ -267,7 +266,7 @@ function MisTokens(props) {
                               await quitarDelMarketplace(nft.tokenID);
                             }}
                           >
-                            Quitar del marketplace
+                            Take off the marketplace
                           </button>
                         ) : (
                           <button
@@ -287,7 +286,7 @@ function MisTokens(props) {
                               });
                             }}
                           >
-                            Poner en venta
+                            Put up for sale 
                           </button>
                         )}
                       </div>

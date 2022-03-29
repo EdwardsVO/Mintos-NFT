@@ -51,17 +51,17 @@ function LightHeroE(props) {
     //validaciones
     validationSchema: Yup.object({
       title: Yup.string()
-        .max(30, "Menos de 30 caracteres")
-        .required("Requerido")
-        .min(5, "el titulo debe longitud mayor a 5"),
+        .max(30, "Less than 30 characters")
+        .required("Required")
+        .min(5, "Title long than 5 characters"),
 
       description: Yup.string()
-        .max(300, "Menos de 50 caracteres")
-        .required("Requerido")
+        .max(300, "Less than 50 characters")
+        .required("Required")
         .min(30, "la descripción minimo es de 30 caracteres"),
 
       price: Yup.number()
-        .required("Requerido")
+        .required("Required")
         .positive("el precio debe ser positivo")
         .moreThan(0, "no existen nft gratis")
         .min(0.000000000000000001, "el precio minimo es un wei"),
@@ -265,7 +265,7 @@ function LightHeroE(props) {
         </div>
         <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
           <h1 className=" w-full title-font sm:text-4xl text-3xl mb-12 font-medium text-gray-900 text-center">
-            Nuevo NFT
+            New NFT
           </h1>
           <div className="flex w-full md:justify-start justify-center items-end">
             <div className="relative mr-4 lg:w-full xl:w-1/2 w-3/4">
@@ -274,7 +274,7 @@ function LightHeroE(props) {
                   htmlFor="title"
                   className="leading-7 text-sm text-gray-600"
                 >
-                  Título
+                  Title
                 </label>
                 {formik.touched.title && formik.errors.title ? (
                   <div className="leading-7 text-sm text-red-600">
@@ -296,7 +296,7 @@ function LightHeroE(props) {
                   htmlFor="price"
                   className="leading-7 text-sm text-gray-600"
                 >
-                  Precio en
+                  Price in
                   {" " +
                     currencys[parseInt(localStorage.getItem("blockchain"))]}
                 </label>
@@ -321,7 +321,7 @@ function LightHeroE(props) {
                   htmlFor="culture"
                   className="leading-7 text-sm text-gray-600"
                 >
-                  Cultura
+                  Culture
                 </label>{" "}
                 {formik.touched.culture && formik.errors.culture ? (
                   <div className="leading-7 text-sm text-red-600">
@@ -343,7 +343,7 @@ function LightHeroE(props) {
                   htmlFor="country"
                   className="leading-7 text-sm text-gray-600"
                 >
-                  País{" "}
+                  Country{" "}
                 </label>
                 {formik.touched.country && formik.errors.country ? (
                   <div className="leading-7 text-sm text-red-600">
@@ -366,7 +366,7 @@ function LightHeroE(props) {
                   htmlFor="description"
                   className="leading-7 text-sm text-gray-600"
                 >
-                  Descripción
+                  Description
                 </label>
                 {formik.touched.description && formik.errors.description ? (
                   <div className="leading-7 text-sm text-red-600">
@@ -388,7 +388,7 @@ function LightHeroE(props) {
                 className={` mt-12 w-full text-white bg-${props.theme}-500 border-0 py-2 px-6 focus:outline-none hover:bg-${props.theme}-600 rounded text-lg`}
                 disabled={mint?.onSubmitDisabled}
               >
-                Minar
+                Mint
               </button>
             </div>
           </div>

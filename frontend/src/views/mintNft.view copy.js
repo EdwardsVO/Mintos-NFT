@@ -278,7 +278,7 @@ function LightHeroE(props) {
               }
               `}
             >
-              {mint?.file ? "Cambiar " : "Subir Imagen"}
+              {mint?.file ? "Change " : "Upload Image"}
             </div>
             <input
               onChange={imageChange}
@@ -298,15 +298,15 @@ function LightHeroE(props) {
         </div>
         <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
           <h1 className=" w-full title-font sm:text-4xl text-3xl mb-12 font-medium text-gray-900 text-center">
-            Nuevo NFT
+            new NFT
           </h1>
           <div className="flex w-full md:justify-start justify-center items-end">
             <div className="relative mr-4 lg:w-full xl:w-1/2 w-3/4">
               <select onChange={e=>{
                 setcombo(e.target.value == "A la venta");
               }}>
-                <option>A la venta</option>
-                <option>En subasta</option>
+                <option>For Sale</option>
+                <option>In Auction</option>
               </select>
               
               <div className="flex justify-between ">
@@ -314,7 +314,7 @@ function LightHeroE(props) {
                   htmlFor="title"
                   className="leading-7 text-sm text-gray-600"
                 >
-                  Título
+                  Title
                 </label>
                 {formik.touched.title && formik.errors.title ? (
                   <div className="leading-7 text-sm text-red-600">
@@ -362,7 +362,7 @@ function LightHeroE(props) {
                   htmlFor="culture"
                   className="leading-7 text-sm text-gray-600"
                 >
-                  Cultura
+                  Culture
                 </label>{" "}
                 {formik.touched.culture && formik.errors.culture ? (
                   <div className="leading-7 text-sm text-red-600">
@@ -384,7 +384,7 @@ function LightHeroE(props) {
                   htmlFor="country"
                   className="leading-7 text-sm text-gray-600"
                 >
-                  País{" "}
+                  Country{" "}
                 </label>
                 {formik.touched.country && formik.errors.country ? (
                   <div className="leading-7 text-sm text-red-600">
@@ -407,7 +407,7 @@ function LightHeroE(props) {
                   htmlFor="description"
                   className="leading-7 text-sm text-gray-600"
                 >
-                  Descripción
+                  Description
                 </label>
                 {formik.touched.description && formik.errors.description ? (
                   <div className="leading-7 text-sm text-red-600">
@@ -431,7 +431,7 @@ function LightHeroE(props) {
                   htmlFor="description"
                   className="leading-7 text-sm text-gray-600"
                 >
-                  Fecha de expiracion
+                  Expiration Date
                 </label>
                 {formik.touched.description && formik.errors.description ? (
                   <div className="leading-7 text-sm text-red-600">

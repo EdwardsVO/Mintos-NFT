@@ -54,7 +54,7 @@ function Modal(props) {
                       props.change({ show: false });
                     }}
                   >
-                    continuar
+                    Next
                   </button>
                 </div>
               </div>

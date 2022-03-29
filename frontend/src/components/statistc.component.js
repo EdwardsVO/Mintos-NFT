@@ -7,7 +7,7 @@ function LightStatisicC(props) {
       <div className="container px-5 py-24 mx-auto ">
         <div className="flex flex-col text-center w-full mb-20">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
-            Información acerca de las culturas nativas en América Latina
+            American culture information
           </h1>
         </div>
         <div className="flex justify-center -m-4 text-center">
@@ -16,7 +16,7 @@ function LightStatisicC(props) {
               <h2 className="title-font font-medium text-3xl text-gray-900">
                 522
               </h2>
-              <p className="leading-relaxed">Número actual de culturas nativas en América Latina.</p>
+              <p className="leading-relaxed">Current american tribes</p>
             </div>
           </div>
           <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
@@ -24,7 +24,7 @@ function LightStatisicC(props) {
               <h2 className="title-font font-medium text-3xl text-gray-900">
                 8 %
               </h2>
-              <p className="leading-relaxed">Porcentaje de la población que forma parte de alguna cultura nativa.</p>
+              <p className="leading-relaxed">Percentage of People into an American Tribe.</p>
             </div>
           </div>
         </div>
