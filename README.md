@@ -5,11 +5,21 @@ Here you can Mine an NFT, Sell, Buy, Resell, List tokens and remove from sale, a
 in a contract built in Solidity for Aurora EVM (Ethereum Virtual Machine) and one in Rust for NEAR with the same functionalities. 
 
 ## Project Structure ⚙
-In the root you'll find three folders
+In the root you'll find three folders 
+
+Blockchain -> Will the core application contracts
+Frontend -> Containing the UI
+Scripts -> Here you'll find usefull development scripts
 
 ```bash
-Blockchain -> Here you'll find the core DApp contracts
-Frontend -> the UI build in Next.js and Typescript
-Scripts -> Usefull development scripts
+├───blockchain
+│   ├───contracts
+│   ├───migrations
+│   ├───rust-contract
+├───frontend
+│   ├───pages
+│   ├───public
+│   ├───styles
+└───scripts
 ```
 
