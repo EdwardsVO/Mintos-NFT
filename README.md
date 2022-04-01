@@ -8,7 +8,9 @@ in a contract built in Solidity for Aurora EVM (Ethereum Virtual Machine) and on
 In the root you'll find three folders 
 
 Blockchain -> Will the core application contracts
+
 Frontend -> Containing the UI
+
 Scripts -> Here you'll find usefull development scripts
 
 ```bash
