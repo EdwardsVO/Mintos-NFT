@@ -1,92 +1,34 @@
-# NFT Marketplace de comunidades latinas
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## 💻 Tecnologias usadas
+## Getting Started
 
-Esta es la parte del proyecto enfacada en la UI/UX para esto se necesitaron las siguientes tecnologias:
+First, run the development server:
 
-1. Node.js >= 12 
-2. React 
-3. MetaMask (Extensión del navegador y móvil)
-4. Infura (IPFS gateway)
-5. Truffle framework
-
-## 👨🏻‍💻 Instalación local del proyecto
-
-Para correr este proyecto de forma local se necesitan los siguientes requerimientos:
-
-1. Tener instalado [Node.js] en su versión 12 o superior (recomendamos utilizar la herramienta de [nvm])
-2. Instalar el manejador de paquetes de yarn `npm install -g yarn`
-3. Instalar las dependencias del proyecto `npm install` o `yarn install` dentro del directorio que contiene el archivo `package.json`
-4. Instalar de forma global el framework de Truffle `npm install -g truffle`
-
-## 📚 Arbol de archivos
 ```bash
-├── README.md                                    # Este archivo
-├── package-lock.json
-├── package.json                                 # Archivo que contiene los scripts y dependencias
-├── public                                       # Directorio con los archivos publicos
-│   ├── ads.txt
-│   ├── favicon.png
-│   ├── index.html
-│   ├── manifest.json
-│   ├── preview.gif
-│   └── robots.txt
-└── src                                          # Directorio fuente del proyecto en react
-    ├── App.js                                   # Archivo con el punto de montaje del componente app
-    ├── App.test.js
-    ├── HOCS
-    │   └── MetamaskProtectedRoute.hoc.js        # Archivo que controla las rutas protegidas con metamask
-    ├── assets                                   # Directorio con los recursos del slider
-    │   └── landingSlider
-    │       ├── img
-    │       │   ├── ArteHuichol_Uno.jpg
-    │       │   ├── flauta.jpg
-    │       │   └── flor.jfif
-    │       └── sliderData.js
-    ├── blocks                                  # Directorio con componentes para tailwind css
-    ├── components                              # Directorio de los componenetes en react
-    │   ├── Footer.component.js
-    │   ├── Hero.component.js
-    │   ├── Navbar.component.js
-    │   ├── imageSlider.component.js
-    │   ├── modal.component.js
-    │   ├── modalRevender.component.js
-    │   ├── nftatribute.component.js
-    │   ├── statistc.component.js
-    │   ├── steps.component.js
-    │   └── teamMembers.component.js
-    ├── contracts                               # Directorio con los contratos para ser importados
-    │   ├── Address.json
-    │   ├── Context.json
-    │   ├── Counters.json
-    │   ├── ERC165.json
-    │   ├── ERC721.json
-    │   ├── ERC721Enumerable.json
-    │   ├── IERC165.json
-    │   ├── IERC721.json
-    │   ├── IERC721Enumerable.json
-    │   ├── IERC721Metadata.json
-    │   ├── IERC721Receiver.json
-    │   ├── MarketPlace.json
-    │   ├── Migrations.json
-    │   └── Strings.json
-    ├── icons
-    ├── index.cs                                # Archivo index de css del proyecto
-    ├── index.js                                # Archivo index del proyecto
-    ├── serviceWorker.js                        # Archivo de configuración del service worker
-    ├── setupTests.js
-    ├── utils                                   # Directorio con archivos de utlidad
-    │   ├── blockchain_interaction.js           # Archivo que controla la interacción con metamask
-    │   └── constraint.js                       # Archivo para el control de formato de archivos
-    └── views                                   # Directorio con las vistas de la Dapp
-        ├── Detail.view.js
-        ├── Galeria.view.js
-        ├── Landing.view.js
-        ├── MisTokens.view.js
-        ├── goMetamask.js
-        ├── mintNft.view.js
-        └── notFound.view.js
+npm run dev
+# or
+yarn dev
 ```
- 
-[Node.js]: https://nodejs.org/en/download/package-manager/
-[nvm]: https://github.com/nvm-sh/nvm
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
