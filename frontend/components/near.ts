@@ -42,9 +42,9 @@ export const initContract = async () => {
     nearConfig.contractName,
     {
       // View methods are read-only – they don't modify the state, but usually return some value
-      viewMethods: ['getAllProposals', 'getProposal', 'getAllUsers', 'getAllPayments', 'getUser', 'getAllContributions', 'getTime'],
+      viewMethods: [],
       // Change methods can modify the state, but you don't receive the returned value when called
-      changeMethods: ['createUser', 'createNewProposal', 'createContribution','fund', 'login'],
+      changeMethods: [],
       // Sender is the account ID to initialize transactions.
       // getAccountId() will return empty string if user is still unauthorized
       // @ts-ignore: Unreachable code error
