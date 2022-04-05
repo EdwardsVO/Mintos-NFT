@@ -1,7 +1,7 @@
 module.exports = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
     './context/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
@@ -14,7 +14,7 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-           50: '#4C5564',
+          50: '#4C5564',
           100: '#787878',
           200: '#5E5E5E',
           300: '#454545',
@@ -29,12 +29,18 @@ module.exports = {
           500: '#15F974',
         },
         test: {
-          50: '#232f35'
-        }
+          50: '#232f35',
+        },
+        figma: {
+          100: '#473EA8',
+          200: '#F9F9F9',
+          300: '#F2F2F2',
+          400: '#333333',
+          500: '#FEFEFE',
+          600: '#828282',
+        },
       },
     },
   },
-  plugins: [
-    require('tailwind-scrollbar-hide')
-  ],
-}
+  plugins: [require('tailwind-scrollbar-hide')],
+};
