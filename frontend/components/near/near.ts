@@ -1,5 +1,5 @@
 import { keyStores, connect, WalletConnection, utils } from "near-api-js";
-import { getConfig } from '../config';
+import { getConfig } from '../../config';
 import * as nearAPI from 'near-api-js';
 
 // Initializing contract
