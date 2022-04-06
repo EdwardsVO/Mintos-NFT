@@ -6,7 +6,7 @@ export default interface TokenMetada {
     copies: number, //u64 // number of copies of this set of metadata in existence when token was minted.
     issued_at: string, // ISO 8601 datetime when token was issued or minted
     price: string, // is the price in yoctos
-    creator: string, // is the creator
+ //   creator: string, // is the creator
     on_sale: boolean, // sale status
     expires_at: string, // ISO 8601 datetime when token expires
     starts_at: string, // ISO 8601 datetime when token starts being valid

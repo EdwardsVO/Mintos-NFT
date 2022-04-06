@@ -34,7 +34,7 @@ pub struct Contract {
     nTokenOnSale: u64,
 }
 
-const DATA_IMAGE_SVG_LATINART_ICON: &str = "no image";
+const DATA_IMAGE_SVG_LATINART_ICON: &str = "MintosNFTMarket";
 
 #[derive(BorshSerialize, BorshStorageKey)]
 enum StorageKey {
@@ -56,7 +56,7 @@ impl Contract {
             NFTContractMetadata {
                 spec: NFT_METADATA_SPEC.to_string(),
                 name: "Mintos NFT".to_string(),
-                symbol: "MOS".to_string(),
+                symbol: "MINTOS".to_string(),
                 icon: Some(DATA_IMAGE_SVG_LATINART_ICON.to_string()),
                 base_uri: None,
                 reference: None,
@@ -110,6 +110,7 @@ impl Contract {
      * @param token_owner_id {ValidAccountId} a quien le va a pertenecer el token
      * @param tokenMetadata {TokenMetadata} los metadatos
      */
+
     #[payable]
     pub fn minar(
         &mut self,
