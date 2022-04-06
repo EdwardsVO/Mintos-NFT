@@ -29,8 +29,6 @@ pub struct TokenMetadata {
     pub copies: Option<u64>, // number of copies of this set of metadata in existence when token was minted.
     pub issued_at: Option<String>, // ISO 8601 datetime when token was issued or minted
     pub price: Option<String>, // is the price in yoctos
-    pub culture: Option<String>, // is the culture
-    pub country: Option<String>, // is the country
     pub creator: Option<String>, // is the creator
     pub on_sale: Option<bool>, // sale status
     pub expires_at: Option<String>, // ISO 8601 datetime when token expires
