@@ -1,8 +1,9 @@
 import React from 'react';
 import Category from '../../../components/Category/Category';
-import MobileNav from '../../../components/Navbar/MobileNav';
+import MobileNav from '../../../components/common/MobileNav';
+import Layout from '../../../components/Layout';
 import NFTGalleryPreview from '../../../components/NFT/NFTGalleryPreview';
-import SearchBar from '../../../components/SearchBar';
+import SearchBar from '../../../components/Searchbar/SearchBar';
 
 export default function Gallery() {
   const galleryData = [
@@ -67,31 +68,30 @@ export default function Gallery() {
   ];
 
   return (
-    <div className="min-h-screen min-w-full mb-20">
-      <div className="p-4">
-        <div className="">
-          <img src="/logo.png" alt="logo" className="w-36" />
-        </div>
-        <div className="mt-6">
-          <SearchBar />
-        </div>
-        <div className="mt-5 flex space-x-4">
-          {categories.map((category, i) => (
-            <Category categories={category} key={i} />
-          ))}
-        </div>
-        <h2 className="text-figma-400 font-semibold text-xl mt-5">
-          NFT Gallery
-        </h2>
-        <div className="mt-3 grid grid-cols-2 gap-3">
-          {galleryData.map((nft, i) => (
-            <NFTGalleryPreview key={i} data={nft} />
-          ))}
+    <Layout>
+      <div className="min-h-screen min-w-full mb-20">
+        <div className="p-4">
+          <div className="">
+            <img src="/logo.png" alt="logo" className="w-36" />
+          </div>
+          <div className="mt-6">
+            <SearchBar />
+          </div>
+          <div className="mt-5 flex space-x-4">
+            {categories.map((category, i) => (
+              <Category categories={category} key={i} />
+            ))}
+          </div>
+          <h2 className="text-figma-400 font-semibold text-xl mt-5">
+            NFT Gallery
+          </h2>
+          <div className="mt-3 grid grid-cols-2 gap-3">
+            {galleryData.map((nft, i) => (
+              <NFTGalleryPreview key={i} data={nft} />
+            ))}
+          </div>
         </div>
       </div>
-      <div>
-        <MobileNav />
-      </div>
-    </div>
+    </Layout>
   );
 }

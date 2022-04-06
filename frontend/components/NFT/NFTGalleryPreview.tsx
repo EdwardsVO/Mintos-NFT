@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 
 interface NFTGalleryPreviewProps {
@@ -5,12 +6,10 @@ interface NFTGalleryPreviewProps {
   isCollection?: boolean;
 }
 
-export default function NFTGalleryPreview({
-  data,
-  isCollection = false,
-}: NFTGalleryPreviewProps) {
+export default function NFTGalleryPreview({ data }: NFTGalleryPreviewProps) {
+  const router = useRouter();
   return (
-    <button type="button">
+    <button type="button" onClick={() => router.push(`/app/nft/${data?._id}`)}>
       <div className=" bg-figma-700 rounded-md drop-shadow-lg shadow-black">
         <div className="p-4">
           <img
