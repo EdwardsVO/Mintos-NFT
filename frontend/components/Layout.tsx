@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 import Navbar from './common/Navbar';
 import Footer from './common/Footer';
 import MobileNav from './common/MobileNav';
