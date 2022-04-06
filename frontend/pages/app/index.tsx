@@ -47,7 +47,7 @@ export default function Landing() {
     },
   ];
   return (
-    <div className="min-h-screen min-w-full mb-32">
+    <div className="min-h-screen min-w-full mb-20">
       <div className="p-4">
         <div className="">
           <h1 className="font-bold; text-xl ml-12">Welcome</h1>
