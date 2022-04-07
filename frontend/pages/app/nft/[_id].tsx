@@ -51,7 +51,7 @@ export default function NFTProfilePage() {
       }
     };
     getNFTData();
-  }, [router]);
+  }, [activeNFT]);
   return (
     <Layout>
       <div className="p-4">
