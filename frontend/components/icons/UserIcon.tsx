@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function CheckIcon({
+export default function UserIcon({
   className,
   ...props
 }: React.SVGProps<SVGSVGElement>) {
@@ -12,12 +12,12 @@ export default function CheckIcon({
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
+      strokeWidth={2}
     >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={2}
-        d="M5 13l4 4L19 7"
+        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
       />
     </svg>
   );
