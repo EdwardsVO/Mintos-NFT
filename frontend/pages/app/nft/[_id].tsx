@@ -5,6 +5,8 @@ import NFTProfile from '../../../components/NFT/NFTProfile';
 
 export default function NFTProfilePage() {
   const router = useRouter();
+  const [nft, setNft] = React.useState({});
+  const activeNFT = router.query._id;
   const galleryData = [
     {
       _id: 0,
@@ -39,19 +41,17 @@ export default function NFTProfilePage() {
       owner: 'mzterdox.near',
     },
   ];
-  const activeNFT = router.query._id;
-  const [nft, setNft] = React.useState({});
 
   React.useEffect(() => {
-    getNFTData();
-  }, []);
-  const getNFTData = () => {
-    for (let x = 0; x < galleryData.length; x++) {
-      if (galleryData[x]._id.toString() == activeNFT) {
-        setNft(galleryData[x]);
+    const getNFTData = () => {
+      for (let x = 0; x < galleryData.length; x++) {
+        if (galleryData[x]._id.toString() == activeNFT) {
+          setNft(galleryData[x]);
+        }
       }
-    }
-  };
+    };
+    getNFTData();
+  }, [router]);
   return (
     <Layout>
       <div className="p-4">

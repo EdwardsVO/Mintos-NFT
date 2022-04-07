@@ -1,9 +1,9 @@
 import React from 'react';
 import Category from '../../../components/Category/Category';
-import MobileNav from '../../../components/common/MobileNav';
 import Layout from '../../../components/Layout';
 import NFTGalleryPreview from '../../../components/NFT/NFTGalleryPreview';
 import SearchBar from '../../../components/Searchbar/SearchBar';
+import SearchBarDesktop from '../../../components/Searchbar/SearchBarDesktop';
 
 export default function Gallery() {
   const galleryData = [
@@ -75,7 +75,10 @@ export default function Gallery() {
             <img src="/logo.png" alt="logo" className="w-36" />
           </div>
           <div className="mt-6">
-            <SearchBar />
+            <SearchBarDesktop
+              className="rounded-lg border-2 h-8 py-px px-3"
+              data={galleryData}
+            />
           </div>
           <div className="mt-5 flex space-x-4">
             {categories.map((category, i) => (
