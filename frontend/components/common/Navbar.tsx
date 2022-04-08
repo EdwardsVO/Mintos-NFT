@@ -1,10 +1,16 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import SearchBar from '../Searchbar/SearchBarDesktop';
+import { useNear } from '../../hooks/useNear';
+import useUser from '../../hooks/useUser';
+import LogOutIcon from '../icons/LogOutIcon';
 
 export default function Navbar() {
   const router = useRouter();
   const [active, setActive] = React.useState();
+  const [nearContext] = useNear();
+  const [user, setUser] = useUser();
+
   const currentPage = router.route;
   const galleryData = [
     {
@@ -40,9 +46,21 @@ export default function Navbar() {
       owner: 'mzterdox.near',
     },
   ];
+
+  const logIn = async () => {
+    await nearContext.walletConnection.requestSignIn(
+      nearContext.nearConfig.contractName
+    );
+  };
+
+  const logOut = async () => {
+    await setUser("");
+    await nearContext.walletConnection.signOut();
+  };
+
   return (
     <div className="bg-white w-full drop-shadow-md">
-      <div className="flex p-4">
+      <div className="flex justify-between p-4">
         <div className="mr-44">
           <img src="/logo.png" alt="logo" className="w-36" />
         </div>
@@ -99,6 +117,28 @@ export default function Navbar() {
             className="rounded-lg border-2 h-8 py-px px-3"
             data={galleryData}
           />
+        </div>
+        <div>
+          { user == "" ? (
+          <button
+            type="button"
+            className="p-3 bg-figma-100 rounded-lg hover:bg-blue-800 text-white"
+            onClick={() => {logIn()}}
+          >
+            Connect
+          </button>) : (
+            <div className='p-3 bg-figma-100 rounded-lg text-white flex justify-between align-middle items-center font-bold'>
+              <div className='h-full'>
+                  {user}
+              </div>
+              <button
+              className=' hover:text-gray-400 text-white w-5 h-full ml-3'
+                onClick={() => {logOut()}}
+              >
+                <LogOutIcon/>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
