@@ -19,7 +19,7 @@ export const NEARApiContext = React.createContext<TNearContext>({});
 
 
 interface NEARApiContextProviderProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export function NEARApiContextProvider({ children }: NEARApiContextProviderProps) {
