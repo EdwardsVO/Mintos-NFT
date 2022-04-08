@@ -2,9 +2,15 @@ import React from 'react';
 import Category from '../Category/Category';
 import NFTGalleryPreview from '../NFT/NFTGalleryPreview';
 import SearchBarDesktop from '../Searchbar/SearchBarDesktop';
+import { useNear } from '../../hooks/useNear';
+import Token from '../../models/Token';
 
 export default function GalleryInfo() {
-  const galleryData = [
+  const [nearContext] = useNear();
+  const [tokens, setTokens] = React.useState<Array<Token>>(null);
+  const [page, setPage] = React.useState<number>(0);
+
+  const galleryDataMock = [
     {
       _id: 0,
       title: 'Lion King',
@@ -38,6 +44,18 @@ export default function GalleryInfo() {
       owner: 'mzterdox.near',
     },
   ];
+
+  const getGalleryData = () => {
+    nearContext.contract
+    // @ts-ignore: Unreachable code error
+      .obtener_pagina_v2({ from_index: page, limit: 10 })
+      .then(setTokens); //limit:10 test purposes. Find an harmonic number for screens
+  };
+
+  React.useEffect(() => {
+    getGalleryData();
+  }, []);
+
   const categories = [
     {
       _id: 0,
@@ -74,7 +92,7 @@ export default function GalleryInfo() {
           <div className="mt-6">
             <SearchBarDesktop
               className="rounded-lg border-2 h-8 py-px px-3"
-              data={galleryData}
+              data={galleryDataMock}
             />
           </div>
           <div className="mt-5 flex space-x-4">
@@ -86,10 +104,26 @@ export default function GalleryInfo() {
             NFT Gallery
           </h2>
           <div className="mt-3 grid grid-cols-2 gap-3">
-            {galleryData.map((nft, i) => (
+            {tokens ? (
+            tokens.map((nft, i) => (
               <NFTGalleryPreview key={i} data={nft} />
-            ))}
+            ))) : (
+              <div>
+                Nothing to show yet...
+              </div>
+            )
+            }
           </div>
+          {/* GET TOKENS TEST BUTTON */}
+          <button
+            className="bg-red-500 p-9"
+            onClick={() => {
+              console.log(tokens);
+            }}
+          >
+            TEST RESULT
+          </button>
+          {/* WE NEED TO CREATE A PAGINATOR TO setPage */}
         </div>
       </div>
     </div>
