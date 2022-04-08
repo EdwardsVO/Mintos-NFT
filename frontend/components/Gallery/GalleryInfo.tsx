@@ -114,15 +114,7 @@ export default function GalleryInfo() {
             )
             }
           </div>
-          {/* GET TOKENS TEST BUTTON */}
-          <button
-            className="bg-red-500 p-9"
-            onClick={() => {
-              console.log(tokens);
-            }}
-          >
-            TEST RESULT
-          </button>
+          
           {/* WE NEED TO CREATE A PAGINATOR TO setPage */}
         </div>
       </div>
