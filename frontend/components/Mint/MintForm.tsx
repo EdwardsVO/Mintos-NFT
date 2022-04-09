@@ -1,6 +1,6 @@
 import React from 'react';
 import Input from '../inputs/Input';
-import { create } from "ipfs-http-client";
+import { create } from 'ipfs-http-client';
 import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
 import useUser from '../../hooks/useUser';
@@ -10,23 +10,18 @@ export default function MintForm() {
   const [price, setPrice] = React.useState(0);
   const [collection, setCollection] = React.useState('');
   const [description, setDescription] = React.useState('');
-  const [url, setUrl] = React.useState<string>("");
+  const [url, setUrl] = React.useState<string>('');
   const [file, setFile] = React.useState(null);
-  const [urlArr, setUrlArr] = React.useState<string>("");
+  const [urlArr, setUrlArr] = React.useState<string>('');
   const [nearContext] = useNear();
   const [user] = useUser();
-  
 
   // @ts-ignore: Unreachable code error
-  const client = create("https://ipfs.infura.io:5001/api/v0");
-  
+  const client = create('https://ipfs.infura.io:5001/api/v0');
+
   const retrieveFile = (e) => {
     const data = e.target.files[0];
-    const reader = new window.FileReader();
-    reader.readAsArrayBuffer(data);
-    reader.onloadend = () => {
-      setFile(reader.result);
-    };
+    setFile(data);
     e.preventDefault();
   };
 
@@ -36,7 +31,6 @@ export default function MintForm() {
       const created = await client.add(file);
       const url = `https://ipfs.infura.io/ipfs/${created.path}`;
       setUrlArr(url);
-      console.log(url);
     } catch (error) {
       console.log(error.message);
     }
@@ -49,17 +43,20 @@ export default function MintForm() {
       price: String(price),
       description: description,
       media: urlArr,
-      media_hash: "imagenenimagenimagenasdfasdfaiasdfam",
+      media_hash: 'imagenenimagenimagenasdfasdfaiasdfam',
       on_sale: true,
-    }
+    },
+  };
 
-  }
-
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     // @ts-ignore: Unreachable code error
-    await nearContext.contract.minar({token_owner_id:token.owner_id, token_metadata: token.metadata},"300000000000000","4650000000000000000000");
+    await nearContext.contract.minar(
+      { token_owner_id: token.owner_id, token_metadata: token.metadata },
+      '300000000000000',
+      '465000000000000000000000'
+    );
     console.log(token);
-  }
+  };
 
   return (
     <div>
@@ -73,9 +70,16 @@ export default function MintForm() {
             className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             type="file"
             id="formFile"
-            onChange={()=>{retrieveFile}}
+            onChange={(e) => {
+              retrieveFile(e);
+            }}
           />
-          <button onClick={() => {upload}} className='p-3 bg-figma-100 hover:bg-blue-800 rounded-lg'>
+          <button
+            onClick={(d) => {
+              upload(d);
+            }}
+            className="p-3 bg-figma-100 hover:bg-blue-800 rounded-lg"
+          >
             Upload
           </button>
         </div>
@@ -133,7 +137,9 @@ export default function MintForm() {
         <button
           type="button"
           className="w-full bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
-          onClick={()=> {handleSubmit()}}
+          onClick={() => {
+            handleSubmit();
+          }}
         >
           Mint NFT
         </button>
