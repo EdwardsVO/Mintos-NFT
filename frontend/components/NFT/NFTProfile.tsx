@@ -1,7 +1,9 @@
 import React from 'react';
+import Token from '../../models/Token';
+import { toNEAR } from '../utils';
 
 interface NFTProfileProps {
-  data: any;
+  data: Token;
 }
 
 export default function NFTProfile({ data }: NFTProfileProps) {
@@ -11,13 +13,13 @@ export default function NFTProfile({ data }: NFTProfileProps) {
         <img src="/logo.png" alt="logo" className="w-36" />
       </div>
       <div className="mt-6 mx-3 lg:px-4 lg:w-full lg:text-center">
-        <h2 className="text-figma-100 font-bold text-xl">{data?.collection}</h2>
+        <h2 className="text-figma-100 font-bold text-xl">Collection</h2>
       </div>
       <div className="lg:w-full">
         <div className=" bg-figma-300 rounded-3xl drop-shadow-lg shadow-black p-5 mx-3 mt-2 lg:max-w-xl lg:mx-auto">
           <img
-            src={data?.banner}
-            alt={data?.title}
+            src={data?.metadata?.media}
+            alt={data?.metadata?.title}
             className="rounded-3xl object-cover"
           />
         </div>
@@ -25,15 +27,15 @@ export default function NFTProfile({ data }: NFTProfileProps) {
           <div className="flex w-full lg:w-1/3 justify-between lg:px-8">
             <div className="mt-2">
               <h2 className="text-xl font-semibold text-figma-400">
-                {data?.title}
+                {data?.metadata?.title}
               </h2>
               <h2 className="text-xl font-semibold text-figma-100">
-                {data?.owner}
+                {data?.owner_id}
               </h2>
             </div>
             <div className="mt-2">
               <h2 className="text-xl font-bold text-figma-400 ">
-                {data?.price} N
+                {toNEAR(data?.metadata?.price)} N
               </h2>
             </div>
           </div>

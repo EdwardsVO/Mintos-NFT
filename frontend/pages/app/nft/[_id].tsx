@@ -2,56 +2,47 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import Layout from '../../../components/Layout';
 import NFTProfile from '../../../components/NFT/NFTProfile';
+import { useNear } from '../../../hooks/useNear';
+import Token from '../../../models/Token';
 
 export default function NFTProfilePage() {
   const router = useRouter();
-  const [nft, setNft] = React.useState({});
-  const activeNFT = router.query._id;
-  const galleryData = [
-    {
-      _id: 0,
-      title: 'Lion King',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/Lion.jpg',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 1,
-      title: 'NEARLien 0',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/12.png',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 2,
-      title: 'Blitzcreg Bop',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/blitz.png',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 3,
-      title: 'Yakuza Kuza',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/yakuza.png',
-      owner: 'mzterdox.near',
-    },
-  ];
+  const [nft, setNft] = React.useState<Token>();
+  const [nearContext] = useNear();
+
+  
+  const id = router.query.token_id;
+
+  const start = async () => {
+    const idInt = await router.query;
+    const token_id = String(idInt);
+    console.log(token_id.toString());
+    try {
+      if (token_id) {
+        // @ts-ignore: Unreachable code error
+        const token = await nearContext.contract.nft_token({token_id: token_id})
+        setNft(token);
+      }
+    } catch (e) {
+      router.push('/app');
+    }
+  };
+
+
 
   React.useEffect(() => {
-    const getNFTData = () => {
-      for (let x = 0; x < galleryData.length; x++) {
-        if (galleryData[x]._id.toString() == activeNFT) {
-          setNft(galleryData[x]);
-        }
-      }
+    if (!id) {
+      console.log(id)
+      return;
+    }
+    const startClass = async () => {
+      console.log('starting...')
+      await start();
     };
-    getNFTData();
-  }, [activeNFT]);
+    startClass();
+  }, [id]);
+
+
   return (
     <Layout>
       <div className="p-4">
