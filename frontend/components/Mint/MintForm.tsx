@@ -4,7 +4,7 @@ import { create } from 'ipfs-http-client';
 import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
 import useUser from '../../hooks/useUser';
-import { ONE_NEAR_IN_YOCTO, toNEAR } from '../utils';
+import { ONE_NEAR_IN_YOCTO } from '../utils';
 import { useRouter } from 'next/router';
 
 export default function MintForm() {
@@ -12,32 +12,42 @@ export default function MintForm() {
   const [price, setPrice] = React.useState(0 * ONE_NEAR_IN_YOCTO);
   const [collection, setCollection] = React.useState('');
   const [description, setDescription] = React.useState('');
-  const [url, setUrl] = React.useState<string>('');
-  const [file, setFile] = React.useState(null);
+  const [file, setFile] = React.useState([]);
   const [urlArr, setUrlArr] = React.useState<string>('');
   const [nearContext] = useNear();
   const [user] = useUser();
-  const router = useRouter();
+  const [uploaded, setUploaded] = React.useState(false);
 
   // @ts-ignore: Unreachable code error
   const client = create('https://ipfs.infura.io:5001/api/v0');
 
-  const retrieveFile = (e) => {
+  const retrieveFile = async (e) => {
+    e.preventDefault();
+    setUploaded(false);
     const data = e.target.files[0];
-    setFile(data);
-    e.preventDefault();
-  };
-
-  const upload = async (e) => {
-    e.preventDefault();
+    setFile(e.target.files[0]);
     try {
-      const created = await client.add(file);
+      const created = await client.add(data);
+      setUploaded(true);
       const url = `https://ipfs.infura.io/ipfs/${created.path}`;
       setUrlArr(url);
+      console.log('File uploaded ', url);
+      console.log(file);
     } catch (error) {
       console.log(error.message);
     }
   };
+
+  // const upload = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const created = await client.add(file);
+  //     const url = `https://ipfs.infura.io/ipfs/${created.path}`;
+  //     setUrlArr(url);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
   const token: Token = {
     owner_id: user,
@@ -58,14 +68,15 @@ export default function MintForm() {
       '300000000000000',
       '465000000000000000000000'
     );
-    console.log(token);
-    router.push('/app/gallery');
   };
 
   return (
     <div>
-      <div className="flex justify-center">
+      <div className="flex">
         <div className="mb-3 w-96">
+          <div className={`${uploaded ? 'flex' : 'hidden'}`}>
+            <img src={urlArr} alt="" className="w-72 h-72" />
+          </div>
           <label htmlFor="formFile" className="inline-block mb-2 text-gray-700">
             NFT File *
           </label>
@@ -78,14 +89,17 @@ export default function MintForm() {
               retrieveFile(e);
             }}
           />
-          <button
+          <h2 className={`${uploaded ? 'inline-block' : 'hidden'}`}>
+            File Uploaded Succesfully!
+          </h2>
+          {/* <button
             onClick={(d) => {
               upload(d);
             }}
             className="p-3 bg-figma-100 hover:bg-blue-800 rounded-lg"
           >
             Upload
-          </button>
+          </button> */}
         </div>
       </div>
       <div>
