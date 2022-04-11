@@ -4,12 +4,12 @@ import { create } from 'ipfs-http-client';
 import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
 import useUser from '../../hooks/useUser';
-import { ONE_NEAR_IN_YOCTO, toNEAR } from '../utils';
+import { ONE_NEAR_IN_YOCTO } from '../utils';
 import { useRouter } from 'next/router';
 
 export default function MintForm() {
   const [name, setName] = React.useState('');
-  const [price, setPrice] = React.useState(0 * ONE_NEAR_IN_YOCTO);
+  const [price, setPrice] = React.useState(0);
   const [collection, setCollection] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [url, setUrl] = React.useState<string>('');
@@ -43,7 +43,7 @@ export default function MintForm() {
     owner_id: user,
     metadata: {
       title: name,
-      price: String(price * ONE_NEAR_IN_YOCTO),
+      price: BigInt(price * ONE_NEAR_IN_YOCTO).toString(),
       description: description,
       media: urlArr,
       media_hash: 'imagenenimagenimagenasdfasdfaiasdfam',
@@ -98,7 +98,7 @@ export default function MintForm() {
           value={name}
           onChange={(e) => {
             e.preventDefault();
-            setName(e.target.value);
+            setName((e.target.value));
           }}
         />
 
@@ -111,7 +111,7 @@ export default function MintForm() {
           value={price}
           onChange={(e) => {
             e.preventDefault();
-            setPrice(e.target.value);
+            setPrice((e.target.value));
           }}
         />
         <Input
