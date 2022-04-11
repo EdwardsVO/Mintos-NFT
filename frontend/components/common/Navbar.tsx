@@ -61,10 +61,6 @@ export default function Navbar() {
     await nearContext.walletConnection.signOut();
   };
 
-  React.useEffect(() => {
-    initContract();
-  }, []);
-
   return (
     <div className="bg-white w-full drop-shadow-md">
       <div className="flex justify-between p-4">
