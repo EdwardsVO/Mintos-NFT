@@ -48,7 +48,7 @@ export default function GalleryInfo() {
   const getGalleryData = () => {
     nearContext.contract
       // @ts-ignore: Unreachable code error
-      .obtener_pagina_v2({ from_index: page, limit: 12 })
+      .obtener_pagina_v2({ from_index: page, limit: 16 })
       .then(setTokens); //limit:10 test purposes. Find an harmonic number for screen
   };
 
