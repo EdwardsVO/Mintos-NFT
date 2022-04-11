@@ -14,5 +14,3 @@ export function toYocto(value: string): number {
     return (parseFloat(value) * ONE_NEAR_IN_YOCTO);
 }
 
-
-
