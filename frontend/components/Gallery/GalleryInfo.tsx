@@ -8,7 +8,11 @@ import Token from '../../models/Token';
 export default function GalleryInfo() {
   const [nearContext] = useNear();
   const [tokens, setTokens] = React.useState<Array<Token>>(null);
-  const [page, setPage] = React.useState<number>(0);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [loading, setLoading] = React.useState(false);
+  const [tokensPerPage] = React.useState(4);
+  const [indexFirstNFT, setIndexFirstNFT] = React.useState(0);
+  // const [currentNFTs, setCurrentNFTs] = React.useState<Token[]>();
 
   const galleryDataMock = [
     {
@@ -45,16 +49,40 @@ export default function GalleryInfo() {
     },
   ];
 
-  const getGalleryData = () => {
-    nearContext.contract
-      // @ts-ignore: Unreachable code error
-      .obtener_pagina_v2({ from_index: page, limit: 12 })
-      .then(setTokens); //limit:10 test purposes. Find an harmonic number for screen
-  };
-
   React.useEffect(() => {
+    const getGalleryData = async () => {
+      setLoading(true);
+      await nearContext.contract
+        // @ts-ignore: Unreachable code error
+        .obtener_pagina_v2({
+          from_index: indexOfFirstNFT,
+          limit: tokensPerPage,
+        })
+        .then(setTokens);
+      setLoading(false);
+    };
     getGalleryData();
-  }, []);
+    // indexOfFirstNFT();
+    console.log(tokens);
+  }, [currentPage, indexFirstNFT]);
+
+  const indexOfLastNFT = currentPage * tokensPerPage;
+  // const indexOfFirstNFT = indexOfLastNFT - tokensPerPage;
+  const indexOfFirstNFT = currentPage * tokensPerPage - 1;
+
+  // const indexOfFirstNFT = () => {
+  //   if (currentPage - tokensPerPage < 0) {
+  //     setIndexFirstNFT(0);
+  //   } else {
+  //     setIndexFirstNFT((currentPage * tokensPerPage) -1);
+  //   }
+  // };
+  const changePage = () => {
+    setCurrentPage(currentPage + 1);
+    setIndexFirstNFT(indexOfFirstNFT);
+    console.log(currentPage);
+    console.log(indexFirstNFT);
+  };
 
   const categories = [
     {
@@ -104,7 +132,7 @@ export default function GalleryInfo() {
             NFT Gallery
           </h2>
           <div className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-6">
-            {tokens ? (
+            {tokens && !loading ? (
               tokens.map((nft, i) => <NFTGalleryPreview key={i} data={nft} />)
             ) : (
               <div>Nothing to show yet...</div>
@@ -112,6 +140,7 @@ export default function GalleryInfo() {
           </div>
 
           {/* WE NEED TO CREATE A PAGINATOR TO setPage */}
+          <button onClick={() => changePage()}>Next Page</button>
         </div>
       </div>
     </div>
