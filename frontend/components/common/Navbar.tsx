@@ -9,7 +9,6 @@ import { initContract } from '../near/near';
 
 export default function Navbar() {
   const router = useRouter();
-  const [active, setActive] = React.useState();
   const [nearContext] = useNear();
   const [user, setUser] = useUser();
   const [tokens, setTokens] = React.useState<Token[]>();
@@ -50,6 +49,10 @@ export default function Navbar() {
     },
   ];
 
+  React.useEffect(() => {
+    initContract();
+  }, []);
+
   const logIn = async () => {
     await nearContext.walletConnection.requestSignIn(
       nearContext.nearConfig.contractName
@@ -60,10 +63,6 @@ export default function Navbar() {
     await setUser('');
     await nearContext.walletConnection.signOut();
   };
-
-  React.useEffect(() => {
-    initContract();
-  }, []);
 
   return (
     <div className="bg-white w-full drop-shadow-md">
