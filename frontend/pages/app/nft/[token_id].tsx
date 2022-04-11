@@ -11,10 +11,10 @@ export default function NFTProfilePage() {
   const [nearContext] = useNear();
 
   
-  const id = router.query.token_id;
+  const id = router.query.token_id
 
   const start = async () => {
-    const idInt = await router.query;
+    const idInt = await router.query.token_id;
     const token_id = String(idInt);
     console.log(token_id.toString());
     try {
@@ -32,11 +32,9 @@ export default function NFTProfilePage() {
 
   React.useEffect(() => {
     if (!id) {
-      console.log(id)
       return;
     }
     const startClass = async () => {
-      console.log('starting...')
       await start();
     };
     startClass();
