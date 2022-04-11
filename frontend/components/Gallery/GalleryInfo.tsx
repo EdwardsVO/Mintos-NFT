@@ -47,9 +47,9 @@ export default function GalleryInfo() {
 
   const getGalleryData = () => {
     nearContext.contract
-    // @ts-ignore: Unreachable code error
+      // @ts-ignore: Unreachable code error
       .obtener_pagina_v2({ from_index: page, limit: 10 })
-      .then(setTokens); //limit:10 test purposes. Find an harmonic number for screens
+      .then(setTokens); //limit:10 test purposes. Find an harmonic number for screen
   };
 
   React.useEffect(() => {
@@ -86,10 +86,10 @@ export default function GalleryInfo() {
     <div>
       <div className="min-h-screen min-w-full mb-20">
         <div className="p-4">
-          <div className="">
+          <div className="lg:hidden">
             <img src="/logo.png" alt="logo" className="w-36" />
           </div>
-          <div className="mt-6">
+          <div className="mt-6 lg:hidden">
             <SearchBarDesktop
               className="rounded-lg border-2 h-8 py-px px-3"
               data={galleryDataMock}
@@ -103,18 +103,14 @@ export default function GalleryInfo() {
           <h2 className="text-figma-400 font-semibold text-xl mt-5">
             NFT Gallery
           </h2>
-          <div className="mt-3 grid grid-cols-2 gap-3">
+          <div className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-6">
             {tokens ? (
-            tokens.map((nft, i) => (
-              <NFTGalleryPreview key={i} data={nft} />
-            ))) : (
-              <div>
-                Nothing to show yet...
-              </div>
-            )
-            }
+              tokens.map((nft, i) => <NFTGalleryPreview key={i} data={nft} />)
+            ) : (
+              <div>Nothing to show yet...</div>
+            )}
           </div>
-          
+
           {/* WE NEED TO CREATE A PAGINATOR TO setPage */}
         </div>
       </div>

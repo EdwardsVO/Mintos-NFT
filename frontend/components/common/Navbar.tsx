@@ -4,12 +4,15 @@ import SearchBar from '../Searchbar/SearchBarDesktop';
 import { useNear } from '../../hooks/useNear';
 import useUser from '../../hooks/useUser';
 import LogOutIcon from '../icons/LogOutIcon';
+import Token from '../../models/Token';
+import { initContract } from '../near/near';
 
 export default function Navbar() {
   const router = useRouter();
   const [active, setActive] = React.useState();
   const [nearContext] = useNear();
   const [user, setUser] = useUser();
+  const [tokens, setTokens] = React.useState<Token[]>();
 
   const currentPage = router.route;
   const galleryData = [
@@ -54,9 +57,13 @@ export default function Navbar() {
   };
 
   const logOut = async () => {
-    await setUser("");
+    await setUser('');
     await nearContext.walletConnection.signOut();
   };
+
+  React.useEffect(() => {
+    initContract();
+  }, []);
 
   return (
     <div className="bg-white w-full drop-shadow-md">
@@ -119,23 +126,26 @@ export default function Navbar() {
           />
         </div>
         <div>
-          { user == "" ? (
-          <button
-            type="button"
-            className="p-3 bg-figma-100 rounded-lg hover:bg-blue-800 text-white"
-            onClick={() => {logIn()}}
-          >
-            Connect
-          </button>) : (
-            <div className='p-3 bg-figma-100 rounded-lg text-white flex justify-between align-middle items-center font-bold'>
-              <div className='h-full'>
-                  {user}
-              </div>
+          {user == '' ? (
+            <button
+              type="button"
+              className="p-3 bg-figma-100 rounded-lg hover:bg-blue-800 text-white"
+              onClick={() => {
+                logIn();
+              }}
+            >
+              Connect
+            </button>
+          ) : (
+            <div className="p-3 bg-figma-100 rounded-lg text-white flex justify-between align-middle items-center font-bold">
+              <div className="h-full">{user}</div>
               <button
-              className=' hover:text-gray-400 text-white w-5 h-full ml-3'
-                onClick={() => {logOut()}}
+                className=" hover:text-gray-400 text-white w-5 h-full ml-3"
+                onClick={() => {
+                  logOut();
+                }}
               >
-                <LogOutIcon/>
+                <LogOutIcon />
               </button>
             </div>
           )}

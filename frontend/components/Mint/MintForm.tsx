@@ -4,10 +4,12 @@ import { create } from 'ipfs-http-client';
 import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
 import useUser from '../../hooks/useUser';
+import { ONE_NEAR_IN_YOCTO, toNEAR } from '../utils';
+import { useRouter } from 'next/router';
 
 export default function MintForm() {
   const [name, setName] = React.useState('');
-  const [price, setPrice] = React.useState(0);
+  const [price, setPrice] = React.useState(0 * ONE_NEAR_IN_YOCTO);
   const [collection, setCollection] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [url, setUrl] = React.useState<string>('');
@@ -15,6 +17,7 @@ export default function MintForm() {
   const [urlArr, setUrlArr] = React.useState<string>('');
   const [nearContext] = useNear();
   const [user] = useUser();
+  const router = useRouter();
 
   // @ts-ignore: Unreachable code error
   const client = create('https://ipfs.infura.io:5001/api/v0');
@@ -40,7 +43,7 @@ export default function MintForm() {
     owner_id: user,
     metadata: {
       title: name,
-      price: String(price),
+      price: String(price * ONE_NEAR_IN_YOCTO),
       description: description,
       media: urlArr,
       media_hash: 'imagenenimagenimagenasdfasdfaiasdfam',
@@ -56,6 +59,7 @@ export default function MintForm() {
       '465000000000000000000000'
     );
     console.log(token);
+    router.push('/app/gallery');
   };
 
   return (

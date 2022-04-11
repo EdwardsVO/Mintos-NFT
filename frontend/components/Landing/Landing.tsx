@@ -48,10 +48,10 @@ export default function Landing() {
   return (
     <div className="min-h-screen min-w-full mb-20">
       <div className="p-4">
-        <div>
+        <div className="lg:hidden">
           <img src="/logo.png" alt="logo" className="w-36" />
         </div>
-        <div className="mt-6">
+        <div className="mt-6 lg:hidden">
           <SearchBar />
         </div>
         <div className="mt-5 flex space-x-4">
@@ -59,7 +59,7 @@ export default function Landing() {
             <Category categories={category} key={i} />
           ))}
         </div>
-        <div className="mt-8 grid grid-cols-2 gap-3">
+        <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
           {categories.map((category, i) => (
             <NFTPreview key={i} data={category} />
           ))}
@@ -68,7 +68,7 @@ export default function Landing() {
           <h2 className="px-4 font-semibold text-lg">
             Top Selling Collections
           </h2>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
             {collections.map((collection, i) => (
               <NFTPreview key={i} data={collection} isCollection />
             ))}
