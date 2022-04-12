@@ -71,7 +71,7 @@ export default function MintForm() {
   };
 
   return (
-    <div>
+    <div className="lg:p-7 lg:w-3/4 lg:mx-auto">
       <div className="flex">
         <div className="mb-3 w-96">
           <div className={`${uploaded ? 'flex' : 'hidden'}`}>
@@ -112,7 +112,7 @@ export default function MintForm() {
           value={name}
           onChange={(e) => {
             e.preventDefault();
-            setName((e.target.value));
+            setName(e.target.value);
           }}
         />
 
@@ -125,7 +125,7 @@ export default function MintForm() {
           value={price}
           onChange={(e) => {
             e.preventDefault();
-            setPrice((e.target.value));
+            setPrice(e.target.value);
           }}
         />
         <Input
@@ -151,7 +151,7 @@ export default function MintForm() {
           }}
         />
       </div>
-      <div className="mt-7">
+      <div className="mt-7 lg:w-1/2 lg:mx-auto">
         <button
           type="button"
           className="w-full bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
