@@ -37,18 +37,7 @@ export default function MintForm() {
       console.log(error.message);
     }
   };
-
-  // const upload = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const created = await client.add(file);
-  //     const url = `https://ipfs.infura.io/ipfs/${created.path}`;
-  //     setUrlArr(url);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
-
+  
   const token: Token = {
     owner_id: user,
     metadata: {
