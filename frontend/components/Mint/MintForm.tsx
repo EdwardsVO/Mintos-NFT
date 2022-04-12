@@ -4,7 +4,7 @@ import { create } from 'ipfs-http-client';
 import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
 import useUser from '../../hooks/useUser';
-import { ONE_NEAR_IN_YOCTO } from '../utils';
+import { ONE_NEAR_IN_YOCTO, toFixed } from '../utils';
 import { useRouter } from 'next/router';
 
 export default function MintForm() {
@@ -53,9 +53,10 @@ export default function MintForm() {
     owner_id: user,
     metadata: {
       title: name,
-      price: BigInt(price * ONE_NEAR_IN_YOCTO).toString(),
+      price: toFixed(price * ONE_NEAR_IN_YOCTO).toString(),
       description: description,
       media: urlArr,
+      creator: user,
       media_hash: 'imagenenimagenimagenasdfasdfaiasdfam',
       on_sale: true,
     },
