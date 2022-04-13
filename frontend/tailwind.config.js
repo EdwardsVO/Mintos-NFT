@@ -37,7 +37,12 @@ module.exports = {
           600: '#828282',
           700: '#FFFCFC',
           800: '#FBFBFB',
+          900: '#6226E1',
         },
+      },
+      backgroundImage: {
+        'bg-1': "url('/bg.png')",
+        'bg-2': "url('/space.jpg')",
       },
     },
   },
