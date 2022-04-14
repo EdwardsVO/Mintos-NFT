@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer() {
   return (
-    <div>Footer</div>
+    <div className='bg-gray-800 h-20 w-full flex justify-center items-center align-middle text-white'>Mintos NFT🚀 All Rights Reserved</div>
   )
 }
 
