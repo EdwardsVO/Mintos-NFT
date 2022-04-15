@@ -21,8 +21,8 @@ export default function GalleryInfo() {
 
   const initSearchBar = async () => {
     const { contract } = await initContract();
-    // @ts-ignore: Unreachable code error
     setSearchBarTokens(
+      // @ts-ignore: Unreachable code error
       await contract.obtener_pagina_v2({ from_index: 0, limit: 10 })
     );
   };
