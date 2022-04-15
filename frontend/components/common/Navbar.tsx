@@ -14,40 +14,6 @@ export default function Navbar() {
   const [tokens, setTokens] = React.useState<Array<Token>>(null);
 
   const currentPage = router.route;
-  const galleryData = [
-    {
-      _id: 0,
-      title: 'Lion King',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/Lion.jpg',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 1,
-      title: 'NEARLien 0',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/12.png',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 2,
-      title: 'Blitzcreg Bop',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/blitz.png',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 3,
-      title: 'Yakuza Kuza',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/yakuza.png',
-      owner: 'mzterdox.near',
-    },
-  ];
 
   React.useEffect(() => {
     initSearchBar();
@@ -67,8 +33,8 @@ export default function Navbar() {
   const initSearchBar = async () => {
     const { contract } = await initContract();
     // @ts-ignore: Unreachable code error
-    setTokens(await contract.obtener_pagina_v2({from_index:0, limit:10}));
-  }
+    setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 10 }));
+  };
 
   return (
     <div className="bg-white w-full drop-shadow-md">
