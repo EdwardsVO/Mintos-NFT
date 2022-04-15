@@ -5,7 +5,6 @@ import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
 import useUser from '../../hooks/useUser';
 import { ONE_NEAR_IN_YOCTO, toFixed } from '../utils';
-import { useRouter } from 'next/router';
 
 export default function MintForm() {
   const [name, setName] = React.useState('');
@@ -37,7 +36,7 @@ export default function MintForm() {
       console.log(error.message);
     }
   };
-  
+
   const token: Token = {
     owner_id: user,
     metadata: {
@@ -61,7 +60,7 @@ export default function MintForm() {
   };
 
   return (
-    <div className='lg:flex lg:justify-center lg:items-center lg:align-middle lg:p-9'>
+    <div className="lg:flex lg:justify-center lg:items-center lg:align-middle lg:p-9">
       <div className="flex lg:justify-center lg:items-center lg:align-middle">
         <div className="mb-3 w-96">
           <div className={`${uploaded ? 'flex' : 'hidden'}`}>
@@ -84,7 +83,7 @@ export default function MintForm() {
           </h2>
         </div>
       </div>
-      <div className='lg:w-1/2 '>
+      <div className="lg:w-1/2 ">
         <Input
           required
           label="Name *"
@@ -94,7 +93,7 @@ export default function MintForm() {
           value={name}
           onChange={(e) => {
             e.preventDefault();
-            setName((e.target.value));
+            setName(e.target.value);
           }}
         />
 
@@ -107,7 +106,7 @@ export default function MintForm() {
           value={price}
           onChange={(e) => {
             e.preventDefault();
-            setPrice((e.target.value));
+            setPrice(e.target.value);
           }}
         />
         <Input
@@ -142,8 +141,7 @@ export default function MintForm() {
           Mint NFT
         </button>
       </div>
-      <div className="mt-7">
-      </div>
+      <div className="mt-7"></div>
     </div>
   );
 }

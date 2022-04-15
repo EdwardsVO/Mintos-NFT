@@ -4,56 +4,32 @@ import NFTGalleryPreview from '../NFT/NFTGalleryPreview';
 import SearchBarDesktop from '../Searchbar/SearchBarDesktop';
 import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
+import { initContract } from '../near/near';
+import SearchBar from '../Searchbar/SearchBar';
 
 export default function GalleryInfo() {
-  const [nearContext] = useNear();
   const [tokens, setTokens] = React.useState<Array<Token>>(null);
+  const [searchBarTokens, setSearchBarTokens] =
+    React.useState<Array<Token>>(null);
   const [page, setPage] = React.useState<number>(0);
 
-  const galleryDataMock = [
-    {
-      _id: 0,
-      title: 'Lion King',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/Lion.jpg',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 1,
-      title: 'NEARLien 0',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/12.png',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 2,
-      title: 'Blitzcreg Bop',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/blitz.png',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 3,
-      title: 'Yakuza Kuza',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/yakuza.png',
-      owner: 'mzterdox.near',
-    },
-  ];
+  const getGalleryData = async () => {
+    const { contract } = await initContract();
+    // @ts-ignore: Unreachable code error
+    setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 12 }));
+  };
 
-  const getGalleryData = () => {
-    nearContext.contract
-      // @ts-ignore: Unreachable code error
-      .obtener_pagina_v2({ from_index: page, limit: 16 })
-      .then(setTokens); //limit:10 test purposes. Find an harmonic number for screen
+  const initSearchBar = async () => {
+    const { contract } = await initContract();
+    // @ts-ignore: Unreachable code error
+    setSearchBarTokens(
+      await contract.obtener_pagina_v2({ from_index: 0, limit: 10 })
+    );
   };
 
   React.useEffect(() => {
     getGalleryData();
+    initSearchBar();
   }, []);
 
   const categories = [
@@ -89,10 +65,10 @@ export default function GalleryInfo() {
           <div className="lg:hidden">
             <img src="/logo.png" alt="logo" className="w-36" />
           </div>
-          <div className="mt-6 lg:hidden">
+          <div className="mt-6 lg:hidden w-full">
             <SearchBarDesktop
-              className="rounded-lg border-2 h-8 py-px px-3"
-              data={galleryDataMock}
+              className="rounded-lg border-2 h-8 py-px px-3 w-full"
+              tokens={tokens}
             />
           </div>
           <div className="mt-5 flex space-x-4">

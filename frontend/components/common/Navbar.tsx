@@ -11,46 +11,12 @@ export default function Navbar() {
   const router = useRouter();
   const [nearContext] = useNear();
   const [user, setUser] = useUser();
-  const [tokens, setTokens] = React.useState<Token[]>();
+  const [tokens, setTokens] = React.useState<Array<Token>>(null);
 
   const currentPage = router.route;
-  const galleryData = [
-    {
-      _id: 0,
-      title: 'Lion King',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/Lion.jpg',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 1,
-      title: 'NEARLien 0',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/12.png',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 2,
-      title: 'Blitzcreg Bop',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/blitz.png',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 3,
-      title: 'Yakuza Kuza',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/yakuza.png',
-      owner: 'mzterdox.near',
-    },
-  ];
 
   React.useEffect(() => {
-    initContract();
+    initSearchBar();
   }, []);
 
   const logIn = async () => {
@@ -62,6 +28,12 @@ export default function Navbar() {
   const logOut = async () => {
     await setUser('');
     await nearContext.walletConnection.signOut();
+  };
+
+  const initSearchBar = async () => {
+    const { contract } = await initContract();
+    // @ts-ignore: Unreachable code error
+    setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 10 }));
   };
 
   return (
@@ -121,7 +93,7 @@ export default function Navbar() {
         <div className="self-center">
           <SearchBar
             className="rounded-lg border-2 h-8 py-px px-3"
-            data={galleryData}
+            tokens={tokens}
           />
         </div>
         <div>
