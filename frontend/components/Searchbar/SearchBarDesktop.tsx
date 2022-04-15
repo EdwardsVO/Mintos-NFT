@@ -7,7 +7,7 @@ interface SearchBarProps {
   className?: string;
 }
 
-export default function SearchBar({ tokens }: SearchBarProps) {
+export default function SearchBar({ tokens, className }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = React.useState<Array<Token>>([]);
 
   const handleFilter = (event) => {
