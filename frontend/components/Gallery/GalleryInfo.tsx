@@ -2,10 +2,9 @@ import React from 'react';
 import Category from '../Category/Category';
 import NFTGalleryPreview from '../NFT/NFTGalleryPreview';
 import SearchBarDesktop from '../Searchbar/SearchBarDesktop';
-import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
 import { initContract } from '../near/near';
-import SearchBar from '../Searchbar/SearchBar';
+import MintButton from '../common/MintButton';
 
 export default function GalleryInfo() {
   const [tokens, setTokens] = React.useState<Array<Token>>(null);
@@ -13,23 +12,17 @@ export default function GalleryInfo() {
     React.useState<Array<Token>>(null);
   const [page, setPage] = React.useState<number>(0);
 
-  const getGalleryData = async () => {
+  const loadContract = async () => {
     const { contract } = await initContract();
     // @ts-ignore: Unreachable code error
     setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 12 }));
-  };
-
-  const initSearchBar = async () => {
-    const { contract } = await initContract();
-    // @ts-ignore: Unreachable code error
     setSearchBarTokens(
       await contract.obtener_pagina_v2({ from_index: 0, limit: 10 })
     );
   };
 
   React.useEffect(() => {
-    getGalleryData();
-    initSearchBar();
+    loadContract();
   }, []);
 
   const categories = [
@@ -68,7 +61,7 @@ export default function GalleryInfo() {
           <div className="mt-6 lg:hidden w-full">
             <SearchBarDesktop
               className="rounded-lg border-2 h-8 py-px px-3 w-full"
-              tokens={tokens}
+              tokens={searchBarTokens}
             />
           </div>
           <div className="mt-5 flex space-x-4">
@@ -76,9 +69,12 @@ export default function GalleryInfo() {
               <Category categories={category} key={i} />
             ))}
           </div>
-          <h2 className="text-figma-400 font-semibold text-xl mt-5">
-            NFT Gallery
-          </h2>
+          <div className="flex between justify-between">
+            <h2 className="text-figma-400 font-semibold text-xl mt-5">
+              NFT Gallery
+            </h2>
+            <MintButton />
+          </div>
           <div className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-6">
             {tokens ? (
               tokens.map((nft, i) => <NFTGalleryPreview key={i} data={nft} />)

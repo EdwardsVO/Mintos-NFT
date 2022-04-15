@@ -77,7 +77,7 @@ export default function Navbar() {
                 Mint
               </h2>
             </button>
-            <button type="button" onClick={() => router.push('/app/profile')}>
+            <button type="button" onClick={() => router.push('/app/mynfts')}>
               <h2
                 className={`font-semibold ${
                   currentPage === '/app/profile'
