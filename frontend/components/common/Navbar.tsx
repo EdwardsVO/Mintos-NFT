@@ -131,9 +131,6 @@ export default function Navbar() {
           />
         </div>
         <div>
-          <button onClick={()=>{console.log(tokens)}}>test tokens</button>
-        </div>
-        <div>
           {user == '' ? (
             <button
               type="button"
