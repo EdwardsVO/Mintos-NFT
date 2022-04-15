@@ -11,7 +11,7 @@ export default function Navbar() {
   const router = useRouter();
   const [nearContext] = useNear();
   const [user, setUser] = useUser();
-  const [tokens, setTokens] = React.useState<Token[]>();
+  const [tokens, setTokens] = React.useState<Array<Token>>(null);
 
   const currentPage = router.route;
   const galleryData = [
@@ -50,7 +50,7 @@ export default function Navbar() {
   ];
 
   React.useEffect(() => {
-    initContract();
+    initSearchBar();
   }, []);
 
   const logIn = async () => {
@@ -63,6 +63,12 @@ export default function Navbar() {
     await setUser('');
     await nearContext.walletConnection.signOut();
   };
+
+  const initSearchBar = async () => {
+    const { contract } = await initContract();
+    // @ts-ignore: Unreachable code error
+    setTokens(await contract.obtener_pagina_v2({from_index:0, limit:10}));
+  }
 
   return (
     <div className="bg-white w-full drop-shadow-md">
@@ -121,8 +127,11 @@ export default function Navbar() {
         <div className="self-center">
           <SearchBar
             className="rounded-lg border-2 h-8 py-px px-3"
-            data={galleryData}
+            tokens={tokens}
           />
+        </div>
+        <div>
+          <button onClick={()=>{console.log(tokens)}}>test tokens</button>
         </div>
         <div>
           {user == '' ? (
