@@ -68,13 +68,13 @@ export default function Navbar() {
             </button>
             <button type="button" onClick={() => router.push('/app/mint')}>
               <h2
-                className={`font-semibold  ${
+                className={`font-bold p-3 mx-7 rounded-sm shadow-lg border-2 border-figma-900 hover:bg-figma-900 hover:text-white ${
                   currentPage === '/app/mint'
-                    ? ' underline underline-offset-8 decoration-figma-100 decoration-4'
+                    ? ' bg-figma-900 text-white'
                     : ''
                 }`}
               >
-                Mint
+                Mint My NFT
               </h2>
             </button>
             <button type="button" onClick={() => router.push('/app/profile')}>
@@ -100,7 +100,7 @@ export default function Navbar() {
           {user == '' ? (
             <button
               type="button"
-              className="p-3 bg-figma-100 rounded-lg hover:bg-blue-800 text-white"
+              className="p-3 bg-figma-900 shadow-lg rounded-sm hover:bg-figma-100 text-white"
               onClick={() => {
                 logIn();
               }}
@@ -108,7 +108,7 @@ export default function Navbar() {
               Connect
             </button>
           ) : (
-            <div className="p-3 bg-figma-100 rounded-lg text-white flex justify-between align-middle items-center font-bold">
+            <div className="p-3 bg-figma-900 rounded-sm text-white flex justify-between align-middle items-center font-bold">
               <div className="h-full">{user}</div>
               <button
                 className=" hover:text-gray-400 text-white w-5 h-full ml-3"
