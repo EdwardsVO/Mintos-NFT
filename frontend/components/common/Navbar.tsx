@@ -77,9 +77,11 @@ export default function Navbar() {
                 Mint My NFT
               </h2>
             </button>
-            <button type="button" onClick={() => router.push('/app/profile')}>
+            <button type="button" 
+            // onClick={() => router.push('/app/profile')} FIXME WHILE DEVELOPMENT
+            >
               <h2
-                className={`font-semibold ${
+                className={`font-semibold text-gray-400 ${
                   currentPage === '/app/profile'
                     ? ' underline underline-offset-8 decoration-figma-100 decoration-4'
                     : ''
@@ -100,7 +102,7 @@ export default function Navbar() {
           {user == '' ? (
             <button
               type="button"
-              className="p-3 bg-figma-900 shadow-lg rounded-sm hover:bg-figma-100 text-white"
+              className="p-3 bg-figma-900 shadow-lg font-bold rounded-sm hover:bg-figma-100 text-white"
               onClick={() => {
                 logIn();
               }}
