@@ -13,15 +13,15 @@ export default function Category({ categories }: CategoryProps) {
 
   return (
     <div className="">
-      <button
-        type="button"
+      <div //button
+        // type="button"
         className={` ${
-          active ? 'bg-figma-100 text-figma-300' : 'bg-figma-500 text-figma-400'
+          active ? 'bg-figma-100 text-gray-200' : 'bg-figma-500 text-gray-400'
         } shadow-black drop-shadow-xl rounded-lg p-2 border border-figma-600 px-4`}
-        onClick={handleClick}
+        // onClick={handleClick}
       >
         {categories.title}
-      </button>
+      </div>
     </div>
   );
 }
