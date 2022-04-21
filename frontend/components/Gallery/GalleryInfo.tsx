@@ -16,15 +16,15 @@ export default function GalleryInfo() {
   const getGalleryData = async () => {
     const { contracts } = await initContract();
     // @ts-ignore: Unreachable code error
-    setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 16 }));
+    // setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 16 }));
   };
 
   const initSearchBar = async () => {
     const { contracts } = await initContract();
-    setSearchBarTokens(
-      // @ts-ignore: Unreachable code error
-      await contract.obtener_pagina_v2({ from_index: 0, limit: 10 })
-    );
+    // setSearchBarTokens(
+    //   // @ts-ignore: Unreachable code error
+    //   await contract.obtener_pagina_v2({ from_index: 0, limit: 10 })
+    // );
   };
 
   React.useEffect(() => {

@@ -43,7 +43,7 @@ export default function NFTGalleryPreview({
             </div>
             <div className="mt-2">
               <div className="w-full p-px bg-figma-800 rounded-2xl drop-shadow-lg border border-figma-300">
-                <p>{toNEAR((data?.metadata.price).toString())} N</p>
+                <p>{0} N</p>
               </div>
             </div>
           </div>

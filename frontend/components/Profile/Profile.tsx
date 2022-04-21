@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { contractName } from '../../config';
 import Token from '../../models/Token';
 import { initContract } from '../near/near';
 import NFTGalleryPreview from '../NFT/NFTGalleryPreview';
@@ -8,15 +7,26 @@ import { toNEAR } from '../utils';
 
 export default function Profile() {
   const router = useRouter();
-  const [tokens, setTokens] = React.useState<Array<Token>>(null);
+  const [tokens, setTokens] = React.useState<Array<Token>>([]);
   const [username, setUsername] = React.useState(null);
   const [balance, setBalance] = React.useState('');
   const getGalleryData = async () => {
-    const { contract } = await initContract();
+    const { contracts } = await initContract();
     // @ts-ignore: Unreachable code error
-    setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 12 }));
-    setUsername(await contract.account.accountId);
-    const balance_yocto = (await contract.account.getAccountBalance()).total;
+    setUsername(await contracts.nftContract.account.accountId);
+    setTokens(
+      // @ts-ignore: Unreachable code error
+      await contracts.nftContract.nft_tokens_for_owner({
+        account_id: await contracts.nftContract.account.accountId,
+        from_index: '0',
+        limit: 20,
+      })
+    );
+    console.log(tokens);
+    // @ts-ignore: Unreachable code error
+    const balance_yocto = (
+      await contracts.nftContract.account.getAccountBalance()
+    ).total;
     setBalance(toNEAR(balance_yocto).toString());
   };
 
@@ -82,11 +92,15 @@ export default function Profile() {
             </button>
           </div>
           <div className="md:grid md:grid-cols-2 md:gap-4 text-center">
-            {myNftsData.map((nft, i) => (
-              <div className="px-6 py-3">
-                <NFTGalleryPreview data={nft} key={i} className="h-72 w-72" />
-              </div>
-            ))}
+            {tokens ? (
+              tokens.map((nft, i) => (
+                <div className="px-6 py-3">
+                  <NFTGalleryPreview data={nft} key={i} className="h-72 w-72" />
+                </div>
+              ))
+            ) : (
+              <div>Nothing to show yet...</div>
+            )}
           </div>
         </div>
       </div>
