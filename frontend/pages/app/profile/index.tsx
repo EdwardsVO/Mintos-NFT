@@ -1,12 +1,11 @@
 import React from 'react';
 import Layout from '../../../components/Layout';
+import Profile from '../../../components/Profile/Profile';
 
 export default function index() {
   return (
     <Layout>
-      <div className="min-h-screen min-w-full">
-        <h2>Placeholder</h2>
-      </div>
+      <Profile />
     </Layout>
   );
 }

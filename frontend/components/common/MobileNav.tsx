@@ -7,16 +7,18 @@ import {
   UserIcon,
   LogOutIcon,
   LoginIcon,
-  CogIcon
+  CogIcon,
 } from '../icons';
 
 import useUser from '../../hooks/useUser';
 import { useNear } from '../../hooks/useNear';
+import { LogOutModal } from '../modal/LogOutModal';
 
 export default function MobileNav() {
   const router = useRouter();
   const [user, setUser] = useUser();
-  const [nearContext] = useNear()
+  const [nearContext] = useNear();
+  const [showModal, setShowModal] = React.useState(false);
 
   const logIn = async () => {
     await nearContext.walletConnection.requestSignIn(
@@ -24,10 +26,9 @@ export default function MobileNav() {
     );
   };
 
-  const logOut = async () => {
-    await setUser('');
-    await nearContext.walletConnection.signOut();
-  };
+  function onClick() {
+    setShowModal(true);
+  }
 
   return (
     <div className="bg-figma-500 h-20 w-full fixed bottom-0 px-6 rounded-t-2xl">
@@ -66,13 +67,22 @@ export default function MobileNav() {
         </button>
         <button
           type="button"
+          className={`${user ? 'hidden' : ''}`}
           onClick={() => {
-            router.push('/app');
+            logIn();
           }}
         >
-        <CogIcon className="w-7 h-7 self-center" />
+          <LoginIcon className="w-7 h-7 self-center text-figma-100" />
+        </button>
+        <button
+          type="button"
+          className={`${!user ? 'hidden' : ''}`}
+          onClick={onClick}
+        >
+          <LogOutIcon className="w-7 h-7 self-center text-figma-100" />
         </button>
       </div>
+      <LogOutModal setOpen={setShowModal} isOpen={showModal} />
     </div>
   );
 }

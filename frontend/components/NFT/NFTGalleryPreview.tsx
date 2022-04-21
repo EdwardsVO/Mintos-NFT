@@ -4,10 +4,14 @@ import Token from '../../models/Token';
 import { toNEAR } from '../utils';
 
 interface NFTGalleryPreviewProps {
-  data?: Token;
+  data?: Token | any;
+  className?: string;
 }
 
-export default function NFTGalleryPreview({ data }: NFTGalleryPreviewProps) {
+export default function NFTGalleryPreview({
+  data,
+  className,
+}: NFTGalleryPreviewProps) {
   const router = useRouter();
   return (
     <button
@@ -22,16 +26,12 @@ export default function NFTGalleryPreview({ data }: NFTGalleryPreviewProps) {
               'http://cdn.onlinewebfonts.com/svg/img_24787.png'
             }
             alt="peng"
-            className="rounded-lg h-36 w-36 object-cover lg:h-72 lg:w-72 lg:object-fill lg:mx-auto"
+            className={`rounded-lg object-cover lg:h-72 lg:w-72 md:object-cover lg:object-fill lg:mx-auto ${className}`}
           />
           <div className="lg:mx-2">
             <div className="mt-1">
               <h1 className="font-semibold text-md text-left">
                 {data?.metadata.title}
-              </h1>
-              <h1 className="font-medium text-left text-sm">
-                {/* Contract dont allow collections */}
-                Collection
               </h1>
               <h1 className="font-medium text-left text-sm">
                 {data?.owner_id}
