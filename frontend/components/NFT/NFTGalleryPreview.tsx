@@ -34,7 +34,7 @@ export default function NFTGalleryPreview({ data }: NFTGalleryPreviewProps) {
                 Collection
               </h1>
               <h1 className="font-medium text-left text-sm">
-                {data?.owner_id}
+                {data?.receiver_id}
               </h1>
             </div>
             <div className="mt-2">

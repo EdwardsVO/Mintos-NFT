@@ -21,7 +21,7 @@ export default function Navbar() {
 
   const logIn = async () => {
     await nearContext.walletConnection.requestSignIn(
-      nearContext.nearConfig.contractName
+      nearContext.nearConfig.contractName[0]
     );
   };
 
@@ -31,9 +31,9 @@ export default function Navbar() {
   };
 
   const initSearchBar = async () => {
-    const { contract } = await initContract();
+    //const { contract } = await initContract();
     // @ts-ignore: Unreachable code error
-    setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 10 }));
+   // setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 10 }));
   };
 
   return (
