@@ -14,13 +14,13 @@ export default function GalleryInfo() {
   const [view, setView] = React.useState('grid');
 
   const getGalleryData = async () => {
-    const { contract } = await initContract();
+    const { contracts } = await initContract();
     // @ts-ignore: Unreachable code error
     setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 12 }));
   };
 
   const initSearchBar = async () => {
-    const { contract } = await initContract();
+    const { contracts } = await initContract();
     setSearchBarTokens(
       // @ts-ignore: Unreachable code error
       await contract.obtener_pagina_v2({ from_index: 0, limit: 10 })
@@ -28,8 +28,8 @@ export default function GalleryInfo() {
   };
 
   React.useEffect(() => {
-    getGalleryData();
-    initSearchBar();
+    //getGalleryData();
+    //initSearchBar();
   }, []);
 
   const categories = [

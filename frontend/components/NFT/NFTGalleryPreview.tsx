@@ -34,7 +34,11 @@ export default function NFTGalleryPreview({
                 {data?.metadata.title}
               </h1>
               <h1 className="font-medium text-left text-sm">
-                {data?.owner_id}
+                {/* Contract dont allow collections */}
+                Collection
+              </h1>
+              <h1 className="font-medium text-left text-sm">
+                {data?.receiver_id}
               </h1>
             </div>
             <div className="mt-2">

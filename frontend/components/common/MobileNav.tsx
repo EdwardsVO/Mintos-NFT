@@ -22,7 +22,7 @@ export default function MobileNav() {
 
   const logIn = async () => {
     await nearContext.walletConnection.requestSignIn(
-      nearContext.nearConfig.contractName
+      nearContext.nearConfig.contractName[0]
     );
   };
 

@@ -30,7 +30,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
                 {data?.metadata?.title}
               </h2>
               <h2 className="text-xl font-semibold text-figma-100">
-                {data?.owner_id}
+                {data?.receiver_id}
               </h2>
             </div>
             <div className="mt-2">

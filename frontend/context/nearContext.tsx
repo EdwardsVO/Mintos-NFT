@@ -2,10 +2,11 @@ import React from "react";
 import { useRouter } from "next/router";
 import { Contract, WalletConnection } from "near-api-js";
 import Network from '../models/Network';
+import ContractsContainer from "../models/ContractsContainer";
 
 
 export interface NearContext {
-  contract?: Contract;
+  contracts?: ContractsContainer;
   walletConnection?: WalletConnection;
   nearConfig?: Network;
 }
