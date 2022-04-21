@@ -1,7 +1,7 @@
 export default interface Network {
     networkId?: string;
     nodeUrl?: string;
-    contractName?: string;
+    contractName?: string[];
     walletUrl?: string;
     helperUrl?: string;
     explorerUrl?: string;
