@@ -16,9 +16,16 @@ export default function MintForm() {
   const [nearContext] = useNear();
   const [user] = useUser();
   const [uploaded, setUploaded] = React.useState(false);
+  const [tokensSupply, setTokensSupply] = React.useState<string>('');
 
   // @ts-ignore: Unreachable code error
   const client = create('https://ipfs.infura.io:5001/api/v0');
+
+  const getTotalSupply = async () => {
+    // @ts-ignore: Unreachable code error
+    var tokenId = await nearContext.contracts.nftContract.nft_total_supply();
+    setTokensSupply(tokenId)
+  }
 
   const retrieveFile = async (e) => {
     e.preventDefault();
@@ -38,26 +45,29 @@ export default function MintForm() {
   };
 
   const token: Token = {
-    owner_id: user,
+    receiver_id: user,
+    token_id: tokensSupply,
     metadata: {
       title: name,
-      price: toFixed(price * ONE_NEAR_IN_YOCTO).toString(),
       description: description,
       media: urlArr,
-      creator: user,
       media_hash: 'imagenenimagenimagenasdfasdfaiasdfam',
-      on_sale: true,
     },
   };
 
   const handleSubmit = async () => {
+    alert(tokensSupply)
     // @ts-ignore: Unreachable code error
-    await nearContext.contract.minar(
-      { token_owner_id: token.owner_id, token_metadata: token.metadata },
+    await nearContext.contracts.nftContract.nft_mint(
+      { token_id: token.token_id, metadata: token.metadata, receiver_id: token.receiver_id },
       '300000000000000',
       '465000000000000000000000'
     );
   };
+
+  React.useEffect(() => {
+    getTotalSupply();
+  })
 
   return (
     <div className="lg:flex lg:justify-center lg:items-center lg:align-middle lg:p-9">
@@ -139,6 +149,9 @@ export default function MintForm() {
           }}
         >
           Mint NFT
+        </button>
+        <button onClick={()=>{console.log(tokensSupply)}}>
+          TEST ID
         </button>
       </div>
       <div className="mt-7"></div>
