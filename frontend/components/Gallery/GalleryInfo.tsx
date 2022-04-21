@@ -2,29 +2,29 @@ import React from 'react';
 import Category from '../Category/Category';
 import NFTGalleryPreview from '../NFT/NFTGalleryPreview';
 import SearchBarDesktop from '../Searchbar/SearchBarDesktop';
-import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
 import { initContract } from '../near/near';
-import SearchBar from '../Searchbar/SearchBar';
+import { ViewGridIcon, ViewListIcon } from '../icons';
 
 export default function GalleryInfo() {
   const [tokens, setTokens] = React.useState<Array<Token>>(null);
   const [searchBarTokens, setSearchBarTokens] =
     React.useState<Array<Token>>(null);
   const [page, setPage] = React.useState<number>(0);
+  const [view, setView] = React.useState('grid');
 
   const getGalleryData = async () => {
     const { contracts } = await initContract();
     // @ts-ignore: Unreachable code error
-    setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 12 }));
+    // setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 16 }));
   };
 
   const initSearchBar = async () => {
     const { contracts } = await initContract();
-    setSearchBarTokens(
-      // @ts-ignore: Unreachable code error
-      await contract.obtener_pagina_v2({ from_index: 0, limit: 10 })
-    );
+    // setSearchBarTokens(
+    //   // @ts-ignore: Unreachable code error
+    //   await contract.obtener_pagina_v2({ from_index: 0, limit: 10 })
+    // );
   };
 
   React.useEffect(() => {
@@ -68,7 +68,7 @@ export default function GalleryInfo() {
           <div className="mt-6 lg:hidden w-full">
             <SearchBarDesktop
               className="rounded-lg border-2 h-8 py-px px-3 w-full"
-              tokens={tokens}
+              tokens={searchBarTokens}
             />
           </div>
           <div className="mt-5 flex space-x-4">
@@ -76,12 +76,50 @@ export default function GalleryInfo() {
               <Category categories={category} key={i} />
             ))}
           </div>
-          <h2 className="text-figma-400 font-semibold text-xl mt-5">
-            NFT Gallery
-          </h2>
-          <div className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-6">
+          <div className="flex justify-between mt-5">
+            <div>
+              <h2 className="text-figma-400 font-semibold text-xl">
+                NFT Gallery
+              </h2>
+            </div>
+            <div className="self-center flex space-x-2 md:hidden">
+              <button
+                type="button"
+                onClick={() => setView('grid')}
+                className={`${view === 'grid' ? 'text-figma-100' : ''}`}
+              >
+                <ViewGridIcon className="w-7 h-7" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setView('list')}
+                className={`${view === 'grid' ? '' : 'text-figma-100'}`}
+              >
+                <ViewListIcon className="w-7 h-7" />
+              </button>
+            </div>
+          </div>
+          <div
+            className={`mt-3 ${
+              view === 'grid'
+                ? 'grid grid-cols-2 gap-3 md:grid-cols-3 lg:flex lg:flex-wrap lg:justify-between'
+                : 'text-center md:grid md:grid-cols-3 md:gap-3 lg:grid lg:grid-cols-5 lg:gap-6'
+            } text-center`}
+          >
             {tokens ? (
-              tokens.map((nft, i) => <NFTGalleryPreview key={i} data={nft} />)
+              tokens.map((nft, i) => (
+                <div className={`${view === 'grid' ? '' : 'py-4 md:py-0'}`}>
+                  <NFTGalleryPreview
+                    key={i}
+                    data={nft}
+                    className={`mt-3 ${
+                      view === 'grid'
+                        ? 'w-36 h-36 lg:w-72 lg:h-72 md:w-52 md:h-52 '
+                        : 'w-72 h-72 md:w-52 md:h-52 lg:h-72 lg:w-72 '
+                    }`}
+                  />
+                </div>
+              ))
             ) : (
               <div>Nothing to show yet...</div>
             )}
