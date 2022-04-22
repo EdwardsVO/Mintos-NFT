@@ -3,6 +3,7 @@ import Input from '../inputs/Input';
 import { create } from 'ipfs-http-client';
 import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
+import ExtraMetadata from '../../models/ExtraMetadata';
 import useUser from '../../hooks/useUser';
 import { ONE_NEAR_IN_YOCTO, toFixed } from '../utils';
 
@@ -44,6 +45,12 @@ export default function MintForm() {
     }
   };
 
+  const extra: ExtraMetadata = {
+    collection: collection
+  }
+
+  
+
   const token: Token = {
     receiver_id: user,
     token_id: tokensSupply,
@@ -52,11 +59,11 @@ export default function MintForm() {
       description: description,
       media: urlArr,
       media_hash: 'imagenenimagenimagenasdfasdfaiasdfam',
+      extra: JSON.stringify(extra)
     },
   };
 
   const handleSubmit = async () => {
-    alert(tokensSupply)
     // @ts-ignore: Unreachable code error
     await nearContext.contracts.nftContract.nft_mint(
       { token_id: token.token_id, metadata: token.metadata, receiver_id: token.receiver_id },

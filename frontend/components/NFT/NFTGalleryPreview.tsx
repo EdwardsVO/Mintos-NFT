@@ -4,7 +4,7 @@ import Token from '../../models/Token';
 import { toNEAR } from '../utils';
 
 interface NFTGalleryPreviewProps {
-  data?: Token | any;
+  data?: Token;
   className?: string;
 }
 
@@ -34,8 +34,11 @@ export default function NFTGalleryPreview({
                 {data?.metadata.title}
               </h1>
               <h1 className="font-medium text-left text-sm">
-                {/* Contract dont allow collections */}
-                Collection
+                {
+                  // @ts-ignore: Unreachable code error
+                  JSON.parse(data.metadata.extra)?.collection
+                }
+                
               </h1>
               <h1 className="font-medium text-left text-sm">
                 {data?.receiver_id}

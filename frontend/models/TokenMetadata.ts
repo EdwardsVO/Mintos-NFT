@@ -1,3 +1,5 @@
+import ExtraMetadata from "./ExtraMetadata";
+
 export default interface TokenMetada {
    title?: string, // ex. "Arch Nemesis: Mail Carrier" or "Parcel #5055"
    description?: string, // free-form description
