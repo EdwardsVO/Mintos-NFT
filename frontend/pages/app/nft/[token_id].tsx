@@ -20,7 +20,7 @@ export default function NFTProfilePage() {
     try {
       if (token_id) {
         // @ts-ignore: Unreachable code error
-        const token = await nearContext.contract.nft_token({token_id: token_id})
+        const token = await nearContext.contracts.nftContract.nft_token({token_id: token_id})
         setNft(token);
       }
     } catch (e) {

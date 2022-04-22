@@ -13,7 +13,10 @@ export default function NFTProfile({ data }: NFTProfileProps) {
         <img src="/logo.png" alt="logo" className="w-36" />
       </div>
       <div className="mt-6 mx-3 lg:px-4 lg:w-full lg:text-center">
-        <h2 className="text-figma-100 font-bold text-xl">Collection</h2>
+
+        <h2 className="text-figma-100 font-bold text-xl">{
+          // @ts-ignore: Unreachable code error
+          data?.metadata?.extra?.collection}</h2>
       </div>
       <div className="lg:w-full">
         <div className=" bg-figma-300 rounded-3xl drop-shadow-lg shadow-black p-5 mx-3 mt-2 lg:max-w-xl lg:mx-auto">
