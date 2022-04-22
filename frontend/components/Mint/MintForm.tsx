@@ -18,6 +18,7 @@ export default function MintForm() {
   const [user] = useUser();
   const [uploaded, setUploaded] = React.useState(false);
   const [tokensSupply, setTokensSupply] = React.useState<string>('');
+  const [category, setCategory] = React.useState<string>('');
 
   // @ts-ignore: Unreachable code error
   const client = create('https://ipfs.infura.io:5001/api/v0');
@@ -46,7 +47,8 @@ export default function MintForm() {
   };
 
   const extra: ExtraMetadata = {
-    collection: collection
+    collection: collection,
+    category: category
   }
 
   
@@ -148,6 +150,7 @@ export default function MintForm() {
             setDescription(e.target.value);
           }}
         />
+        
         <button
           type="button"
           className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
