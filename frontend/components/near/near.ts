@@ -62,7 +62,7 @@ export const initContract = async () => {
     nearConfig.contractName[1], //1 for the marketplace contract
     {
       // View methods are read-only – they don't modify the state, but usually return some value
-      viewMethods: [],
+      viewMethods: ['get_supply_sales', 'get_supply_by_nft_contract_id', 'get_sales_by_nft_contract_id'],
       // Change methods can modify the state, but you don't receive the returned value when called
       changeMethods: [],
       // Sender is the account ID to initialize transactions.
