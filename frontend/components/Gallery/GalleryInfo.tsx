@@ -5,18 +5,33 @@ import SearchBarDesktop from '../Searchbar/SearchBarDesktop';
 import Token from '../../models/Token';
 import { initContract } from '../near/near';
 import { ViewGridIcon, ViewListIcon } from '../icons';
+import Sale from '../../models/Sale';
 
 export default function GalleryInfo() {
   const [tokens, setTokens] = React.useState<Array<Token>>(null);
+  const [loaded, setLoaded] = React.useState<boolean>(false)
+  const [sales, setSales] = React.useState<Array<Sale>>(null);
   const [searchBarTokens, setSearchBarTokens] =
     React.useState<Array<Token>>(null);
   const [page, setPage] = React.useState<number>(0);
   const [view, setView] = React.useState('grid');
+  
 
   const getGalleryData = async () => {
     const { contracts } = await initContract();
     // @ts-ignore: Unreachable code error
+    var currentSales:Array<Sale> = await contracts.marketContract.get_sales_by_nft_contract_id({nft_contract_id: contracts.nftContract.contractId, from_index: "0", limit:10})
+    var currentTokens: Array<Token> = [];
+    currentSales.map(async token => {
+      // @ts-ignore: Unreachable code error
+      let tokenIterable = await contracts.nftContract.nft_token({token_id: token.token_id});
+      currentTokens.push(tokenIterable);
+    })
+    setTokens(currentTokens);
+    setLoaded(true);
+    //setSales(currentSales);
     // setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 16 }));
+
   };
 
   const initSearchBar = async () => {
@@ -28,7 +43,7 @@ export default function GalleryInfo() {
   };
 
   React.useEffect(() => {
-    //getGalleryData();
+    getGalleryData();
     //initSearchBar();
   }, []);
 
@@ -106,7 +121,10 @@ export default function GalleryInfo() {
                 : 'text-center md:grid md:grid-cols-3 md:gap-3 lg:grid lg:grid-cols-5 lg:gap-6'
             } text-center`}
           >
-            {tokens ? (
+            <button onClick={() => {console.log(tokens)}}>
+              Ver tokens
+            </button>
+            {tokens && loaded ? (
               tokens.map((nft, i) => (
                 <div className={`${view === 'grid' ? '' : 'py-4 md:py-0'}`}>
                   <NFTGalleryPreview
@@ -121,7 +139,11 @@ export default function GalleryInfo() {
                 </div>
               ))
             ) : (
-              <div>Nothing to show yet...</div>
+              <div>Nothing to show yet...
+                <button onClick={()=> {console.log(sales)}}>
+                  VER SALES
+                </button>
+              </div>
             )}
           </div>
 
