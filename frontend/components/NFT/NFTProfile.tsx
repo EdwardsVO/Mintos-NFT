@@ -4,6 +4,7 @@ import { toNEAR } from '../utils';
 
 interface NFTProfileProps {
   data: Token;
+  //sale: Sale <- update implementation 
 }
 
 export default function NFTProfile({ data }: NFTProfileProps) {
@@ -38,7 +39,8 @@ export default function NFTProfile({ data }: NFTProfileProps) {
             </div>
             <div className="mt-2">
               <h2 className="text-xl font-bold text-figma-400 ">
-                {toNEAR(data?.metadata?.price)} N
+                {/* {toNEAR(data?.metadata?.price)}  */}
+                NEARs
               </h2>
             </div>
           </div>
