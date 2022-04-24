@@ -10,6 +10,7 @@ export default function Profile() {
   const [tokens, setTokens] = React.useState<Array<Token>>([]);
   const [username, setUsername] = React.useState(null);
   const [balance, setBalance] = React.useState('');
+  const [storage, setStorage] = React.useState('');
   const getGalleryData = async () => {
     const { contracts } = await initContract();
     // @ts-ignore: Unreachable code error
@@ -22,50 +23,34 @@ export default function Profile() {
         limit: 20,
       })
     );
-    console.log(tokens);
     // @ts-ignore: Unreachable code error
     const balance_yocto = (
       await contracts.nftContract.account.getAccountBalance()
     ).total;
     setBalance(toNEAR(balance_yocto).toString());
+
+    const available_storage =
+      // @ts-ignore: Unreachable code error
+      await contracts.marketContract.storage_balance_of({
+        account_id: contracts.nftContract.account.accountId,
+      });
+
+    setStorage(await available_storage);
+  };
+
+  const addStorageDeposit = async () => {
+    const { contracts } = await initContract();
+    // @ts-ignore: Unreachable code error
+    let deposit = await contracts.marketContract.storage_deposit({
+      account_id: username,
+    });
+    console.log(deposit);
   };
 
   React.useEffect(() => {
     getGalleryData();
   }, []);
 
-  const myNftsData = [
-    {
-      token_id: 1001,
-      owner_id: 'mzterdox.testnet',
-      metadata: {
-        title: 'title',
-        description: 'dkd',
-        media: '/12.png',
-        price: 1000000000000000000000000,
-      },
-    },
-    {
-      token_id: 1002,
-      owner_id: 'mzterdox.testnet',
-      metadata: {
-        title: 'title',
-        description: 'dkd',
-        media: '/123123123.png',
-        price: 1000000000000000000000000,
-      },
-    },
-    {
-      token_id: 1003,
-      owner_id: 'mzterdox.testnet',
-      metadata: {
-        title: 'title',
-        description: 'dkd',
-        media: '/Lion.jpg',
-        price: 1000000000000000000000000,
-      },
-    },
-  ];
   return (
     <div>
       <div className="min-h-screen min-w-full mb-20">
@@ -80,6 +65,17 @@ export default function Profile() {
             <h2>User: {username}</h2>
             <h2>Email: email@mail.com</h2>
             <h2>Available Balance: {balance} NEAR</h2>
+            <h2>Available Storage: {storage} NEAR</h2>
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={() => addStorageDeposit()}
+                className="underline text-center"
+              >
+                {' '}
+                add more storage
+              </button>
+            </div>
           </div>
           <div className="mt-6 px-4 flex justify-between mb-2">
             <h2 className="font-semibold text-2xl">My NFTs</h2>
