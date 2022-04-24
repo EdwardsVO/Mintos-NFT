@@ -65,15 +65,15 @@ export default function Profile() {
             <h2>User: {username}</h2>
             <h2>Email: email@mail.com</h2>
             <h2>Available Balance: {balance} NEAR</h2>
-            <div className="flex text-center">
-              <h2>Available Storage: {storage} NEAR</h2>
+            <h2>Available Storage: {storage} NEAR</h2>
+            <div className="text-center">
               <button
                 type="button"
                 onClick={() => addStorageDeposit()}
-                className="underline"
+                className="underline text-center"
               >
                 {' '}
-                add more
+                add more storage
               </button>
             </div>
           </div>
