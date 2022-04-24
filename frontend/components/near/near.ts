@@ -1,11 +1,9 @@
-import { keyStores, connect, WalletConnection, utils } from "near-api-js";
+import { keyStores, connect, WalletConnection, utils } from 'near-api-js';
 import { getConfig } from '../../config';
 import * as nearAPI from 'near-api-js';
 
 // Initializing contract
 export const initContract = async () => {
-
-
   // create a keyStore for signing transactions using the user's key
   // which is located in the browser local storage after user logs in
   const nearConfig = getConfig(process.env.NEAR_ENV || 'testnet');
@@ -13,10 +11,10 @@ export const initContract = async () => {
 
   // Initializing connection to the NEAR testnet
   const near = await nearAPI.connect({
-    keyStore, ...nearConfig,
-    headers: {}
+    keyStore,
+    ...nearConfig,
+    headers: {},
   });
-
 
   // Initialize wallet connection
   const walletConnection = new nearAPI.WalletConnection(near, null);
@@ -42,7 +40,13 @@ export const initContract = async () => {
     nearConfig.contractName[0], //0 for the NFT contract
     {
       // View methods are read-only – they don't modify the state, but usually return some value
-      viewMethods: ['nft_tokens', 'nft_supply_for_owner', 'nft_tokens_for_owner', 'nft_token', 'nft_total_supply'],
+      viewMethods: [
+        'nft_tokens',
+        'nft_supply_for_owner',
+        'nft_tokens_for_owner',
+        'nft_token',
+        'nft_total_supply',
+      ],
       // Change methods can modify the state, but you don't receive the returned value when called
       changeMethods: ['nft_mint'],
       // Sender is the account ID to initialize transactions.
@@ -62,9 +66,14 @@ export const initContract = async () => {
     nearConfig.contractName[1], //1 for the marketplace contract
     {
       // View methods are read-only – they don't modify the state, but usually return some value
-      viewMethods: ['get_supply_sales', 'get_supply_by_nft_contract_id', 'get_sales_by_nft_contract_id'],
+      viewMethods: [
+        'get_supply_sales',
+        'get_supply_by_nft_contract_id',
+        'get_sales_by_nft_contract_id',
+        'storage_balance_of',
+      ],
       // Change methods can modify the state, but you don't receive the returned value when called
-      changeMethods: [],
+      changeMethods: ['storage_deposit'],
       // Sender is the account ID to initialize transactions.
       // getAccountId() will return empty string if user is still unauthorized
       // @ts-ignore: Unreachable code error
@@ -72,9 +81,9 @@ export const initContract = async () => {
     }
   );
 
-  return (
-    {
-      contracts:{nftContract, marketContract}, nearConfig, walletConnection
-    }
-  );
-}
+  return {
+    contracts: { nftContract, marketContract },
+    nearConfig,
+    walletConnection,
+  };
+};

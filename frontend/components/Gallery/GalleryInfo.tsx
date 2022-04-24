@@ -8,38 +8,36 @@ import { ViewGridIcon, ViewListIcon } from '../icons';
 import Sale from '../../models/Sale';
 
 export default function GalleryInfo() {
-  const [tokens, setTokens] = React.useState<Array<Token>>(null);
-  const [loaded, setLoaded] = React.useState<boolean>(false)
-  const [sales, setSales] = React.useState<Array<Sale>>(null);
-  const [searchBarTokens, setSearchBarTokens] =
-    React.useState<Array<Token>>(null);
+  const [tokens, setTokens] = React.useState<Array<Token>>([]);
+  const [loaded, setLoaded] = React.useState<boolean>(false);
+  const [sales, setSales] = React.useState<Array<Sale>>([]);
+  const [searchBarTokens, setSearchBarTokens] = React.useState<Array<Token>>(
+    []
+  );
   const [page, setPage] = React.useState<number>(0);
   const [view, setView] = React.useState('grid');
-  
 
   const getGalleryData = async () => {
     const { contracts } = await initContract();
-    // @ts-ignore: Unreachable code error
-    var currentSales:Array<Sale> = await contracts.marketContract.get_sales_by_nft_contract_id({nft_contract_id: contracts.nftContract.contractId, from_index: "0", limit:10})
-    var currentTokens: Array<Token> = [];
-    currentSales.map(async token => {
+    var currentSales: Array<Sale> = await contracts.marketContract
       // @ts-ignore: Unreachable code error
-      let tokenIterable = await contracts.nftContract.nft_token({token_id: token.token_id});
+      .get_sales_by_nft_contract_id({
+        nft_contract_id: contracts.nftContract.contractId,
+        from_index: '0',
+        limit: 10,
+      });
+    var currentTokens: Array<Token> = [];
+    currentSales.map(async (token) => {
+      // @ts-ignore: Unreachable code error
+      let tokenIterable = await contracts.nftContract.nft_token({
+        token_id: token.token_id,
+      });
       currentTokens.push(tokenIterable);
-    })
+    });
     setTokens(currentTokens);
+    setSales(currentSales);
     setLoaded(true);
-    //setSales(currentSales);
     // setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 16 }));
-
-  };
-
-  const initSearchBar = async () => {
-    const { contracts } = await initContract();
-    // setSearchBarTokens(
-    //   // @ts-ignore: Unreachable code error
-    //   await contract.obtener_pagina_v2({ from_index: 0, limit: 10 })
-    // );
   };
 
   React.useEffect(() => {
@@ -121,14 +119,11 @@ export default function GalleryInfo() {
                 : 'text-center md:grid md:grid-cols-3 md:gap-3 lg:grid lg:grid-cols-5 lg:gap-6'
             } text-center`}
           >
-            <button onClick={() => {console.log(tokens)}}>
-              Ver tokens
-            </button>
-            {tokens && loaded ? (
-              tokens.map((nft, i) => (
+            {tokens ? (
+              tokens.map((nft) => (
                 <div className={`${view === 'grid' ? '' : 'py-4 md:py-0'}`}>
                   <NFTGalleryPreview
-                    key={i}
+                    key={nft.token_id}
                     data={nft}
                     className={`mt-3 ${
                       view === 'grid'
@@ -139,11 +134,7 @@ export default function GalleryInfo() {
                 </div>
               ))
             ) : (
-              <div>Nothing to show yet...
-                <button onClick={()=> {console.log(sales)}}>
-                  VER SALES
-                </button>
-              </div>
+              <div>Nothing to show yet...</div>
             )}
           </div>
 
