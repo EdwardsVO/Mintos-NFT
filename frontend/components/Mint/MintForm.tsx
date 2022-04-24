@@ -26,8 +26,8 @@ export default function MintForm() {
   const getTotalSupply = async () => {
     // @ts-ignore: Unreachable code error
     var tokenId = await nearContext.contracts.nftContract.nft_total_supply();
-    setTokensSupply(tokenId)
-  }
+    setTokensSupply(tokenId);
+  };
 
   const retrieveFile = async (e) => {
     e.preventDefault();
@@ -48,27 +48,29 @@ export default function MintForm() {
 
   const extra: ExtraMetadata = {
     collection: collection,
-    category: category
-  }
-
-  
+    category: category,
+  };
 
   const token: Token = {
-    receiver_id: user,
+    owner_id: user,
     token_id: tokensSupply,
     metadata: {
       title: name,
       description: description,
       media: urlArr,
       media_hash: 'imagenenimagenimagenasdfasdfaiasdfam',
-      extra: JSON.stringify(extra)
+      extra: JSON.stringify(extra),
     },
   };
 
   const handleSubmit = async () => {
     // @ts-ignore: Unreachable code error
     await nearContext.contracts.nftContract.nft_mint(
-      { token_id: token.token_id, metadata: token.metadata, receiver_id: token.receiver_id },
+      {
+        token_id: token.token_id,
+        metadata: token.metadata,
+        receiver_id: token.owner_id,
+      },
       '300000000000000',
       '465000000000000000000000'
     );
@@ -76,7 +78,7 @@ export default function MintForm() {
 
   React.useEffect(() => {
     getTotalSupply();
-  })
+  });
 
   return (
     <div className="lg:flex lg:justify-center lg:items-center lg:align-middle lg:p-9">
@@ -150,7 +152,7 @@ export default function MintForm() {
             setDescription(e.target.value);
           }}
         />
-        
+
         <button
           type="button"
           className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
@@ -160,7 +162,11 @@ export default function MintForm() {
         >
           Mint NFT
         </button>
-        <button onClick={()=>{console.log(tokensSupply)}}>
+        <button
+          onClick={() => {
+            console.log(tokensSupply);
+          }}
+        >
           TEST ID
         </button>
       </div>
