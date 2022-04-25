@@ -11,10 +11,10 @@ interface NFTProfileProps {
 }
 
 export default function NFTProfile({ data, sale }: NFTProfileProps) {
-  const [username, setUsername] = React.useState('');
-  const [putSale, setPutSale] = React.useState(false);
-  const [newPrice, setNewPrice] = React.useState('');
-  const [loaded, setLoaded] = React.useState(false);
+  const [username, setUsername] = React.useState<string>('');
+  const [putSale, setPutSale] = React.useState<boolean>(false);
+  const [newPrice, setNewPrice] = React.useState<number>(0);
+  const [loaded, setLoaded] = React.useState<boolean>(false);
   const loadUserData = async () => {
     const { contracts } = await initContract();
     setUsername(await contracts.nftContract.account.accountId);
@@ -22,20 +22,21 @@ export default function NFTProfile({ data, sale }: NFTProfileProps) {
   };
 
   const setPrice = (price) => {
-    setNewPrice(String(price));
+    setNewPrice((price));
   };
 
   const confirmSale = async () => {
     const { contracts } = await initContract();
     const condition = { sale_conditions: newPrice };
-    // @ts-ignore: Unreachable code error
-    const approve = await contracts.nftContract.nft_approve(
+    //@ts-ignore: Unreachable code error
+    await contracts.nftContract.nft_approve(
       {
         token_id: data?.token_id,
         account_id: marketContractName,
         msg: JSON.stringify(condition),
       },
-      '465000000000000000000000'
+      "100000000000000", 
+      "440000000000000000000"
     );
   };
 
