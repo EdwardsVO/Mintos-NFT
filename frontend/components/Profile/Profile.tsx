@@ -102,7 +102,7 @@ export default function Profile() {
           <div className="md:grid md:grid-cols-2 md:gap-4 text-center">
             {tokens ? (
               tokens.map((nft, i) => (
-                <div className="px-6 py-3">
+                <div key={i} className="px-6 py-3">
                   <NFTGalleryPreview data={nft} key={i} className="h-72 w-72" />
                 </div>
               ))
