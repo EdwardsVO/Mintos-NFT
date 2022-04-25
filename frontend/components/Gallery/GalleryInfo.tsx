@@ -17,7 +17,7 @@ export default function GalleryInfo() {
   const [view, setView] = React.useState('grid');
   
 
-  const getGalleryData = async () => {
+  const getSalesData = async () => {
     const { contracts } = await initContract();
     // @ts-ignore: Unreachable code error
     var currentSales:Array<Sale> = await contracts.marketContract.get_sales_by_nft_contract_id({nft_contract_id: contracts.nftContract.contractId, from_index: "0", limit:10})
@@ -34,6 +34,10 @@ export default function GalleryInfo() {
 
   };
 
+  const getTokens = async () => {
+    
+  }
+
   const initSearchBar = async () => {
     const { contracts } = await initContract();
     // setSearchBarTokens(
@@ -43,7 +47,7 @@ export default function GalleryInfo() {
   };
 
   React.useEffect(() => {
-    getGalleryData();
+    getSalesData();
     //initSearchBar();
   }, []);
 

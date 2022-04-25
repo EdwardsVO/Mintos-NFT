@@ -1,15 +1,18 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import Sale from '../../models/Sale';
 import Token from '../../models/Token';
 import { toNEAR } from '../utils';
 
 interface NFTGalleryPreviewProps {
   data?: Token;
+  saleData?: Sale;
   className?: string;
 }
 
 export default function NFTGalleryPreview({
   data,
+  saleData,
   className,
 }: NFTGalleryPreviewProps) {
   const router = useRouter();
@@ -38,10 +41,9 @@ export default function NFTGalleryPreview({
                   // @ts-ignore: Unreachable code error
                   JSON.parse(data.metadata.extra)?.collection
                 }
-                
               </h1>
               <h1 className="font-medium text-left text-sm">
-                {data?.receiver_id}
+                {data?.owner_id}
               </h1>
             </div>
             <div className="mt-2">
