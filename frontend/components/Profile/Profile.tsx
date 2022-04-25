@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
 import { initContract } from '../near/near';
 import NFTGalleryPreview from '../NFT/NFTGalleryPreview';
-import { toNEAR } from '../utils';
+import { ONE_NEAR_IN_YOCTO, toNEAR, toFixed } from '../utils';
 
 export default function Profile() {
   const router = useRouter();
@@ -11,6 +12,15 @@ export default function Profile() {
   const [username, setUsername] = React.useState(null);
   const [balance, setBalance] = React.useState('');
   const [storage, setStorage] = React.useState('');
+  const [amountForStorage, setAmountForStorage] = React.useState<string>('');
+  const [nearContext] = useNear();
+  
+  const setStorageInNEAR = (e: any) => {
+    const amount = Number(e) * ONE_NEAR_IN_YOCTO;
+    const completeAmount = toFixed(amount).toString();
+    setAmountForStorage(completeAmount);
+  }
+
   const getGalleryData = async () => {
     const { contracts } = await initContract();
     // @ts-ignore: Unreachable code error
@@ -35,16 +45,18 @@ export default function Profile() {
         account_id: contracts.nftContract.account.accountId,
       });
 
-    setStorage(await available_storage);
+    setStorage(await toNEAR(available_storage));
   };
 
   const addStorageDeposit = async () => {
-    const { contracts } = await initContract();
+    
     // @ts-ignore: Unreachable code error
-    let deposit = await contracts.marketContract.storage_deposit({
+    nearContext.contracts.marketContract.storage_deposit({
       account_id: username,
-    });
-    console.log(deposit);
+    },
+    100000000000000,
+    amountForStorage
+    );
   };
 
   React.useEffect(() => {
@@ -67,12 +79,12 @@ export default function Profile() {
             <h2>Available Balance: {balance} NEAR</h2>
             <h2>Available Storage: {storage} NEAR</h2>
             <div className="text-center">
+              <input type="text" placeholder='AGREGAR MONTO' onChange={(e) => {setStorageInNEAR(e.target.value)}}/>
               <button
                 type="button"
                 onClick={() => addStorageDeposit()}
                 className="underline text-center"
               >
-                {' '}
                 add more storage
               </button>
             </div>
