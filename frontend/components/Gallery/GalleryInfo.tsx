@@ -8,7 +8,7 @@ import { ViewGridIcon, ViewListIcon } from '../icons';
 import Sale from '../../models/Sale';
 
 export default function GalleryInfo() {
-  const [tokens, setTokens] = React.useState<Array<Token>>(null);
+  const [tokens, setTokens] = React.useState<Array<Token>>([]);
   const [loaded, setLoaded] = React.useState<boolean>(false)
   const [sales, setSales] = React.useState<Array<Sale>>(null);
   const [searchBarTokens, setSearchBarTokens] =
