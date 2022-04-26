@@ -1,21 +1,18 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import Sale from '../../models/Sale';
-import Token from '../../models/Token';
-import { toNEAR } from '../utils';
+import WholeToken from '../../models/WholeToken';
 
 interface NFTGalleryPreviewProps {
-  data?: Token;
-  saleData?: Sale;
+  data?: WholeToken;
   className?: string;
 }
 
 export default function NFTGalleryPreview({
   data,
-  saleData,
   className,
 }: NFTGalleryPreviewProps) {
   const router = useRouter();
+
   return (
     <button
       type="button"
@@ -48,7 +45,7 @@ export default function NFTGalleryPreview({
             </div>
             <div className="mt-2">
               <div className="w-full p-px bg-figma-800 rounded-2xl drop-shadow-lg border border-figma-300">
-                <p>{0} N</p>
+                <p>{data?.sale_conditions || '0'} N</p>
               </div>
             </div>
           </div>

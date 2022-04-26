@@ -3,46 +3,91 @@ import Sale from '../../models/Sale';
 import Token from '../../models/Token';
 import { initContract } from '../near/near';
 import { toFixed, toNEAR, toYocto } from '../utils';
-import { marketContractName } from '../../config';
+import { marketContractName, nftContractName } from '../../config';
+import { useNear } from '../../hooks/useNear';
 
 interface NFTProfileProps {
   data: Token;
-  sale?: Sale;
 }
 
-export default function NFTProfile({ data, sale }: NFTProfileProps) {
+export default function NFTProfile({ data }: NFTProfileProps) {
   const [username, setUsername] = React.useState<string>('');
   const [putSale, setPutSale] = React.useState<boolean>(false);
   const [newPrice, setNewPrice] = React.useState<number>(0);
   const [loaded, setLoaded] = React.useState<boolean>(false);
+  const [salePrice, setSalePrice] = React.useState('');
+  const [nearContext, setNearContext] = useNear();
+  const [saleData, setSaleData] = React.useState<Sale>();
+  const [updateSale, setUpdateSale] = React.useState(false);
+
   const loadUserData = async () => {
-    const { contracts } = await initContract();
-    setUsername(await contracts.nftContract.account.accountId);
+    const NEAR = await initContract();
+    setNearContext(NEAR);
+    setUsername(await nearContext.contracts.nftContract.account.accountId);
     setLoaded(true);
   };
 
   const setPrice = (price) => {
-    setNewPrice((price));
+    setNewPrice(toFixed(price));
   };
 
   const confirmSale = async () => {
-    const { contracts } = await initContract();
     const condition = { sale_conditions: newPrice };
     //@ts-ignore: Unreachable code error
-    await contracts.nftContract.nft_approve(
+    await nearContext.contracts.nftContract.nft_approve(
       {
         token_id: data?.token_id,
         account_id: marketContractName,
         msg: JSON.stringify(condition),
       },
-      "100000000000000", 
-      "440000000000000000000"
+      '100000000000000',
+      '440000000000000000000'
     );
   };
 
+  const uniqueId = nftContractName + '.' + data?.token_id;
+
+  const getSaleData = async () => {
+    const { contracts } = await initContract();
+    const sale =
+      // @ts-ignore: Unreachable code error
+      await contracts.marketContract.get_sale({
+        nft_contract_token: uniqueId,
+      });
+    setSaleData(await sale);
+  };
+
+  const setCurrentPrice = () => {
+    setSalePrice(saleData?.sale_conditions);
+  };
+
+  const changeUpdateStatus = () => {
+    setUpdateSale(!updateSale);
+  };
+
+  const removeFromSale = async () => {
+    try {
+      // @ts-ignore: Unreachable code error
+      await nearContext.contracts.nftContract.nft_revoke(
+        {
+          token_id: data?.token_id,
+          account_id: marketContractName,
+        },
+        '100000000000000',
+        '1'
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   React.useEffect(() => {
+    if (saleData) {
+      setCurrentPrice();
+    }
     loadUserData();
-  }, []);
+    getSaleData();
+  }, [saleData]);
   return (
     <div>
       <div className="lg:hidden">
@@ -76,25 +121,47 @@ export default function NFTProfile({ data, sale }: NFTProfileProps) {
             </div>
             <div className="mt-2">
               <h2 className="text-xl font-bold text-figma-400 ">
-                {toNEAR(sale?.sale_conditions || '0')}
-                NEARs
+                {salePrice || '0'} NEARs
               </h2>
             </div>
           </div>
         </div>
         {data?.owner_id === username && loaded ? (
           <div>
-            <div className="mt-8 lg:w-full lg:text-center">
-              <button
-                type="button"
-                className={`bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl`}
-                onClick={() => setPutSale(true)}
-              >
-                <p className="text-figma-500 text-lg font-semibold">
-                  Put on Sale!
-                </p>
-              </button>
-            </div>
+            {saleData ? (
+              <div className="flex justify-between mt-4 mx-3">
+                <div>
+                  <button
+                    type="button"
+                    className="w-full px-5 py-2 bg-figma-100 text-figma-300 font-semibold rounded-lg"
+                    onClick={() => changeUpdateStatus()}
+                  >
+                    Update Sale
+                  </button>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    className="w-full px-5 py-2 bg-figma-100 text-figma-300 font-semibold rounded-lg"
+                    onClick={() => removeFromSale()}
+                  >
+                    Remove from Sale
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="mt-8 lg:w-full lg:text-center">
+                <button
+                  type="button"
+                  className={`bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl`}
+                  onClick={() => setPutSale(true)}
+                >
+                  <p className="text-figma-500 text-lg font-semibold">
+                    Put on Sale!
+                  </p>
+                </button>
+              </div>
+            )}
             {putSale ? (
               <div className="text-center justify-between mt-4">
                 <div>
@@ -105,7 +172,6 @@ export default function NFTProfile({ data, sale }: NFTProfileProps) {
                     onChange={(e) => setPrice(e.target.value)}
                   />
                 </div>
-                {newPrice}
                 <div className="mt-4">
                   <button
                     type="button"
