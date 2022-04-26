@@ -10,8 +10,7 @@ export default function NFTProfilePage() {
   const [nft, setNft] = React.useState<Token>();
   const [nearContext] = useNear();
 
-  
-  const id = router.query.token_id
+  const id = router.query.token_id;
 
   const start = async () => {
     const idInt = await router.query.token_id;
@@ -20,15 +19,15 @@ export default function NFTProfilePage() {
     try {
       if (token_id) {
         // @ts-ignore: Unreachable code error
-        const token = await nearContext.contracts.nftContract.nft_token({token_id: token_id})
+        const token = await nearContext.contracts.nftContract.nft_token({
+          token_id: token_id,
+        });
         setNft(token);
       }
     } catch (e) {
       router.push('/app');
     }
   };
-
-
 
   React.useEffect(() => {
     if (!id) {
@@ -39,7 +38,6 @@ export default function NFTProfilePage() {
     };
     startClass();
   }, [id]);
-
 
   return (
     <Layout>

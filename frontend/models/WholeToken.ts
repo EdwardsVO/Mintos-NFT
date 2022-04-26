@@ -1,13 +1,7 @@
-import TokenMetadata from './TokenMetadata';
+import Sale from './Sale';
+import Token from './Token';
 
-export default interface Token {
-  token_id?: string;
-  owner_id?: string;
-  metadata?: TokenMetadata;
-  approved_accounts_id?: string;
-  royalties?: JSON;
-  account_id?: string;
-  approval_id?: string;
-  nft_contract_id?: string;
-  sale_conditions?: string;
+export default interface WholeToken {
+  sale: Sale;
+  token: Token;
 }

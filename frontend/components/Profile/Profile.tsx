@@ -75,15 +75,8 @@ export default function Profile() {
       for (let j = 0; j < tokens.length; j++) {
         if (sales[index].token_id === tokens[j].token_id) {
           let wholeToken: WholeToken = {
-            owner_id: tokens[j].owner_id,
-            token_id: tokens[j].token_id,
-            account_id: sales[index].account_id,
-            nft_contract_id: sales[index].nft_contract_id,
-            approval_id: sales[index].approval_id,
-            sale_conditions: sales[index].sale_conditions,
-            metadata: tokens[j].metadata,
-            approved_accounts_id: tokens[j].approved_accounts_id,
-            royalties: tokens[j].royalties,
+            sale: sales[index],
+            token: tokens[j],
           };
           wholeDataArray.push(wholeToken);
         }
