@@ -48,10 +48,9 @@ export default function NFTProfile({ data }: NFTProfileProps) {
   const uniqueId = nftContractName + '.' + data?.token_id;
 
   const getSaleData = async () => {
-    const { contracts } = await initContract();
     const sale =
       // @ts-ignore: Unreachable code error
-      await contracts.marketContract.get_sale({
+      await nearContext.contracts.marketContract.get_sale({
         nft_contract_token: uniqueId,
       });
     setSaleData(await sale);
@@ -71,7 +70,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
       await nearContext.contracts.nftContract.nft_revoke(
         {
           token_id: data?.token_id,
-          account_id: marketContractName,
+          nft_contract_id: nearContext.contracts.nftContract,
         },
         '100000000000000',
         '1'
@@ -80,6 +79,19 @@ export default function NFTProfile({ data }: NFTProfileProps) {
       console.log(e);
     }
   };
+
+  const purchaseToken = async () => {
+    // @ts-ignore: Unreachable code error
+    await nearContext.contracts.marketContract.offer(
+      {
+        nft_contract_id: nearContext.contracts.marketContract, 
+        token_id: data.token_id
+      },
+      '100000000000000',
+      // @ts-ignore: Unreachable code error
+      saleData.sale_conditions.price //FIXME this attribute needs to exist in the data received or saved in this page
+      )
+  }
 
   React.useEffect(() => {
     if (saleData) {
@@ -194,6 +206,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
               <button
                 type="button"
                 className="bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl"
+                onClick={()=>{purchaseToken()}}
               >
                 <p className="text-figma-500 text-lg font-semibold">Buy Now</p>
               </button>

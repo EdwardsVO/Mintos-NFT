@@ -75,7 +75,13 @@ export const initContract = async () => {
         'get_sales_by_owner_id',
       ],
       // Change methods can modify the state, but you don't receive the returned value when called
-      changeMethods: ['storage_deposit'],
+      changeMethods: [
+        'storage_deposit', 
+        'withdraw_deposit', 
+        'remove_sale', 
+        'update_price',
+        'offer',
+      ],
       // Sender is the account ID to initialize transactions.
       // getAccountId() will return empty string if user is still unauthorized
       // @ts-ignore: Unreachable code error
