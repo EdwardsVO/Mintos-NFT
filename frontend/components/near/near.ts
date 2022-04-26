@@ -76,9 +76,9 @@ export const initContract = async () => {
       ],
       // Change methods can modify the state, but you don't receive the returned value when called
       changeMethods: [
-        'storage_deposit', 
-        'withdraw_deposit', 
-        'remove_sale', 
+        'storage_deposit',
+        'withdraw_deposit',
+        'remove_sale',
         'update_price',
         'offer',
       ],
