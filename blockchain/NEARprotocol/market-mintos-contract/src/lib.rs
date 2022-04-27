@@ -29,6 +29,9 @@ const NO_DEPOSIT: Balance = 0;
 //the minimum storage to have a sale on the contract.
 const STORAGE_PER_SALE: u128 = 1000 * STORAGE_PRICE_PER_BYTE;
 
+//fee for contract maintenance
+const FEE_PER_SALE: u128 = 5/100;
+
 //every sale will have a unique ID which is `CONTRACT + DELIMITER + TOKEN_ID`
 static DELIMETER: &str = ".";
 
@@ -67,6 +70,9 @@ pub struct Contract {
 
     //keep track of the storage that accounts have payed
     pub storage_deposits: LookupMap<AccountId, Balance>,
+    
+    //mintos treasury account
+    pub treasury_id: AccountId,
 }
 
 /// Helper structure to for keys of the persistent collections.
@@ -91,11 +97,12 @@ impl Contract {
         that's passed in
     */
     #[init]
-    pub fn new(owner_id: AccountId) -> Self {
+    pub fn new(owner_id: AccountId, treasury_id: AccountId) -> Self {
         let this = Self {
             //set the owner_id field equal to the passed in owner_id. 
             owner_id,
-
+            //set treasury account id
+            treasury_id: treasury_id,
             //Storage keys are simply the prefixes used for the collections. This helps avoid data collision
             sales: UnorderedMap::new(StorageKey::Sales),
             by_owner_id: LookupMap::new(StorageKey::ByOwnerId),
@@ -105,6 +112,13 @@ impl Contract {
 
         //return the Contract object
         this
+    }
+
+    #[payable]
+    pub fn set_treasury_id(&mut self, treasury_id: AccountId) {
+        assert_one_yocto();
+        self.assert_owner();
+        self.treasury_id = treasury_id;
     }
 
     //Allows users to deposit storage. This is to cover the cost of storing sale objects on the contract
