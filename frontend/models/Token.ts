@@ -5,5 +5,5 @@ export default interface Token {
   owner_id?: string;
   metadata?: TokenMetadata;
   approved_accounts_id?: string;
-  royalties?: JSON;
+  //royalties?: JSON;
 }

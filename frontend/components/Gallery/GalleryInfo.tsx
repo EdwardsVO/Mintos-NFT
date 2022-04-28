@@ -25,7 +25,7 @@ export default function GalleryInfo() {
     setNearContext(NEAR);
     const currentSales =
       // @ts-ignore: Unreachable code error
-      await nearContext.contracts.marketContract.get_sales_by_nft_contract_id({
+      await NEAR.contracts.marketContract.get_sales_by_nft_contract_id({
         nft_contract_id: NEAR.contracts.nftContract.contractId,
         from_index: '0',
         limit: 10,

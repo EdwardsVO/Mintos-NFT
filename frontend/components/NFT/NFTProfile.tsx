@@ -2,7 +2,7 @@ import React from 'react';
 import Sale from '../../models/Sale';
 import Token from '../../models/Token';
 import { initContract } from '../near/near';
-import { toFixed, toNEAR, toYocto } from '../utils';
+import { ONE_NEAR_IN_YOCTO, toFixed, toNEAR, toYocto } from '../utils';
 import { marketContractName, nftContractName } from '../../config';
 import { useNear } from '../../hooks/useNear';
 import WholeToken from '../../models/WholeToken';
@@ -53,8 +53,8 @@ export default function NFTProfile({ data }: NFTProfileProps) {
       // @ts-ignore: Unreachable code error
       await nearContext.contracts.nftContract.remove_sale(
         {
-          token_id: data?.token?.token_id,
           nft_contract_id: nearContext.contracts.nftContract,
+          token_id: data?.token?.token_id,
         },
         '100000000000000',
         '1'
@@ -68,14 +68,15 @@ export default function NFTProfile({ data }: NFTProfileProps) {
     // @ts-ignore: Unreachable code error
     await nearContext.contracts.marketContract.offer(
       {
-        nft_contract_id: nearContext.contracts.marketContract,
+        nft_contract_id: nearContext.contracts.nftContract.contractId,
         token_id: data.token?.token_id,
       },
-      '100000000000000',
-      // @ts-ignore: Unreachable code error
-      data?.sale?.sale_conditions
+      '300000000000000',
+      (data.sale.sale_conditions) 
     );
-  };
+    console.log(await nearContext.contracts.marketContract.contractId)
+    console.log(await data.token?.token_id)
+   };
 
   React.useEffect(() => {
     loadUserData();
