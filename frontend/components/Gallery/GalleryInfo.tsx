@@ -6,41 +6,67 @@ import Token from '../../models/Token';
 import { initContract } from '../near/near';
 import { ViewGridIcon, ViewListIcon } from '../icons';
 import Sale from '../../models/Sale';
+import WholeToken from '../../models/WholeToken';
 import { useNear } from '../../hooks/useNear';
 
 export default function GalleryInfo() {
   const [tokens, setTokens] = React.useState<Array<Token>>([]);
-  const [loaded, setLoaded] = React.useState<boolean>(false)
+  const [loaded, setLoaded] = React.useState<boolean>(false);
   const [sales, setSales] = React.useState<Array<Sale>>([]);
   const [searchBarTokens, setSearchBarTokens] =
     React.useState<Array<Token>>(null);
   const [page, setPage] = React.useState<number>(0);
   const [view, setView] = React.useState('grid');
-  const [ nearContext, setNearContext ] = useNear();
+  const [wholeDataSet, setWholeDataSet] = React.useState<WholeToken[]>([]);
+  const [nearContext, setNearContext] = useNear();
 
   const getSalesData = async () => {
     const NEAR = await initContract();
     setNearContext(NEAR);
-    // @ts-ignore: Unreachable code error
-    const currentSales = await NEAR.contracts.marketContract.get_sales_by_nft_contract_id({nft_contract_id: NEAR.contracts.nftContract.contractId, from_index: "0", limit:10})
+    const currentSales =
+      // @ts-ignore: Unreachable code error
+      await NEAR.contracts.marketContract.get_sales_by_nft_contract_id({
+        nft_contract_id: NEAR.contracts.nftContract.contractId,
+        from_index: '0',
+        limit: 10,
+      });
     setSales(currentSales);
+    wholeData();
   };
 
   const getTokens = async () => {
     let currentTokens = [];
-    await sales.map(async token => {
+    await sales.map(async (token) => {
       // @ts-ignore: Unreachable code error
-      let tokenIterable = await nearContext.contracts.nftContract.nft_token({token_id: token.token_id});
+      let tokenIterable = await nearContext.contracts.nftContract.nft_token({
+        token_id: token.token_id,
+      });
       currentTokens.push(tokenIterable);
-    })
-     setTokens(currentTokens)
-  }
+    });
+    setTokens(currentTokens);
+  };
+
+  const wholeData = () => {
+    let wholeDataArray = [];
+    for (let index = 0; index < sales.length; index++) {
+      for (let j = 0; j < tokens.length; j++) {
+        if (sales[index].token_id === tokens[j].token_id) {
+          let wholeToken: WholeToken = {
+            sale: sales[index],
+            token: tokens[j],
+          };
+          wholeDataArray.push(wholeToken);
+        }
+      }
+    }
+    setWholeDataSet(wholeDataArray);
+  };
 
   React.useEffect(() => {
-    if(tokens.length == 0){
-    getTokens()
-  }
-  getSalesData()
+    if (tokens.length === 0) {
+      getTokens();
+    }
+    getSalesData();
   }, [sales]);
 
   const categories = [
@@ -117,11 +143,14 @@ export default function GalleryInfo() {
                 : 'text-center md:grid md:grid-cols-3 md:gap-3 lg:grid lg:grid-cols-5 lg:gap-6'
             } text-center`}
           >
-            {tokens.length > 0 ? (
-              tokens.map((nft, i) => (
-                <div key={i} className={`${view === 'grid' ? '' : 'py-4 md:py-0'}`}>
+            {wholeDataSet.length > 0 ? (
+              wholeDataSet.map((nft, i) => (
+                <div
+                  key={nft.token.token_id}
+                  className={`${view === 'grid' ? '' : 'py-4 md:py-0'}`}
+                >
                   <NFTGalleryPreview
-                    key={i}
+                    key={nft.token.token_id}
                     data={nft}
                     className={`mt-3 ${
                       view === 'grid'
