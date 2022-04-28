@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import WholeToken from '../../models/WholeToken';
+import { ONE_NEAR_IN_YOCTO, toFixed } from '../utils';
 
 interface NFTGalleryPreviewProps {
   data?: WholeToken;
@@ -45,7 +46,15 @@ export default function NFTGalleryPreview({
             </div>
             <div className="mt-2">
               <div className="w-full p-px bg-figma-800 rounded-2xl drop-shadow-lg border border-figma-300">
-                <p>{data?.sale?.sale_conditions || '0'} N</p>
+                {
+                  data?.sale?.sale_conditions ?
+                  (<div>
+                    {`${(Number(data?.sale?.sale_conditions) / ONE_NEAR_IN_YOCTO)} N`}
+                  </div>) :
+                  (<button>
+                    Put On Sale
+                  </button>)
+                }
               </div>
             </div>
           </div>

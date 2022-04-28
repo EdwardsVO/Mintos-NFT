@@ -27,7 +27,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
   };
 
   const setPrice = (price) => {
-    setNewPrice(toFixed(price));
+    setNewPrice(toFixed(price * ONE_NEAR_IN_YOCTO));
   };
 
   const confirmSale = async () => {
@@ -74,8 +74,6 @@ export default function NFTProfile({ data }: NFTProfileProps) {
       '300000000000000',
       (data.sale.sale_conditions) 
     );
-    console.log(await nearContext.contracts.marketContract.contractId)
-    console.log(await data.token?.token_id)
    };
 
   React.useEffect(() => {

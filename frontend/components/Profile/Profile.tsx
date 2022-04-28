@@ -80,7 +80,14 @@ export default function Profile() {
           };
           wholeDataArray.push(wholeToken);
         }
+        let wholeToken: WholeToken = {
+          sale: sales[index],
+          token: tokens[j],
+        };
+        wholeDataArray.push(wholeToken);
+      
       }
+      
     }
     setWholeDataSet(wholeDataArray);
   };
