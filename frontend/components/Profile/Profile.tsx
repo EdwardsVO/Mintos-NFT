@@ -52,6 +52,8 @@ export default function Profile() {
       });
 
     setStorage(await toNEAR(available_storage));
+    console.log('Gallery Data');
+    console.log(tokens);
   };
 
   const getSalesData = async () => {
@@ -66,28 +68,53 @@ export default function Profile() {
         limit: 10,
       });
     setSales(currentSales);
+    // console.log('sales data');
+    // console.log(sales);
     wholeData();
   };
 
   const wholeData = () => {
     let wholeDataArray = [];
-    for (let index = 0; index < sales.length; index++) {
+    if (sales?.length > 0) {
       for (let j = 0; j < tokens.length; j++) {
-        if (sales[index].token_id === tokens[j].token_id) {
-          let wholeToken: WholeToken = {
-            sale: sales[index],
-            token: tokens[j],
-          };
-          wholeDataArray.push(wholeToken);
+        for (let index = 0; index < sales.length; index++) {
+          console.log(tokens[j]);
+          if (sales[index].token_id === tokens[j].token_id) {
+            let wholeToken: WholeToken = {
+              sale: sales[index],
+              token: tokens[j],
+            };
+            wholeDataArray.push(wholeToken);
+          } else {
+            let wholeToken: WholeToken = {
+              token: tokens[j],
+              sale: {
+                token_id: null,
+                account_id: null,
+                sale_conditions: null,
+                approval_id: null,
+                nft_contract_id: null,
+              },
+            };
+            wholeDataArray.push(wholeToken);
+            console.log(tokens[j]);
+          }
         }
+      }
+    } else {
+      for (let j = 0; j < tokens.length; j++) {
         let wholeToken: WholeToken = {
-          sale: sales[index],
           token: tokens[j],
+          sale: {
+            token_id: null,
+            account_id: null,
+            sale_conditions: null,
+            approval_id: null,
+            nft_contract_id: null,
+          },
         };
         wholeDataArray.push(wholeToken);
-      
       }
-      
     }
     setWholeDataSet(wholeDataArray);
   };
@@ -108,6 +135,7 @@ export default function Profile() {
       getGalleryData();
     }
     getSalesData();
+    wholeData();
   }, [sales]);
 
   return (
