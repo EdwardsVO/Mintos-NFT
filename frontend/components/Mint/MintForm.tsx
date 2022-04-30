@@ -162,13 +162,7 @@ export default function MintForm() {
         >
           Mint NFT
         </button>
-        <button
-          onClick={() => {
-            console.log(tokensSupply);
-          }}
-        >
-          TEST ID
-        </button>
+        
       </div>
       <div className="mt-7"></div>
     </div>
