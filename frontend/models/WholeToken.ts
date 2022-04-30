@@ -2,6 +2,6 @@ import Sale from './Sale';
 import Token from './Token';
 
 export default interface WholeToken {
-  sale: Sale;
+  sale?: Sale;
   token: Token;
 }

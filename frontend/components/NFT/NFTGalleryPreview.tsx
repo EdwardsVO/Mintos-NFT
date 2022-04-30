@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import WholeToken from '../../models/WholeToken';
+import Token from '../../models/Token';
 import { ONE_NEAR_IN_YOCTO, toFixed } from '../utils';
 
 interface NFTGalleryPreviewProps {
@@ -23,7 +24,7 @@ export default function NFTGalleryPreview({
         <div className="p-4">
           <img
             src={
-              data?.token?.metadata.media ||
+              data?.token?.metadata?.media ||
               'http://cdn.onlinewebfonts.com/svg/img_24787.png'
             }
             alt="peng"
@@ -32,12 +33,12 @@ export default function NFTGalleryPreview({
           <div className="lg:mx-2">
             <div className="mt-1">
               <h1 className="font-semibold text-md text-left">
-                {data?.token?.metadata.title}
+                {data?.token?.metadata?.title}
               </h1>
               <h1 className="font-medium text-left text-sm">
                 {
                   // @ts-ignore: Unreachable code error
-                  JSON.parse(data.token?.metadata.extra)?.collection || ''
+                  JSON.parse(data.token?.metadata?.extra)?.collection || ''
                 }
               </h1>
               <h1 className="font-medium text-left text-sm">
@@ -46,15 +47,15 @@ export default function NFTGalleryPreview({
             </div>
             <div className="mt-2">
               <div className="w-full p-px bg-figma-800 rounded-2xl drop-shadow-lg border border-figma-300">
-                {
-                  data?.sale?.sale_conditions ?
-                  (<div>
-                    {`${(Number(data?.sale?.sale_conditions) / ONE_NEAR_IN_YOCTO)} N`}
-                  </div>) :
-                  (<button>
-                    Put On Sale
-                  </button>)
-                }
+                {data?.sale?.sale_conditions ? (
+                  <div>
+                    {`${
+                      Number(data?.sale?.sale_conditions) / ONE_NEAR_IN_YOCTO
+                    } N`}
+                  </div>
+                ) : (
+                  <button>Put On Sale</button>
+                )}
               </div>
             </div>
           </div>

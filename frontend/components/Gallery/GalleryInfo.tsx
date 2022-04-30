@@ -28,7 +28,7 @@ export default function GalleryInfo() {
       await NEAR.contracts.marketContract.get_sales_by_nft_contract_id({
         nft_contract_id: NEAR.contracts.nftContract.contractId,
         from_index: '0',
-        limit: 10,
+        limit: 20,
       });
     setSales(currentSales);
     wholeData();
