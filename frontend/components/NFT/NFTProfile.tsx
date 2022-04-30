@@ -6,6 +6,7 @@ import { ONE_NEAR_IN_YOCTO, toFixed, toNEAR, toYocto } from '../utils';
 import { marketContractName, nftContractName } from '../../config';
 import { useNear } from '../../hooks/useNear';
 import WholeToken from '../../models/WholeToken';
+import Input from '../inputs/Input';
 interface NFTProfileProps {
   data: WholeToken;
 }
@@ -17,17 +18,19 @@ export default function NFTProfile({ data }: NFTProfileProps) {
   const [loaded, setLoaded] = React.useState<boolean>(false);
   const [nearContext, setNearContext] = useNear();
   const [saleData, setSaleData] = React.useState<Sale>();
-  const [updateSale, setUpdateSale] = React.useState(false);
+  const [currentPrice, setCurrentPrice] = React.useState('');
 
   const loadUserData = async () => {
     const NEAR = await initContract();
     setNearContext(NEAR);
     setUsername(await nearContext.contracts.nftContract.account.accountId);
     setLoaded(true);
+    setCurrentPrice(data?.sale?.sale_conditions);
   };
 
   const setPrice = (price) => {
-    setNewPrice(toFixed(price * ONE_NEAR_IN_YOCTO));
+    const x = toFixed(price * ONE_NEAR_IN_YOCTO);
+    setNewPrice(x);
   };
 
   const confirmSale = async () => {
@@ -45,15 +48,15 @@ export default function NFTProfile({ data }: NFTProfileProps) {
   };
 
   const changeUpdateStatus = () => {
-    setUpdateSale(!updateSale);
+    setPutSale(!putSale);
   };
 
   const removeFromSale = async () => {
     try {
       // @ts-ignore: Unreachable code error
-      await nearContext.contracts.nftContract.remove_sale(
+      await nearContext.contracts.marketContract.remove_sale(
         {
-          nft_contract_id: nearContext.contracts.nftContract,
+          nft_contract_id: nearContext.contracts.nftContract.contractId,
           token_id: data?.token?.token_id,
         },
         '100000000000000',
@@ -72,9 +75,9 @@ export default function NFTProfile({ data }: NFTProfileProps) {
         token_id: data.token?.token_id,
       },
       '300000000000000',
-      (data.sale.sale_conditions) 
+      data.sale.sale_conditions
     );
-   };
+  };
 
   React.useEffect(() => {
     loadUserData();
@@ -112,7 +115,8 @@ export default function NFTProfile({ data }: NFTProfileProps) {
             </div>
             <div className="mt-2">
               <h2 className="text-xl font-bold text-figma-400 ">
-                {data?.sale?.sale_conditions || '0'} NEARs
+                {Number(data?.sale?.sale_conditions) / ONE_NEAR_IN_YOCTO || '0'}{' '}
+                NEAR
               </h2>
             </div>
           </div>
@@ -120,7 +124,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
         {data?.token?.owner_id === username && loaded ? (
           <div>
             {data?.sale ? (
-              <div className="flex justify-between mt-4 mx-3">
+              <div className="flex justify-between mt-4 mx-3 lg:justify-center lg:space-x-64">
                 <div>
                   <button
                     type="button"
@@ -155,19 +159,28 @@ export default function NFTProfile({ data }: NFTProfileProps) {
             )}
             {putSale ? (
               <div className="text-center justify-between mt-4">
-                <div>
-                  <label htmlFor="price">NFT Price</label>
-                  <input
-                    type="number"
+                <div className="flex justify-center">
+                  <Input
+                    type="text"
                     id="price"
-                    onChange={(e) => setPrice(e.target.value)}
+                    label="NFT Price"
+                    className="lg:w-auto"
+                    placeholder={(
+                      Number(currentPrice) / ONE_NEAR_IN_YOCTO
+                    ).toString()}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setPrice(e.target.value);
+                    }}
                   />
                 </div>
                 <div className="mt-4">
                   <button
                     type="button"
                     className="bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl"
-                    onClick={() => confirmSale()}
+                    onClick={() => {
+                      confirmSale();
+                    }}
                   >
                     <p className="text-figma-500 text-lg font-semibold">
                       Confirm Sale
