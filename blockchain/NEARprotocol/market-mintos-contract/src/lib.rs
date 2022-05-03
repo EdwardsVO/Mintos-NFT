@@ -30,7 +30,7 @@ const NO_DEPOSIT: Balance = 0;
 const STORAGE_PER_SALE: u128 = 1000 * STORAGE_PRICE_PER_BYTE;
 
 //fee for contract maintenance
-const FEE_PER_SALE: u128 = 5/100;
+const FEE_PER_SALE: u128 = 5;
 
 //every sale will have a unique ID which is `CONTRACT + DELIMITER + TOKEN_ID`
 static DELIMETER: &str = ".";
@@ -187,6 +187,12 @@ impl Contract {
     }
 
     /// views
+    
+    //return the treasury account id
+    pub fn get_treasury_account_id(&self) -> AccountId {
+        return self.treasury_id.clone();
+    }
+
     //return the minimum storage for 1 sale
     pub fn storage_minimum_balance(&self) -> U128 {
         U128(STORAGE_PER_SALE)
