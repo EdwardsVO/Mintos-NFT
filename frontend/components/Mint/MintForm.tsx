@@ -6,6 +6,7 @@ import Token from '../../models/Token';
 import ExtraMetadata from '../../models/ExtraMetadata';
 import useUser from '../../hooks/useUser';
 import { ONE_NEAR_IN_YOCTO, toFixed } from '../utils';
+import Royalties from '../../models/Royalties';
 
 export default function MintForm() {
   const [name, setName] = React.useState('');
@@ -19,9 +20,22 @@ export default function MintForm() {
   const [uploaded, setUploaded] = React.useState(false);
   const [tokensSupply, setTokensSupply] = React.useState<string>('');
   const [category, setCategory] = React.useState<string>('');
+  const [royalties, setRoyalties] = React.useState<Array<Royalties>>([]);
+  const [royalty, setRoyalty] = React.useState<Royalties>({
+    account_id: '',
+    percentage: 0,
+  });
+  const [royaltyNumber, setRoyaltyNumber] = React.useState<number>(0);
+  const [royaltyAccount, setRoyaltyAccount] = React.useState('');
+  const [royaltyPercentage, setRoyaltyPercentage] = React.useState(0);
 
   // @ts-ignore: Unreachable code error
   const client = create('https://ipfs.infura.io:5001/api/v0');
+
+  const addOneRoyalty = () => {
+    setRoyaltyNumber(royaltyNumber + 1);
+    setRoyalties([...royalties, royalty]);
+  };
 
   const getTotalSupply = async () => {
     // @ts-ignore: Unreachable code error
@@ -74,6 +88,10 @@ export default function MintForm() {
       '300000000000000',
       '465000000000000000000000'
     );
+  };
+
+  const confirmRoyalty = () => {
+    setRoyalties([...royalties, royalty]);
   };
 
   React.useEffect(() => {
@@ -152,17 +170,71 @@ export default function MintForm() {
             setDescription(e.target.value);
           }}
         />
+        {royalties.map((roy, i) => (
+          <div key={i}>
+            <div className="lg:flex lg:justify-between lg:full">
+              <Input
+                className="lg:w-2/5"
+                required
+                label="Account"
+                name="account"
+                type="text"
+                onChange={(e) => setRoyaltyAccount(e.target.value)}
+              />
+              <Input
+                className="lg:w-2/5"
+                required
+                label="Percentage"
+                name="percentage"
+                type="number"
+                onChange={(e) => setRoyaltyPercentage(e.target.value)}
+              />
+            </div>
+            {/* <button
+              type="button"
+              className="w-full bg-figma-100 text-figma-300 rounded-lg mb-5 py-1.5"
+              onClick={() => {
+                setRoyalty({
+                  account_id: royaltyAccount,
+                  percentage: royaltyPercentage,
+                });
+                confirmRoyalty();
+              }}
+            >
+              Add
+            </button> */}
+          </div>
+        ))}
+        <div className="lg:flex">
+          <button
+            type="button"
+            className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
+            onClick={() => {
+              addOneRoyalty();
+            }}
+          >
+            Add Royalties
+          </button>
 
-        <button
-          type="button"
-          className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
-          onClick={() => {
-            handleSubmit();
-          }}
-        >
-          Mint NFT
-        </button>
-        
+          <button
+            type="button"
+            className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
+            onClick={() => {
+              handleSubmit();
+            }}
+          >
+            Mint NFT
+          </button>
+          {/* <button
+            type="button"
+            className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
+            onClick={() => {
+              console.log(royalties);
+            }}
+          >
+            TEST ROY
+          </button> */}
+        </div>
       </div>
       <div className="mt-7"></div>
     </div>
