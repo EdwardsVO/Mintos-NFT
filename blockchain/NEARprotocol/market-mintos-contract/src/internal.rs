@@ -55,4 +55,14 @@ impl Contract {
         //return the sale object
         sale
     }
+    
+    //check if caller is the sender
+    pub(crate) fn assert_owner(&self) {
+        assert_eq!(
+            env::predecessor_account_id(),
+            self.owner_id,
+            "Mintos: Owner only"
+        )
+    }
+    
 }

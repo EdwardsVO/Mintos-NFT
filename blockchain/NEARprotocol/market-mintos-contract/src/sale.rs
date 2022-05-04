@@ -89,11 +89,17 @@ impl Contract {
         //make sure the deposit is greater than the price
         assert!(deposit >= price, "Attached deposit must be greater than or equal to the current price: {:?}", price);
 
+        //calculating the treasury fee per sale
+        let treasury_fee = (deposit as f64 * FEE_PER_SALE) as u128; 
+        
+        //transfer to the current treasury account 
+        Promise::new(self.treasury_id.clone()).transfer(treasury_fee);
+
         //process the purchase (which will remove the sale, transfer and get the payout from the nft contract, and then distribute royalties) 
         self.process_purchase(
             contract_id,
             token_id,
-            U128(deposit),
+            U128(deposit - treasury_fee),
             buyer_id,
         );
     }
