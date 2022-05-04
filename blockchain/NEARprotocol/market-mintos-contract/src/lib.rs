@@ -30,7 +30,7 @@ const NO_DEPOSIT: Balance = 0;
 const STORAGE_PER_SALE: u128 = 1000 * STORAGE_PRICE_PER_BYTE;
 
 //fee for contract maintenance
-const FEE_PER_SALE: u128 = 5;
+const FEE_PER_SALE: f64 = 0.05;
 
 //every sale will have a unique ID which is `CONTRACT + DELIMITER + TOKEN_ID`
 static DELIMETER: &str = ".";
