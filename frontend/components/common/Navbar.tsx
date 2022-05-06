@@ -27,6 +27,7 @@ export default function Navbar() {
 
   const logOut = async () => {
     await setUser('');
+    router.push('/')
     await nearContext.walletConnection.signOut();
   };
 
