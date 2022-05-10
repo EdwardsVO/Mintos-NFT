@@ -33,8 +33,8 @@ export default function MintForm() {
   const client = create('https://ipfs.infura.io:5001/api/v0');
 
   const addOneRoyalty = () => {
-    setRoyaltyNumber(royaltyNumber + 1);
     setRoyalties([...royalties, royalty]);
+    setRoyaltyNumber(royaltyNumber + 1);
   };
 
   const getTotalSupply = async () => {
@@ -88,10 +88,6 @@ export default function MintForm() {
       '300000000000000',
       '465000000000000000000000'
     );
-  };
-
-  const confirmRoyalty = () => {
-    setRoyalties([...royalties, royalty]);
   };
 
   React.useEffect(() => {
@@ -190,19 +186,6 @@ export default function MintForm() {
                 onChange={(e) => setRoyaltyPercentage(e.target.value)}
               />
             </div>
-            {/* <button
-              type="button"
-              className="w-full bg-figma-100 text-figma-300 rounded-lg mb-5 py-1.5"
-              onClick={() => {
-                setRoyalty({
-                  account_id: royaltyAccount,
-                  percentage: royaltyPercentage,
-                });
-                confirmRoyalty();
-              }}
-            >
-              Add
-            </button> */}
           </div>
         ))}
         <div className="lg:flex">
@@ -225,7 +208,7 @@ export default function MintForm() {
           >
             Mint NFT
           </button>
-          {/* <button
+          <button
             type="button"
             className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
             onClick={() => {
@@ -233,7 +216,7 @@ export default function MintForm() {
             }}
           >
             TEST ROY
-          </button> */}
+          </button>
         </div>
       </div>
       <div className="mt-7"></div>
