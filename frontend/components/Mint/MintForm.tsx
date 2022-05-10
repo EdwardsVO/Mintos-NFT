@@ -7,6 +7,7 @@ import ExtraMetadata from '../../models/ExtraMetadata';
 import useUser from '../../hooks/useUser';
 import { ONE_NEAR_IN_YOCTO, toFixed } from '../utils';
 import Royalties from '../../models/Royalties';
+import { stringify } from 'querystring';
 
 export default function MintForm() {
   const [name, setName] = React.useState('');
@@ -20,27 +21,41 @@ export default function MintForm() {
   const [uploaded, setUploaded] = React.useState(false);
   const [tokensSupply, setTokensSupply] = React.useState<string>('');
   const [category, setCategory] = React.useState<string>('');
-  const [royalties, setRoyalties] = React.useState<Array<Royalties>>([]);
-  const [royalty, setRoyalty] = React.useState<Royalties>({
-    account_id: '',
-    percentage: 0,
-  });
-  const [royaltyNumber, setRoyaltyNumber] = React.useState<number>(0);
-  const [royaltyAccount, setRoyaltyAccount] = React.useState('');
-  const [royaltyPercentage, setRoyaltyPercentage] = React.useState(0);
+  const [royaltiesList, setRoyaltiesList] = React.useState<Array<Royalties>>(
+    []
+  );
+  const [royaltyBool, setRoyaltyBool] = React.useState<boolean>(false);
+  const [royaltyAccount, setRoyaltyAccount] = React.useState<string>();
+  const [royaltyAmount, setRoyaltyAmount] = React.useState<number>();
+
+  const [royalties] = React.useState([]);
 
   // @ts-ignore: Unreachable code error
   const client = create('https://ipfs.infura.io:5001/api/v0');
-
-  const addOneRoyalty = () => {
-    setRoyalties([...royalties, royalty]);
-    setRoyaltyNumber(royaltyNumber + 1);
-  };
 
   const getTotalSupply = async () => {
     // @ts-ignore: Unreachable code error
     var tokenId = await nearContext.contracts.nftContract.nft_total_supply();
     setTokensSupply(tokenId);
+  };
+
+  const confirmRoyalty = () => {
+    royalties.push({
+      key: royaltyAccount,
+      value: royaltyAmount,
+    });
+    setRoyaltyBool(false);
+    setRoyaltyAccount('');
+    setRoyaltyAmount(0);
+  };
+
+  // const stringifyRoyalties = () => {
+  //   const stringified = JSON.stringify(royalties);
+  //   console.log(stringified);
+  // };
+
+  const addNewRoyalty = () => {
+    setRoyaltyBool(true);
   };
 
   const retrieveFile = async (e) => {
@@ -166,39 +181,61 @@ export default function MintForm() {
             setDescription(e.target.value);
           }}
         />
-        {royalties.map((roy, i) => (
-          <div key={i}>
-            <div className="lg:flex lg:justify-between lg:full">
+
+        <div>
+          {royalties.map((r, index) => (
+            <h2 key={index}>
+              {index + 1}.- {r.key}: {r.value}
+            </h2>
+          ))}
+        </div>
+
+        <div>
+          {royaltyBool ? (
+            <div className="flex space-x-5">
               <Input
-                className="lg:w-2/5"
                 required
-                label="Account"
-                name="account"
+                label="Account *"
+                name="Account"
                 type="text"
-                onChange={(e) => setRoyaltyAccount(e.target.value)}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setRoyaltyAccount(e.target.value);
+                }}
               />
               <Input
-                className="lg:w-2/5"
                 required
-                label="Percentage"
-                name="percentage"
+                label="Amount *"
+                name="Amount"
                 type="number"
-                onChange={(e) => setRoyaltyPercentage(e.target.value)}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setRoyaltyAmount(e.target.value);
+                }}
               />
+              <button
+                type="button"
+                className="bg-figma-100 px-8 rounded-lg text-figma-300"
+                onClick={() => {
+                  confirmRoyalty();
+                }}
+              >
+                Add royalty
+              </button>
             </div>
-          </div>
-        ))}
+          ) : null}
+        </div>
+
         <div className="lg:flex">
           <button
             type="button"
             className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
             onClick={() => {
-              addOneRoyalty();
+              addNewRoyalty();
             }}
           >
-            Add Royalties
+            New Royalty
           </button>
-
           <button
             type="button"
             className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
