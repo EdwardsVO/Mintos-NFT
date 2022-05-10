@@ -68,7 +68,7 @@ impl Contract {
     #[payable]
     pub fn offer(&mut self, nft_contract_id: AccountId, token_id: String) {
         //get the attached deposit and make sure it's greater than 0
-        let mut deposit = env::attached_deposit();
+        let deposit = env::attached_deposit();
         assert!(deposit > 0, "Attached deposit must be greater than 0");
 
         //convert the nft_contract_id from a AccountId to an AccountId
@@ -90,19 +90,16 @@ impl Contract {
         assert!(deposit >= price, "Attached deposit must be greater than or equal to the current price: {:?}", price);
 
         //calculating the treasury fee per sale
-        let treasury_fee = deposit * FEE_PER_SALE; 
-
+        let treasury_fee = (deposit as f64 * FEE_PER_SALE) as u128; 
+        
         //transfer to the current treasury account 
         Promise::new(self.treasury_id.clone()).transfer(treasury_fee);
-
-        deposit = deposit - treasury_fee; //Deposit less the current treasury fee
-
 
         //process the purchase (which will remove the sale, transfer and get the payout from the nft contract, and then distribute royalties) 
         self.process_purchase(
             contract_id,
             token_id,
-            U128(deposit),
+            U128(deposit - treasury_fee),
             buyer_id,
         );
     }

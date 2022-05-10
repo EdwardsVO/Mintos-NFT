@@ -78,7 +78,7 @@ export default function Profile() {
     if (sales?.length > 0) {
       for (let j = 0; j < tokens.length; j++) {
         for (let index = 0; index < sales.length; index++) {
-          console.log(tokens[j]);
+          
           if (sales[index].token_id === tokens[j].token_id) {
             let wholeToken: WholeToken = {
               sale: sales[index],
@@ -97,7 +97,6 @@ export default function Profile() {
               },
             };
             wholeDataArray.push(wholeToken);
-            console.log(tokens[j]);
           }
         }
       }
