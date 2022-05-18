@@ -78,7 +78,6 @@ export default function Profile() {
     if (sales?.length > 0) {
       for (let j = 0; j < tokens.length; j++) {
         for (let index = 0; index < sales.length; index++) {
-          
           if (sales[index].token_id === tokens[j].token_id) {
             let wholeToken: WholeToken = {
               sale: sales[index],
@@ -141,9 +140,6 @@ export default function Profile() {
     <div>
       <div className="min-h-screen min-w-full mb-20">
         <div className="p-4">
-          <div className="lg:hidden">
-            <img src="/logo.png" alt="logo" className="w-36" />
-          </div>
           <div className="w-full my-7">
             <img src="/profile.png" alt="profile" className="w-40 mx-auto" />
           </div>

@@ -48,10 +48,7 @@ export default function Landing() {
   return (
     <div className="min-h-screen min-w-full mb-20">
       <div className="p-4">
-        <div className="lg:hidden">
-          <img src="/logo.png" alt="logo" className="w-36" />
-        </div>
-        <div className="mt-6 lg:hidden">
+        <div className="mt-2 lg:hidden">
           <SearchBar />
         </div>
         <div className="mt-5 flex space-x-4">

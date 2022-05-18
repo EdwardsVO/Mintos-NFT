@@ -44,11 +44,11 @@ function Layout({ children }: LayoutProps) {
       <div className="hidden lg:block">
         <Navbar />
       </div>
-      {children}
-      {/* Mobile navs goes on the footer of the page, so no footer will be shown on this screen size. */}
       <div className="lg:hidden">
         <MobileNav />
       </div>
+      {children}
+      {/* Mobile navs goes on the footer of the page, so no footer will be shown on this screen size. */}
       <div className="hidden lg:block">
         <Footer />
       </div>

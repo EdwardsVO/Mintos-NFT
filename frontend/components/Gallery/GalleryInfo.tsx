@@ -99,9 +99,6 @@ export default function GalleryInfo() {
     <div>
       <div className="min-h-screen min-w-full mb-20">
         <div className="p-4">
-          <div className="lg:hidden">
-            <img src="/logo.png" alt="logo" className="w-36" />
-          </div>
           <div className="mt-6 lg:hidden w-full">
             <SearchBarDesktop
               className="rounded-lg border-2 h-8 py-px px-3 w-full"
