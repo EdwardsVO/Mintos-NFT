@@ -10,6 +10,7 @@ import ViewGridIcon from './ViewGridIcon';
 import ViewListIcon from './ViewListIcon';
 import HamburgerIcon from './HamburgerIcon';
 import CloseIcon from './CloseIcon';
+import DotsIcon from './DotsIcon';
 
 export {
   HomeIcon,
@@ -24,4 +25,5 @@ export {
   ViewListIcon,
   HamburgerIcon,
   CloseIcon,
+  DotsIcon,
 };

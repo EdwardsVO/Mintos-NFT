@@ -4,6 +4,7 @@ import WholeToken from '../../models/WholeToken';
 import Token from '../../models/Token';
 import { ONE_NEAR_IN_YOCTO, toFixed } from '../utils';
 import useUser from '../../hooks/useUser';
+import { DotsIcon } from '../icons';
 
 interface NFTGalleryPreviewProps {
   data?: WholeToken;
@@ -83,9 +84,12 @@ export default function NFTGalleryPreview({
                   </div>
                 </div>
               ) : (
-                <div className="flex justify-start">
+                <div className="flex justify-between">
                   <button className="text-figma-100 font-semibold text-md py-1.5">
                     Connect
+                  </button>
+                  <button className="font-lg text-bold hover:bg-gray-200/[.7] px-2">
+                    <DotsIcon className="w-6 text-figma-100" />
                   </button>
                 </div>
               )}
