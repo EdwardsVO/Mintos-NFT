@@ -8,6 +8,8 @@ import LogOutIcon from './LogOutIcon';
 import LoginIcon from './LoginIcon';
 import ViewGridIcon from './ViewGridIcon';
 import ViewListIcon from './ViewListIcon';
+import HamburgerIcon from './HamburgerIcon';
+import CloseIcon from './CloseIcon';
 
 export {
   HomeIcon,
@@ -20,4 +22,6 @@ export {
   LoginIcon,
   ViewGridIcon,
   ViewListIcon,
+  HamburgerIcon,
+  CloseIcon,
 };

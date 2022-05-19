@@ -48,17 +48,14 @@ export default function Landing() {
   return (
     <div className="min-h-screen min-w-full mb-20">
       <div className="p-4">
-        <div className="lg:hidden">
-          <img src="/logo.png" alt="logo" className="w-36" />
-        </div>
-        <div className="mt-6 lg:hidden">
+        <div className="mt-2 lg:hidden">
           <SearchBar />
         </div>
-        <div className="mt-5 flex space-x-4">
+        {/* <div className="mt-5 flex space-x-4">
           {categories.map((category, i) => (
             <Category categories={category} key={i} />
           ))}
-        </div>
+        </div> */}
         <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
           {categories.map((category, i) => (
             <NFTPreview key={i} data={category} />
