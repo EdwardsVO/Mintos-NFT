@@ -5,7 +5,7 @@ import { useNear } from '../../hooks/useNear';
 import useUser from '../../hooks/useUser';
 import LogOutIcon from '../icons/LogOutIcon';
 import Token from '../../models/Token';
-//
+import { SunIcon } from '../icons';
 
 export default function Navbar() {
   const router = useRouter();
@@ -45,7 +45,11 @@ export default function Navbar() {
         </div>
         <div className="self-center">
           <div className="flex space-x-8">
-            <button type="button" onClick={() => router.push('/app/')}>
+            <button
+              type="button"
+              onClick={() => router.push('/app/')}
+              className="hover:bg-gray-200/[.4] p-4"
+            >
               <h2
                 className={`font-semibold  ${
                   currentPage === '/app'
@@ -56,7 +60,11 @@ export default function Navbar() {
                 Home
               </h2>
             </button>
-            <button type="button" onClick={() => router.push('/app/gallery')}>
+            <button
+              type="button"
+              className="hover:bg-gray-200/[.4] p-4"
+              onClick={() => router.push('/app/gallery')}
+            >
               <h2
                 className={`font-semibold ${
                   currentPage === '/app/gallery'
@@ -67,7 +75,11 @@ export default function Navbar() {
                 Gallery
               </h2>
             </button>
-            <button type="button" onClick={() => router.push('/app/profile')}>
+            <button
+              type="button"
+              onClick={() => router.push('/app/profile')}
+              className="hover:bg-gray-200/[.4] p-4"
+            >
               <h2
                 className={`font-semibold ${
                   currentPage === '/app/profile'
@@ -94,6 +106,9 @@ export default function Navbar() {
             className="rounded-lg border-2 h-8 py-px px-3"
             tokens={tokens}
           />
+        </div>
+        <div className="flex justify-center align-middle hover:bg-gray-200/[.4] p-4 hover:cursor-pointer">
+          <SunIcon className="w-7" />
         </div>
         <div>
           {user == '' ? (

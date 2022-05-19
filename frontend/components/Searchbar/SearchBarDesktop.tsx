@@ -27,6 +27,7 @@ export default function SearchBar({ tokens, className }: SearchBarProps) {
           className="h-full border-0 w-full rounded-lg outline-none bg-figma-200 lg:bg-white"
           placeholder="Search artwork"
           onChange={handleFilter}
+          disabled
         />
         <SearchIcon className="h-6 top-1 text-figma-600 font-bold" />
       </div>

@@ -18,6 +18,7 @@ export default function NFTGalleryPreview({
   const router = useRouter();
   const [user] = useUser();
   const [isLogged, setIsLogged] = React.useState(true);
+  const [formatedPrice, setFormatedPrice] = React.useState<number>();
 
   const checkUser = () => {
     if (user) {
@@ -27,13 +28,15 @@ export default function NFTGalleryPreview({
     }
   };
 
-  // React.useEffect(() => {
-  //   if (user) {
-  //     setIsLogged(true);
-  //   } else {
-  //     setIsLogged(false);
-  //   }
-  // }, []);
+  const calculatePrice = () => {
+    const num = Number(data?.sale?.sale_conditions) / ONE_NEAR_IN_YOCTO;
+    const formated = Math.round((num + Number.EPSILON) * 100) / 100;
+    setFormatedPrice(formated);
+  };
+
+  React.useEffect(() => {
+    calculatePrice();
+  }, []);
   return (
     <button
       type="button"
@@ -73,10 +76,7 @@ export default function NFTGalleryPreview({
                   <div className="w-full p-px bg-figma-800 rounded-2xl drop-shadow-lg border border-figma-300 group-hover:bg-gray-100/[.7] group-hover:border-gray-600/[.05]">
                     {data?.sale?.sale_conditions ? (
                       <div>
-                        {`${
-                          Number(data?.sale?.sale_conditions) /
-                          ONE_NEAR_IN_YOCTO
-                        } N`}
+                        <h2>{formatedPrice} N</h2>
                       </div>
                     ) : (
                       <button>Put On Sale</button>

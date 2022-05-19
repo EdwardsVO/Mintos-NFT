@@ -11,6 +11,7 @@ import ViewListIcon from './ViewListIcon';
 import HamburgerIcon from './HamburgerIcon';
 import CloseIcon from './CloseIcon';
 import DotsIcon from './DotsIcon';
+import SunIcon from './SunIcon';
 
 export {
   HomeIcon,
@@ -26,4 +27,5 @@ export {
   HamburgerIcon,
   CloseIcon,
   DotsIcon,
+  SunIcon,
 };

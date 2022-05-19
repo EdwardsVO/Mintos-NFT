@@ -7,7 +7,7 @@ import { marketContractName, nftContractName } from '../../config';
 import { useNear } from '../../hooks/useNear';
 import WholeToken from '../../models/WholeToken';
 import Input from '../inputs/Input';
-import  {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 
 interface NFTProfileProps {
   data: WholeToken;
@@ -30,11 +30,9 @@ export default function NFTProfile({ data }: NFTProfileProps) {
       setUsername(await nearContext.contracts.nftContract.account.accountId);
       setLoaded(true);
       setCurrentPrice(data?.sale?.sale_conditions);
+    } catch (e) {
+      router.push('/app/profile');
     }
-    catch(e) {
-      router.push('/app/profile')
-    }
-    
   };
 
   const setPrice = (price) => {
@@ -104,7 +102,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
           }
         </h2>
       </div>
-      <div className="lg:w-full">
+      <div className="lg:w-full flex flex-col">
         <div className=" bg-figma-300 rounded-3xl drop-shadow-lg shadow-black p-5 mx-3 mt-2 lg:max-w-xl lg:mx-auto">
           <img
             src={data?.token?.metadata?.media}
@@ -112,7 +110,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
             className="rounded-3xl object-cover"
           />
         </div>
-        <div className="flex mx-3 lg:mx-0 justify-between mt-3 lg:w-full lg:justify-center">
+        <div className="flex mx-3 lg:mx-0 justify-between mt-3 lg:justify-center">
           <div className="flex w-full lg:w-1/3 justify-between lg:px-8">
             <div className="mt-2">
               <h2 className="text-xl font-semibold text-figma-400">
@@ -124,7 +122,11 @@ export default function NFTProfile({ data }: NFTProfileProps) {
             </div>
             <div className="mt-2">
               <h2 className="text-xl font-bold text-figma-400 ">
-                {Number(data?.sale?.sale_conditions) / ONE_NEAR_IN_YOCTO || '0'}{' '}
+                {Math.round(
+                  (Number(data?.sale?.sale_conditions) / ONE_NEAR_IN_YOCTO +
+                    Number.EPSILON) *
+                    100
+                ) / 100 || '0'}{' '}
                 NEAR
               </h2>
             </div>
