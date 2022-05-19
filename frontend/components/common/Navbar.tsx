@@ -5,7 +5,7 @@ import { useNear } from '../../hooks/useNear';
 import useUser from '../../hooks/useUser';
 import LogOutIcon from '../icons/LogOutIcon';
 import Token from '../../models/Token';
-import { initContract } from '../near/near';
+//
 
 export default function Navbar() {
   const router = useRouter();
@@ -27,7 +27,7 @@ export default function Navbar() {
 
   const logOut = async () => {
     await setUser('');
-    router.push('/')
+    router.push('/');
     await nearContext.walletConnection.signOut();
   };
 
@@ -38,7 +38,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="bg-white w-full drop-shadow-md">
+    <div className="bg-white w-full drop-shadow-md fixed z-50">
       <div className="flex justify-between p-4">
         <div className="mr-44">
           <img src="/logo.png" alt="logo" className="w-36" />

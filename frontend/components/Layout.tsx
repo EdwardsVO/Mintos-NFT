@@ -47,7 +47,7 @@ function Layout({ children }: LayoutProps) {
       <div className="lg:hidden">
         <MobileNav />
       </div>
-      {children}
+      <div className="pt-16">{children}</div>
       {/* Mobile navs goes on the footer of the page, so no footer will be shown on this screen size. */}
       <div className="hidden lg:block">
         <Footer />

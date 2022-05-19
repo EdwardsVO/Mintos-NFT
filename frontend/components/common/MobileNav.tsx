@@ -27,8 +27,8 @@ export default function MobileNav() {
   }
 
   return (
-    <div className="w-full sticky px-6 rounded-t-2xl">
-      <div className="flex w-full justify-between items-center mt-3">
+    <div className="w-full fixed z-50 bg-figma-200">
+      <div className="flex w-full justify-between items-center mt-3 px-6">
         <div
           className={`menu-btn w-0 ${showMenu ? 'open' : ''}`}
           onClick={onMenuClick}
@@ -54,52 +54,67 @@ export default function MobileNav() {
           )}
         </div>
       </div>
-      {showMenu ? (
-        <div className="bg-figma-200 text-gray-600 min-h-screen flex justify-center text-lg">
-          <div className="mt-4">
-            <h2
-              className={`mt-2 ${
-                currentPage === '/app'
-                  ? 'text-figma-100 underline underline-offset-8 decoration-figma-100 decoration-4'
-                  : ''
-              }`}
-              onClick={() => router.push('/app')}
-            >
-              Home
-            </h2>
-            <h2
-              className={`mt-2 ${
-                currentPage === '/app/gallery'
-                  ? 'text-figma-100 underline underline-offset-8 decoration-figma-100 decoration-4'
-                  : ''
-              }`}
-              onClick={() => router.push('/app/gallery')}
-            >
-              Gallery
-            </h2>
-            <h2
-              className={`mt-2 ${
-                currentPage === '/app/mint'
-                  ? 'text-figma-100 underline underline-offset-8 decoration-figma-100 decoration-4'
-                  : ''
-              }`}
-              onClick={() => router.push('/app/mint')}
-            >
-              Mint
-            </h2>
-            <h2
-              className={`mt-2 ${
-                currentPage === '/app/profile'
-                  ? 'text-figma-100 underline underline-offset-8 decoration-figma-100 decoration-4'
-                  : ''
-              }`}
-              onClick={() => router.push('/app/profile')}
-            >
-              Profile
-            </h2>
+      <div>
+        {showMenu ? (
+          <div className="bg-gray-600/[.7] text-gray-600 min-h-screen flex text-lg absolute w-full">
+            <div className="px-6 bg-gray-100 w-3/4 border-t-2 border-t-gray-200">
+              <h2
+                className={`mt-2 ${
+                  currentPage === '/app'
+                    ? 'text-figma-100 un derline underline-offset-8 decoration-figma-100 decoration-4'
+                    : ''
+                }`}
+                onClick={() => router.push('/app')}
+              >
+                Home
+              </h2>
+              <h2
+                className={`mt-2 ${
+                  currentPage === '/app/gallery'
+                    ? 'text-figma-100 underline underline-offset-8 decoration-figma-100 decoration-4'
+                    : ''
+                }`}
+                onClick={() => router.push('/app/gallery')}
+              >
+                Gallery
+              </h2>
+              <h2
+                className={`mt-2 ${
+                  currentPage === '/app/mint'
+                    ? 'text-figma-100 underline underline-offset-8 decoration-figma-100 decoration-4'
+                    : ''
+                }`}
+                onClick={() => router.push('/app/mint')}
+              >
+                Mint
+              </h2>
+              <h2
+                className={`mt-2 ${
+                  currentPage === '/app/profile'
+                    ? 'text-figma-100 underline underline-offset-8 decoration-figma-100 decoration-4'
+                    : ''
+                }`}
+                onClick={() => router.push('/app/profile')}
+              >
+                Profile
+              </h2>
+              {user ? (
+                <button className="mt-2" onClick={() => onClick()}>
+                  Logout
+                </button>
+              ) : (
+                <h2
+                  className="mt-2
+                  "
+                  onClick={() => logIn()}
+                >
+                  Login
+                </h2>
+              )}
+            </div>
           </div>
-        </div>
-      ) : null}
+        ) : null}
+      </div>
       <LogOutModal setOpen={setShowModal} isOpen={showModal} />
     </div>
   );
