@@ -30,21 +30,22 @@ a {
 .menu-btn__burger {
   width: 25px;
   height: 2px;
-  background: #473EA8;
+  background: #473ea8;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(20, 6, 1, 0.2);
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
-.menu-btn__burger::before, .menu-btn__burger::after {
- content:'';
- position: absolute;
- width: 25px;
- height: 2px;
- background: #473EA8;
- border-radius: 5px;
- box-shadow: 0 2px 5px rgba(20, 6, 1, 0.2);
- transition: all .2s ease-in-out;
+.menu-btn__burger::before,
+.menu-btn__burger::after {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 2px;
+  background: #473ea8;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(20, 6, 1, 0.2);
+  transition: all 0.2s ease-in-out;
 }
 
 .menu-btn__burger::before {
