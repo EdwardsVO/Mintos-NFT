@@ -162,7 +162,6 @@ export default function MintForm() {
         >
           Mint NFT
         </button>
-        
       </div>
       <div className="mt-7"></div>
     </div>

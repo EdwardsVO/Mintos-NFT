@@ -1,9 +1,7 @@
-import React from "react";
-import { useRouter } from "next/router";
-import { Contract, WalletConnection } from "near-api-js";
+import React from 'react';
+import { useRouter } from 'next/router';
+import { Contract, WalletConnection } from 'near-api-js';
 import Network from '../models/Network';
-
-
 
 export type TAuthContext = {
   authContext?: boolean;
@@ -11,7 +9,6 @@ export type TAuthContext = {
 };
 
 export const AuthContext = React.createContext<TAuthContext>({});
-
 
 interface AuthContextProviderProps {
   children: React.ReactNode;
