@@ -7,6 +7,8 @@ import { useNear } from '../../../hooks/useNear';
 import Sale from '../../../models/Sale';
 import Token from '../../../models/Token';
 import WholeToken from '../../../models/WholeToken';
+import { Seo } from '../../../components/Seo/Seo';
+import { ONE_NEAR_IN_YOCTO } from '../../../components/utils';
 
 export default function NFTProfilePage() {
   const router = useRouter();
@@ -59,6 +61,14 @@ export default function NFTProfilePage() {
 
   return (
     <Layout>
+      <Seo
+        metaTitle={wholeNftData?.token?.metadata?.title}
+        metaDescription={`${wholeNftData?.token?.metadata?.title} (${
+          Number(wholeNftData?.sale?.sale_conditions) / ONE_NEAR_IN_YOCTO || '0'
+        } NEAR)`}
+        shareImage={wholeNftData?.token?.metadata?.media}
+      />
+
       <div className="p-4">
         <NFTProfile data={wholeNftData} />
       </div>
