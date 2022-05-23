@@ -7,7 +7,7 @@ import { marketContractName, nftContractName } from '../../config';
 import { useNear } from '../../hooks/useNear';
 import WholeToken from '../../models/WholeToken';
 import Input from '../inputs/Input';
-import  {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 
 interface NFTProfileProps {
   data: WholeToken;
@@ -30,11 +30,9 @@ export default function NFTProfile({ data }: NFTProfileProps) {
       setUsername(await nearContext.contracts.nftContract.account.accountId);
       setLoaded(true);
       setCurrentPrice(data?.sale?.sale_conditions);
+    } catch (e) {
+      router.push('/app/profile');
     }
-    catch(e) {
-      router.push('/app/profile')
-    }
-    
   };
 
   const setPrice = (price) => {

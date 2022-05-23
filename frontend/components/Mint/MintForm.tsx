@@ -182,6 +182,7 @@ export default function MintForm() {
           }}
         />
 
+<<<<<<< HEAD
         <div>
           {royalties.map((r, index) => (
             <h2 key={index}>
@@ -255,6 +256,17 @@ export default function MintForm() {
             TEST ROY
           </button>
         </div>
+=======
+        <button
+          type="button"
+          className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
+          onClick={() => {
+            handleSubmit();
+          }}
+        >
+          Mint NFT
+        </button>
+>>>>>>> b1efdc32662ba837e575105353a9d0b5da76c354
       </div>
       <div className="mt-7"></div>
     </div>

@@ -99,20 +99,17 @@ export default function GalleryInfo() {
     <div>
       <div className="min-h-screen min-w-full mb-20">
         <div className="p-4">
-          <div className="lg:hidden">
-            <img src="/logo.png" alt="logo" className="w-36" />
-          </div>
           <div className="mt-6 lg:hidden w-full">
             <SearchBarDesktop
               className="rounded-lg border-2 h-8 py-px px-3 w-full"
               tokens={searchBarTokens}
             />
           </div>
-          <div className="mt-5 flex space-x-4">
+          {/* <div className="mt-5 flex space-x-4">
             {categories.map((category, i) => (
               <Category categories={category} key={i} />
             ))}
-          </div>
+          </div> */}
           <div className="flex justify-between mt-5">
             <div>
               <h2 className="text-figma-400 font-semibold text-xl">
@@ -139,7 +136,7 @@ export default function GalleryInfo() {
           <div
             className={`mt-3 ${
               view === 'grid'
-                ? 'grid grid-cols-2 gap-3 md:grid-cols-3 lg:flex lg:flex-wrap lg:justify-between'
+                ? 'grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid lg:grid-cols-5 lg:justify-between'
                 : 'text-center md:grid md:grid-cols-3 md:gap-3 lg:grid lg:grid-cols-5 lg:gap-6'
             } text-center`}
           >
@@ -152,7 +149,7 @@ export default function GalleryInfo() {
                   <NFTGalleryPreview
                     key={nft.token.token_id}
                     data={nft}
-                    className={`mt-3 ${
+                    className={`mt-3 lg:mt-0 ${
                       view === 'grid'
                         ? 'w-36 h-36 lg:w-72 lg:h-72 md:w-52 md:h-52 '
                         : 'w-72 h-72 md:w-52 md:h-52 lg:h-72 lg:w-72 '
