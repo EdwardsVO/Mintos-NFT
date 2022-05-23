@@ -1,77 +1,47 @@
+import { ReactTypical } from '@deadcoder0904/react-typical';
 import React from 'react';
-import Category from '../Category/Category';
-import NFTPreview from '../NFT/NFTPreview';
-import SearchBar from '../Searchbar/SearchBar';
+import Steps from './Steps';
 
 export default function Landing() {
-  const categories = [
-    {
-      _id: 0,
-      title: 'All',
-      availableNfts: 99,
-      banner: '/123123123.png',
-    },
-    {
-      _id: 1,
-      title: 'Aliens',
-      availableNfts: 32,
-      banner: '/123123123.png',
-    },
-    {
-      _id: 2,
-      title: 'Animals',
-      availableNfts: 43,
-      banner: '/123123123.png',
-    },
-    {
-      _id: 3,
-      title: 'People',
-      availableNfts: 12,
-      banner: '/123123123.png',
-    },
-  ];
-
-  const collections = [
-    {
-      _id: 1,
-      title: 'NEARliens',
-      sold: 48,
-      banner: '/123123123.png',
-    },
-    {
-      _id: 2,
-      title: 'Collection2',
-      sold: 30,
-      banner: '/123123123.png',
-    },
-  ];
   return (
-    <div className="min-h-screen min-w-full mb-20">
-      <div className="p-4">
-        <div className="lg:hidden">
-          <img src="/logo.png" alt="logo" className="w-36" />
-        </div>
-        <div className="mt-6 lg:hidden">
-          <SearchBar />
-        </div>
-        <div className="mt-5 flex space-x-4">
-          {categories.map((category, i) => (
-            <Category categories={category} key={i} />
-          ))}
-        </div>
-        <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
-          {categories.map((category, i) => (
-            <NFTPreview key={i} data={category} />
-          ))}
-        </div>
-        <div className="mt-5">
-          <h2 className="px-4 font-semibold text-lg">
-            Top Selling Collections
+    <div className="h-full w-full">
+      <div className="lg:py-16 lg:px-32 px-4 py-14">
+        <div>
+          <h2 className="text-4xl lg:text-7xl text-figma-900 font-bold">
+            <ReactTypical
+              steps={['Explore', 2000, 'Mint', 2000, 'Buy', 2000, 'Sell', 2000]}
+              wrapper="b"
+              loop={Infinity}
+            />
+            <span className="text-4xl lg:text-7xl text-figma-300 font-bold">
+              {' '}
+              Out Of This World{' '}
+              <span className="lg:hidden text-4xl text-figma-300 font-bold">
+                NFTs
+              </span>
+            </span>
           </h2>
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
-            {collections.map((collection, i) => (
-              <NFTPreview key={i} data={collection} isCollection />
-            ))}
+          <h2 className="text-4xl lg:text-7xl text-figma-300 font-bold mt-4 hidden lg:block">
+            NFTs
+          </h2>
+        </div>
+        <div className="mt-16 lg:mt-24">
+          <div className="mt-7">
+            <Steps
+              logo="lock"
+              text="Connect with NEAR Wallet"
+              extra="and start interacting!"
+            />
+          </div>
+          <div className="mt-7">
+            <Steps logo="check" text="Find your favorite NFT and buy it" />
+          </div>
+          <div className="mt-7">
+            <Steps
+              logo="crypto"
+              text="Don't want it anymore?"
+              extra="Sell it!"
+            />
           </div>
         </div>
       </div>

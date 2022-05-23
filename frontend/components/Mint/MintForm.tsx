@@ -3,13 +3,13 @@ import Input from '../inputs/Input';
 import { create } from 'ipfs-http-client';
 import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
+import ExtraMetadata from '../../models/ExtraMetadata';
 import useUser from '../../hooks/useUser';
-import { ONE_NEAR_IN_YOCTO } from '../utils';
-import { useRouter } from 'next/router';
+import { ONE_NEAR_IN_YOCTO, toFixed } from '../utils';
 
 export default function MintForm() {
   const [name, setName] = React.useState('');
-  const [price, setPrice] = React.useState(0 * ONE_NEAR_IN_YOCTO);
+  const [price, setPrice] = React.useState(0);
   const [collection, setCollection] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [file, setFile] = React.useState([]);
@@ -17,9 +17,17 @@ export default function MintForm() {
   const [nearContext] = useNear();
   const [user] = useUser();
   const [uploaded, setUploaded] = React.useState(false);
+  const [tokensSupply, setTokensSupply] = React.useState<string>('');
+  const [category, setCategory] = React.useState<string>('');
 
   // @ts-ignore: Unreachable code error
   const client = create('https://ipfs.infura.io:5001/api/v0');
+
+  const getTotalSupply = async () => {
+    // @ts-ignore: Unreachable code error
+    var tokenId = await nearContext.contracts.nftContract.nft_total_supply();
+    setTokensSupply(tokenId);
+  };
 
   const retrieveFile = async (e) => {
     e.preventDefault();
@@ -38,41 +46,43 @@ export default function MintForm() {
     }
   };
 
-  // const upload = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const created = await client.add(file);
-  //     const url = `https://ipfs.infura.io/ipfs/${created.path}`;
-  //     setUrlArr(url);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
+  const extra: ExtraMetadata = {
+    collection: collection,
+    category: category,
+  };
 
   const token: Token = {
     owner_id: user,
+    token_id: tokensSupply,
     metadata: {
       title: name,
-      price: String(price * ONE_NEAR_IN_YOCTO),
       description: description,
       media: urlArr,
       media_hash: 'imagenenimagenimagenasdfasdfaiasdfam',
-      on_sale: true,
+      extra: JSON.stringify(extra),
     },
   };
 
   const handleSubmit = async () => {
     // @ts-ignore: Unreachable code error
-    await nearContext.contract.minar(
-      { token_owner_id: token.owner_id, token_metadata: token.metadata },
+    await nearContext.contracts.nftContract.nft_mint(
+      {
+        token_id: token.token_id,
+        metadata: token.metadata,
+        receiver_id: token.owner_id,
+      },
       '300000000000000',
       '465000000000000000000000'
     );
   };
 
+  React.useEffect(() => {
+    getTotalSupply();
+  });
+
   return (
-    <div>
-      <div className="flex">
+    <div className="lg:flex lg:justify-center lg:items-center lg:align-middle lg:p-9">
+      <div className="flex lg:justify-center lg:items-center lg:align-middle">
         <div className="mb-3 w-96">
           <div className={`${uploaded ? 'flex' : 'hidden'}`}>
             <img src={urlArr} alt="" className="w-72 h-72" />
@@ -82,7 +92,7 @@ export default function MintForm() {
           </label>
           <input
             required
-            className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none lg:border-0 lg:bg-figma-200"
             type="file"
             id="formFile"
             onChange={(e) => {
@@ -92,17 +102,9 @@ export default function MintForm() {
           <h2 className={`${uploaded ? 'inline-block' : 'hidden'}`}>
             File Uploaded Succesfully!
           </h2>
-          {/* <button
-            onClick={(d) => {
-              upload(d);
-            }}
-            className="p-3 bg-figma-100 hover:bg-blue-800 rounded-lg"
-          >
-            Upload
-          </button> */}
         </div>
       </div>
-      <div>
+      <div className="lg:w-1/2 ">
         <Input
           required
           label="Name *"
@@ -150,11 +152,10 @@ export default function MintForm() {
             setDescription(e.target.value);
           }}
         />
-      </div>
-      <div className="mt-7">
+
         <button
           type="button"
-          className="w-full bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
+          className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
           onClick={() => {
             handleSubmit();
           }}
@@ -162,6 +163,7 @@ export default function MintForm() {
           Mint NFT
         </button>
       </div>
+      <div className="mt-7"></div>
     </div>
   );
 }

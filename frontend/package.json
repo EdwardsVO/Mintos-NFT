@@ -6,14 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write \"**/*.{js,jsx,css,ts,tsx}\""
   },
   "dependencies": {
+    "@deadcoder0904/react-typical": "^0.1.2",
+    "framer-motion": "^6.2.10",
     "ipfs-http-client": "^56.0.2",
     "near-api-js": "^0.44.2",
     "next": "12.1.4",
+    "prettier": "^2.6.2",
     "react": "18.0.0",
     "react-dom": "18.0.0",
+    "sitemap": "^7.1.1",
     "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {

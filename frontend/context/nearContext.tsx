@@ -1,11 +1,11 @@
-import React from "react";
-import { useRouter } from "next/router";
-import { Contract, WalletConnection } from "near-api-js";
+import React from 'react';
+import { useRouter } from 'next/router';
+import { Contract, WalletConnection } from 'near-api-js';
 import Network from '../models/Network';
-
+import ContractsContainer from '../models/ContractsContainer';
 
 export interface NearContext {
-  contract?: Contract;
+  contracts?: ContractsContainer;
   walletConnection?: WalletConnection;
   nearConfig?: Network;
 }
@@ -17,12 +17,13 @@ export type TNearContext = {
 
 export const NEARApiContext = React.createContext<TNearContext>({});
 
-
 interface NEARApiContextProviderProps {
   children?: React.ReactNode;
 }
 
-export function NEARApiContextProvider({ children }: NEARApiContextProviderProps) {
+export function NEARApiContextProvider({
+  children,
+}: NEARApiContextProviderProps) {
   const [nearContext, setNearContext] = React.useState<NearContext>();
   const nearContextHook = React.useContext(NEARApiContext);
   const hook = nearContextHook;

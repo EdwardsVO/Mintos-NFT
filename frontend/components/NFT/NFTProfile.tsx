@@ -1,25 +1,112 @@
 import React from 'react';
+import Sale from '../../models/Sale';
 import Token from '../../models/Token';
-import { toNEAR } from '../utils';
+import { initContract } from '../near/near';
+import { ONE_NEAR_IN_YOCTO, toFixed, toNEAR, toYocto } from '../utils';
+import { marketContractName, nftContractName } from '../../config';
+import { useNear } from '../../hooks/useNear';
+import WholeToken from '../../models/WholeToken';
+import Input from '../inputs/Input';
+import { useRouter } from 'next/router';
 
 interface NFTProfileProps {
-  data: Token;
+  data: WholeToken;
 }
 
 export default function NFTProfile({ data }: NFTProfileProps) {
+  const [username, setUsername] = React.useState<string>('');
+  const [putSale, setPutSale] = React.useState<boolean>(false);
+  const [newPrice, setNewPrice] = React.useState<number>(0);
+  const [loaded, setLoaded] = React.useState<boolean>(false);
+  const [nearContext, setNearContext] = useNear();
+  const [saleData, setSaleData] = React.useState<Sale>();
+  const [currentPrice, setCurrentPrice] = React.useState('');
+  const router = useRouter();
+
+  const loadUserData = async () => {
+    const NEAR = await initContract();
+    setNearContext(NEAR);
+    try {
+      setUsername(await nearContext.contracts.nftContract.account.accountId);
+      setLoaded(true);
+      setCurrentPrice(data?.sale?.sale_conditions);
+    } catch (e) {
+      router.push('/app/profile');
+    }
+  };
+
+  const setPrice = (price) => {
+    const x = toFixed(price * ONE_NEAR_IN_YOCTO);
+    setNewPrice(x);
+  };
+
+  const confirmSale = async () => {
+    const condition = { sale_conditions: newPrice };
+    //@ts-ignore: Unreachable code error
+    await nearContext.contracts.nftContract.nft_approve(
+      {
+        token_id: data?.token?.token_id,
+        account_id: marketContractName,
+        msg: JSON.stringify(condition),
+      },
+      '100000000000000',
+      '440000000000000000000'
+    );
+  };
+
+  const changeUpdateStatus = () => {
+    setPutSale(!putSale);
+  };
+
+  const removeFromSale = async () => {
+    try {
+      // @ts-ignore: Unreachable code error
+      await nearContext.contracts.marketContract.remove_sale(
+        {
+          nft_contract_id: nearContext.contracts.nftContract.contractId,
+          token_id: data?.token?.token_id,
+        },
+        '100000000000000',
+        '1'
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const purchaseToken = async () => {
+    // @ts-ignore: Unreachable code error
+    await nearContext.contracts.marketContract.offer(
+      {
+        nft_contract_id: nearContext.contracts.nftContract.contractId,
+        token_id: data.token?.token_id,
+      },
+      '300000000000000',
+      data.sale.sale_conditions
+    );
+  };
+
+  React.useEffect(() => {
+    loadUserData();
+  }, []);
   return (
     <div>
       <div className="lg:hidden">
         <img src="/logo.png" alt="logo" className="w-36" />
       </div>
       <div className="mt-6 mx-3 lg:px-4 lg:w-full lg:text-center">
-        <h2 className="text-figma-100 font-bold text-xl">Collection</h2>
+        <h2 className="text-figma-100 font-bold text-xl">
+          {
+            // @ts-ignore: Unreachable code error
+            data?.metadata?.extra?.collection
+          }
+        </h2>
       </div>
       <div className="lg:w-full">
         <div className=" bg-figma-300 rounded-3xl drop-shadow-lg shadow-black p-5 mx-3 mt-2 lg:max-w-xl lg:mx-auto">
           <img
-            src={data?.metadata?.media}
-            alt={data?.metadata?.title}
+            src={data?.token?.metadata?.media}
+            alt={data?.token?.metadata?.title}
             className="rounded-3xl object-cover"
           />
         </div>
@@ -27,27 +114,106 @@ export default function NFTProfile({ data }: NFTProfileProps) {
           <div className="flex w-full lg:w-1/3 justify-between lg:px-8">
             <div className="mt-2">
               <h2 className="text-xl font-semibold text-figma-400">
-                {data?.metadata?.title}
+                {data?.token?.metadata?.title}
               </h2>
               <h2 className="text-xl font-semibold text-figma-100">
-                {data?.owner_id}
+                {data?.token?.owner_id}
               </h2>
             </div>
             <div className="mt-2">
               <h2 className="text-xl font-bold text-figma-400 ">
-                {toNEAR(data?.metadata?.price)} N
+                {Number(data?.sale?.sale_conditions) / ONE_NEAR_IN_YOCTO || '0'}{' '}
+                NEAR
               </h2>
             </div>
           </div>
         </div>
-        <div className="mt-8 lg:w-full lg:text-center">
-          <button
-            type="button"
-            className="bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl"
-          >
-            <p className="text-figma-500 text-lg font-semibold">Buy Now</p>
-          </button>
-        </div>
+        {data?.token?.owner_id === username && loaded ? (
+          <div>
+            {data?.sale ? (
+              <div className="flex justify-between mt-4 mx-3 lg:justify-center lg:space-x-64">
+                <div>
+                  <button
+                    type="button"
+                    className="w-full px-5 py-2 bg-figma-100 text-figma-300 font-semibold rounded-lg"
+                    onClick={() => changeUpdateStatus()}
+                  >
+                    Update Sale
+                  </button>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    className="w-full px-5 py-2 bg-figma-100 text-figma-300 font-semibold rounded-lg"
+                    onClick={() => removeFromSale()}
+                  >
+                    Remove from Sale
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="mt-8 lg:w-full lg:text-center">
+                <button
+                  type="button"
+                  className={`bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl`}
+                  onClick={() => setPutSale(true)}
+                >
+                  <p className="text-figma-500 text-lg font-semibold">
+                    Put on Sale!
+                  </p>
+                </button>
+              </div>
+            )}
+            {putSale ? (
+              <div className="text-center justify-between mt-4">
+                <div className="flex justify-center">
+                  <Input
+                    type="text"
+                    id="price"
+                    label="NFT Price"
+                    className="lg:w-auto"
+                    placeholder={(
+                      Number(currentPrice) / ONE_NEAR_IN_YOCTO
+                    ).toString()}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setPrice(e.target.value);
+                    }}
+                  />
+                </div>
+                <div className="mt-4">
+                  <button
+                    type="button"
+                    className="bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl"
+                    onClick={() => {
+                      confirmSale();
+                    }}
+                  >
+                    <p className="text-figma-500 text-lg font-semibold">
+                      Confirm Sale
+                    </p>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </div>
+        ) : (
+          <div>
+            <div className="mt-8 lg:w-full lg:text-center">
+              <button
+                type="button"
+                className="bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl"
+                onClick={() => {
+                  purchaseToken();
+                }}
+              >
+                <p className="text-figma-500 text-lg font-semibold">Buy Now</p>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

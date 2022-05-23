@@ -2,69 +2,59 @@ import React from 'react';
 import Category from '../Category/Category';
 import NFTGalleryPreview from '../NFT/NFTGalleryPreview';
 import SearchBarDesktop from '../Searchbar/SearchBarDesktop';
-import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
+import { initContract } from '../near/near';
+import { ViewGridIcon, ViewListIcon } from '../icons';
+import Sale from '../../models/Sale';
+import WholeToken from '../../models/WholeToken';
+import { useNear } from '../../hooks/useNear';
 
 export default function GalleryInfo() {
-  const [nearContext] = useNear();
   const [tokens, setTokens] = React.useState<Array<Token>>(null);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
   const [tokensPerPage] = React.useState(4);
   const [indexFirstNFT, setIndexFirstNFT] = React.useState(0);
   // const [currentNFTs, setCurrentNFTs] = React.useState<Token[]>();
+  const [loaded, setLoaded] = React.useState<boolean>(false);
+  const [sales, setSales] = React.useState<Array<Sale>>([]);
+  const [searchBarTokens, setSearchBarTokens] =
+    React.useState<Array<Token>>(null);
+  const [page, setPage] = React.useState<number>(0);
+  const [view, setView] = React.useState('grid');
+  const [wholeDataSet, setWholeDataSet] = React.useState<WholeToken[]>([]);
+  const [nearContext, setNearContext] = useNear();
 
-  const galleryDataMock = [
-    {
-      _id: 0,
-      title: 'Lion King',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/Lion.jpg',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 1,
-      title: 'NEARLien 0',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/12.png',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 2,
-      title: 'Blitzcreg Bop',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/blitz.png',
-      owner: 'mzterdox.near',
-    },
-    {
-      _id: 3,
-      title: 'Yakuza Kuza',
-      price: 10,
-      collection: 'Collection Name',
-      banner: '/yakuza.png',
-      owner: 'mzterdox.near',
-    },
-  ];
+  const getSalesData = async () => {
+    const NEAR = await initContract();
+    setNearContext(NEAR);
+    const currentSales =
+      // @ts-ignore: Unreachable code error
+      await NEAR.contracts.marketContract.get_sales_by_nft_contract_id({
+        nft_contract_id: NEAR.contracts.nftContract.contractId,
+        from_index: '0',
+        limit: 20,
+      });
+    setSales(currentSales);
+    wholeData();
+  };
 
-  React.useEffect(() => {
-    const getGalleryData = async () => {
-      setLoading(true);
-      await nearContext.contract
-        // @ts-ignore: Unreachable code error
-        .obtener_pagina_v2({
-          from_index: indexOfFirstNFT,
-          limit: tokensPerPage,
-        })
-        .then(setTokens);
-      setLoading(false);
-    };
-    getGalleryData();
-    // indexOfFirstNFT();
-    console.log(tokens);
-  }, [currentPage, indexFirstNFT]);
+  // React.useEffect(() => {
+  //   const getGalleryData = async () => {
+  //     setLoading(true);
+  //     await nearContext.contract
+  //       // @ts-ignore: Unreachable code error
+  //       .obtener_pagina_v2({
+  //         from_index: indexOfFirstNFT,
+  //         limit: tokensPerPage,
+  //       })
+  //       .then(setTokens);
+  //     setLoading(false);
+  //   };
+  //   getGalleryData();
+  //   // indexOfFirstNFT();
+  //   console.log(tokens);
+  // }, [currentPage, indexFirstNFT]);
 
   const indexOfLastNFT = currentPage * tokensPerPage;
   // const indexOfFirstNFT = indexOfLastNFT - tokensPerPage;
@@ -83,6 +73,40 @@ export default function GalleryInfo() {
     console.log(currentPage);
     console.log(indexFirstNFT);
   };
+  const getTokens = async () => {
+    let currentTokens = [];
+    await sales.map(async (token) => {
+      // @ts-ignore: Unreachable code error
+      let tokenIterable = await nearContext.contracts.nftContract.nft_token({
+        token_id: token.token_id,
+      });
+      currentTokens.push(tokenIterable);
+    });
+    setTokens(currentTokens);
+  };
+
+  const wholeData = () => {
+    let wholeDataArray = [];
+    for (let index = 0; index < sales.length; index++) {
+      for (let j = 0; j < tokens.length; j++) {
+        if (sales[index].token_id === tokens[j].token_id) {
+          let wholeToken: WholeToken = {
+            sale: sales[index],
+            token: tokens[j],
+          };
+          wholeDataArray.push(wholeToken);
+        }
+      }
+    }
+    setWholeDataSet(wholeDataArray);
+  };
+
+  React.useEffect(() => {
+    if (tokens.length === 0) {
+      getTokens();
+    }
+    getSalesData();
+  }, [sales]);
 
   const categories = [
     {
@@ -114,26 +138,64 @@ export default function GalleryInfo() {
     <div>
       <div className="min-h-screen min-w-full mb-20">
         <div className="p-4">
-          <div className="lg:hidden">
-            <img src="/logo.png" alt="logo" className="w-36" />
-          </div>
-          <div className="mt-6 lg:hidden">
+          <div className="mt-6 lg:hidden w-full">
             <SearchBarDesktop
-              className="rounded-lg border-2 h-8 py-px px-3"
-              data={galleryDataMock}
+              className="rounded-lg border-2 h-8 py-px px-3 w-full"
+              tokens={searchBarTokens}
             />
           </div>
-          <div className="mt-5 flex space-x-4">
+          {/* <div className="mt-5 flex space-x-4">
             {categories.map((category, i) => (
               <Category categories={category} key={i} />
             ))}
+          </div> */}
+          <div className="flex justify-between mt-5">
+            <div>
+              <h2 className="text-figma-400 font-semibold text-xl">
+                NFT Gallery
+              </h2>
+            </div>
+            <div className="self-center flex space-x-2 md:hidden">
+              <button
+                type="button"
+                onClick={() => setView('grid')}
+                className={`${view === 'grid' ? 'text-figma-100' : ''}`}
+              >
+                <ViewGridIcon className="w-7 h-7" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setView('list')}
+                className={`${view === 'grid' ? '' : 'text-figma-100'}`}
+              >
+                <ViewListIcon className="w-7 h-7" />
+              </button>
+            </div>
           </div>
-          <h2 className="text-figma-400 font-semibold text-xl mt-5">
-            NFT Gallery
-          </h2>
-          <div className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-6">
-            {tokens && !loading ? (
-              tokens.map((nft, i) => <NFTGalleryPreview key={i} data={nft} />)
+          <div
+            className={`mt-3 ${
+              view === 'grid'
+                ? 'grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid lg:grid-cols-5 lg:justify-between'
+                : 'text-center md:grid md:grid-cols-3 md:gap-3 lg:grid lg:grid-cols-5 lg:gap-6'
+            } text-center`}
+          >
+            {wholeDataSet.length > 0 ? (
+              wholeDataSet.map((nft, i) => (
+                <div
+                  key={nft.token.token_id}
+                  className={`${view === 'grid' ? '' : 'py-4 md:py-0'}`}
+                >
+                  <NFTGalleryPreview
+                    key={nft.token.token_id}
+                    data={nft}
+                    className={`mt-3 lg:mt-0 ${
+                      view === 'grid'
+                        ? 'w-36 h-36 lg:w-72 lg:h-72 md:w-52 md:h-52 '
+                        : 'w-72 h-72 md:w-52 md:h-52 lg:h-72 lg:w-72 '
+                    }`}
+                  />
+                </div>
+              ))
             ) : (
               <div>Nothing to show yet...</div>
             )}

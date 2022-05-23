@@ -1,7 +1,19 @@
-import React from "react";
+import React from 'react';
+import Landing from '../components/Landing/Landing';
+import Layout from '../components/Landing/Layout';
+import { Seo } from '../components/Seo/Seo';
 
-function index() {
-  return <div className="text-4xl font-light h-screen w-screen flex justify-center items-center align-middle">Mintos NFT Marketplace 🚀</div>;
+export default function index() {
+  return (
+    <div className="bg-bg-2 lg:w-full lg:h-full lg:bg-cover lg:min-h-screen bg-cover min-h-screen min-w-screen">
+      <Layout>
+        <Seo
+          metaTitle="Mintos NFTs"
+          metaDescription="Explore out of this wordl!"
+          shareImage="/logo.png"
+        />
+        <Landing />
+      </Layout>
+    </div>
+  );
 }
-
-export default index;
