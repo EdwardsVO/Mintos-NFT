@@ -1,5 +1,4 @@
 import React from 'react';
-import Category from '../Category/Category';
 import NFTGalleryPreview from '../NFT/NFTGalleryPreview';
 import SearchBarDesktop from '../Searchbar/SearchBarDesktop';
 import Token from '../../models/Token';
@@ -10,17 +9,13 @@ import WholeToken from '../../models/WholeToken';
 import { useNear } from '../../hooks/useNear';
 
 export default function GalleryInfo() {
-  const [tokens, setTokens] = React.useState<Array<Token>>(null);
+  const [tokens, setTokens] = React.useState<Array<Token>>([]);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [loading, setLoading] = React.useState(false);
   const [tokensPerPage] = React.useState(4);
-  const [indexFirstNFT, setIndexFirstNFT] = React.useState(0);
-  // const [currentNFTs, setCurrentNFTs] = React.useState<Token[]>();
-  const [loaded, setLoaded] = React.useState<boolean>(false);
+  const [indexFirstNFT, setIndexFirstNFT] = React.useState('0');
   const [sales, setSales] = React.useState<Array<Sale>>([]);
   const [searchBarTokens, setSearchBarTokens] =
     React.useState<Array<Token>>(null);
-  const [page, setPage] = React.useState<number>(0);
   const [view, setView] = React.useState('grid');
   const [wholeDataSet, setWholeDataSet] = React.useState<WholeToken[]>([]);
   const [nearContext, setNearContext] = useNear();
@@ -32,47 +27,13 @@ export default function GalleryInfo() {
       // @ts-ignore: Unreachable code error
       await NEAR.contracts.marketContract.get_sales_by_nft_contract_id({
         nft_contract_id: NEAR.contracts.nftContract.contractId,
-        from_index: '0',
-        limit: 20,
+        from_index: indexFirstNFT,
+        limit: tokensPerPage,
       });
     setSales(currentSales);
     wholeData();
   };
 
-  // React.useEffect(() => {
-  //   const getGalleryData = async () => {
-  //     setLoading(true);
-  //     await nearContext.contract
-  //       // @ts-ignore: Unreachable code error
-  //       .obtener_pagina_v2({
-  //         from_index: indexOfFirstNFT,
-  //         limit: tokensPerPage,
-  //       })
-  //       .then(setTokens);
-  //     setLoading(false);
-  //   };
-  //   getGalleryData();
-  //   // indexOfFirstNFT();
-  //   console.log(tokens);
-  // }, [currentPage, indexFirstNFT]);
-
-  const indexOfLastNFT = currentPage * tokensPerPage;
-  // const indexOfFirstNFT = indexOfLastNFT - tokensPerPage;
-  const indexOfFirstNFT = currentPage * tokensPerPage - 1;
-
-  // const indexOfFirstNFT = () => {
-  //   if (currentPage - tokensPerPage < 0) {
-  //     setIndexFirstNFT(0);
-  //   } else {
-  //     setIndexFirstNFT((currentPage * tokensPerPage) -1);
-  //   }
-  // };
-  const changePage = () => {
-    setCurrentPage(currentPage + 1);
-    setIndexFirstNFT(indexOfFirstNFT);
-    console.log(currentPage);
-    console.log(indexFirstNFT);
-  };
   const getTokens = async () => {
     let currentTokens = [];
     await sales.map(async (token) => {
@@ -99,6 +60,11 @@ export default function GalleryInfo() {
       }
     }
     setWholeDataSet(wholeDataArray);
+  };
+
+  const next = () => {
+    setCurrentPage(currentPage + 1);
+    setIndexFirstNFT((Number(indexFirstNFT) + tokensPerPage).toPrecision());
   };
 
   React.useEffect(() => {
@@ -154,6 +120,8 @@ export default function GalleryInfo() {
               <h2 className="text-figma-400 font-semibold text-xl">
                 NFT Gallery
               </h2>
+              <h2>Current Page: {currentPage}</h2>
+              <h2>first token index:{indexFirstNFT}</h2>
             </div>
             <div className="self-center flex space-x-2 md:hidden">
               <button
@@ -180,7 +148,7 @@ export default function GalleryInfo() {
             } text-center`}
           >
             {wholeDataSet.length > 0 ? (
-              wholeDataSet.map((nft, i) => (
+              wholeDataSet.map((nft) => (
                 <div
                   key={nft.token.token_id}
                   className={`${view === 'grid' ? '' : 'py-4 md:py-0'}`}
@@ -202,7 +170,7 @@ export default function GalleryInfo() {
           </div>
 
           {/* WE NEED TO CREATE A PAGINATOR TO setPage */}
-          <button onClick={() => changePage()}>Next Page</button>
+          <button onClick={next}>next</button>
         </div>
       </div>
     </div>
