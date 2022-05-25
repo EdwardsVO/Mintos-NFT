@@ -9,10 +9,13 @@ export default function SearchBar() {
           type="search"
           className=" h-11 rounded px-6 w-3/4 border-2 border-figma-300 text-figma-400 font-medium"
           placeholder="Search artwork"
+          disabled={true}
         />
-        <button className="inline-block px-1 py-2 border-2 border-figma-100 text-figma-100 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-1/4">
+        {/* <button className="inline-block px-1 py-2 border-2 border-figma-100 text-figma-100 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-1/4"> */}
+        <div className=" px-1 py-2 border-2 border-gray-300 text-gray-400 font-medium text-xs leading-tight uppercase rounded  w-1/4 text-center flex items-center justify-center align-middle">
           Search
-        </button>
+          </div>
+        {/* </button> */}
       </div>
     </div>
   );
