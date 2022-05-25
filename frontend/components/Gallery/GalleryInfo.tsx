@@ -11,7 +11,7 @@ import { useNear } from '../../hooks/useNear';
 export default function GalleryInfo() {
   const [tokens, setTokens] = React.useState<Array<Token>>([]);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [tokensPerPage] = React.useState(4);
+  const [tokensPerPage] = React.useState(20);
   const [indexFirstNFT, setIndexFirstNFT] = React.useState('0');
   const [sales, setSales] = React.useState<Array<Sale>>([]);
   const [searchBarTokens, setSearchBarTokens] =
