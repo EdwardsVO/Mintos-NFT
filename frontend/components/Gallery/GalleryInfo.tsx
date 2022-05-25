@@ -106,15 +106,15 @@ export default function GalleryInfo() {
       <div className="min-h-screen min-w-full mb-20">
         <div className="p-4">
           <div className="mt-6 lg:hidden flex bg-red-300">
-            <SearchBar/>
+            <SearchBar />
           </div>
           <div className="flex justify-between mt-5">
             <div>
               <h2 className="text-figma-400 font-semibold text-xl">
                 NFT Gallery
               </h2>
-              <h2>Current Page: {currentPage}</h2>
-              <h2>first token index:{indexFirstNFT}</h2>
+              {/* <h2>Current Page: {currentPage}</h2>
+              <h2>first token index:{indexFirstNFT}</h2> */}
             </div>
             <div className="self-center flex space-x-2 md:hidden">
               <button
@@ -163,7 +163,7 @@ export default function GalleryInfo() {
           </div>
 
           {/* WE NEED TO CREATE A PAGINATOR TO setPage */}
-          <button onClick={next}>next</button>
+          {/* <button onClick={next}>next</button> */}
         </div>
       </div>
     </div>

@@ -104,7 +104,6 @@ export default function Profile() {
           }
         }
       }
-      // console.log(intersection);
       setMarketTokens(market);
     }
   };
@@ -135,9 +134,6 @@ export default function Profile() {
     }
     setWalletTokens(wallet);
   };
-
-  console.log('On Sale: ', marketTokens);
-  console.log('Not on Sale: ', walletTokens);
 
   const addStorageDeposit = async () => {
     // @ts-ignore: Unreachable code error
@@ -188,7 +184,7 @@ export default function Profile() {
               </button>
             </div>
           </div>
-          <div className="mt-6 px-4 flex justify-between mb-2">
+          <div className="mt-6 px-4 flex justify-between mb-2 md:px-9">
             <h2 className="font-semibold text-2xl">My NFTs</h2>
             <button
               type="button"
@@ -220,11 +216,11 @@ export default function Profile() {
               Wallet
             </button>
           </div>
-          <div className="md:grid md:grid-cols-2 md:gap-4 text-center">
+          <div className="">
             {changeView ? (
-              <div>
+              <div className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center lg:grid-cols-3 xl:grid-cols-4">
                 {marketTokens.map((nft) => (
-                  <div key={nft?.token?.token_id} className="px-6 py-3">
+                  <div key={nft?.token?.token_id} className="pt-4">
                     <NFTGalleryPreview
                       data={nft}
                       key={nft?.token?.token_id}
@@ -236,7 +232,10 @@ export default function Profile() {
             ) : (
               <div>
                 {walletTokens.map((nft) => (
-                  <div key={nft?.token?.token_id} className="px-6 py-3">
+                  <div
+                    key={nft?.token?.token_id}
+                    className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center lg:grid-cols-3 xl:grid-cols-4"
+                  >
                     <NFTGalleryPreview
                       data={nft}
                       key={nft?.token?.token_id}
