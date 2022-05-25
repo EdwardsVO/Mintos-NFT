@@ -7,26 +7,26 @@ export default function Landing() {
   const categories = [
     {
       _id: 0,
-      title: 'All',
-      availableNfts: 99,
+      title: 'Comming Soon',
+      availableNfts: 0,
       banner: '/123123123.png',
     },
     {
       _id: 1,
-      title: 'Aliens',
-      availableNfts: 32,
+      title: 'Comming Soon',
+      availableNfts: 0,
       banner: '/123123123.png',
     },
     {
       _id: 2,
-      title: 'Animals',
-      availableNfts: 43,
+      title: 'Comming Soon',
+      availableNfts: 0,
       banner: '/123123123.png',
     },
     {
       _id: 3,
-      title: 'People',
-      availableNfts: 12,
+      title: 'Comming Soon',
+      availableNfts: 0,
       banner: '/123123123.png',
     },
   ];
@@ -34,14 +34,14 @@ export default function Landing() {
   const collections = [
     {
       _id: 1,
-      title: 'NEARliens',
-      sold: 48,
+      title: 'Comming Soon',
+      sold: 134,
       banner: '/123123123.png',
     },
     {
       _id: 2,
-      title: 'Collection2',
-      sold: 30,
+      title: 'Comming Soon',
+      sold: 876,
       banner: '/123123123.png',
     },
   ];
@@ -51,18 +51,16 @@ export default function Landing() {
         <div className="mt-2 lg:hidden">
           <SearchBar />
         </div>
-        {/* <div className="mt-5 flex space-x-4">
-          {categories.map((category, i) => (
-            <Category categories={category} key={i} />
-          ))}
-        </div> */}
-        <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
+        <h2 className="px-4 font-semibold p-6 text-5xl text-figma-400">
+          Last Collections 
+        </h2>
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
           {categories.map((category, i) => (
             <NFTPreview key={i} data={category} />
           ))}
         </div>
         <div className="mt-5">
-          <h2 className="px-4 font-semibold text-lg">
+          <h2 className="px-4 font-semibold p-6 text-5xl text-figma-400">
             Top Selling Collections
           </h2>
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
