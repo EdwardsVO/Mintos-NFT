@@ -91,8 +91,6 @@ export default function Navbar() {
         </div>
         <div className="self-center">
           <SearchBar
-            className="rounded-lg border-2 h-8 py-px px-3"
-            tokens={tokens}
           />
         </div>
         <div>

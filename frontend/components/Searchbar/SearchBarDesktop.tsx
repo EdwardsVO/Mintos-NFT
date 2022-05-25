@@ -21,14 +21,15 @@ export default function SearchBar({ tokens, className }: SearchBarProps) {
   };
   return (
     <div>
-      <div className="flex">
+      <div className="flex justify-center align-middle items-center">
         <input
           type="text"
-          className="h-full border-0 w-full rounded-lg outline-none bg-figma-200 lg:bg-white"
+          className="h-full border-2 p-3 w-full rounded-lg outline-none bg-figma-200 lg:bg-white"
           placeholder="Search artwork"
           onChange={handleFilter}
+          disabled={true}
         />
-        <SearchIcon className="h-6 top-1 text-figma-600 font-bold" />
+        <SearchIcon className="h-8 ml-2 top-1 text-figma-600 font-bold" />
       </div>
       {searchTerm?.length !== 0 && (
         <div className="w-56 bg-gray-50 overflow-hidden overflow-y-auto text-md p-2 mt-3 shadow-lg scrollbar-hide absolute">
