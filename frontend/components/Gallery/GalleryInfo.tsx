@@ -8,6 +8,7 @@ import { ViewGridIcon, ViewListIcon } from '../icons';
 import Sale from '../../models/Sale';
 import WholeToken from '../../models/WholeToken';
 import { useNear } from '../../hooks/useNear';
+import SearchBar from '../Searchbar/SearchBar';
 
 export default function GalleryInfo() {
   const [tokens, setTokens] = React.useState<Array<Token>>([]);
@@ -99,17 +100,9 @@ export default function GalleryInfo() {
     <div>
       <div className="min-h-screen min-w-full mb-20">
         <div className="p-4">
-          <div className="mt-6 lg:hidden w-full">
-            <SearchBarDesktop
-              className="rounded-lg border-2 h-8 py-px px-3 w-full"
-              tokens={searchBarTokens}
-            />
+          <div className="mt-6 lg:hidden flex bg-red-300">
+            <SearchBar/>
           </div>
-          {/* <div className="mt-5 flex space-x-4">
-            {categories.map((category, i) => (
-              <Category categories={category} key={i} />
-            ))}
-          </div> */}
           <div className="flex justify-between mt-5">
             <div>
               <h2 className="text-figma-400 font-semibold text-xl">
