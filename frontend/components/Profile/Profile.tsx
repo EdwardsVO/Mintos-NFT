@@ -18,11 +18,19 @@ export default function Profile() {
   const [storage, setStorage] = React.useState('');
   const [amountForStorage, setAmountForStorage] = React.useState<string>('');
   const [nearContext, setNearContext] = useNear();
+  // True view = market, False view = wallet
+  const [changeView, setChangeView] = React.useState(true);
+  const [marketTokens, setMarketTokens] = React.useState<Array<WholeToken>>([]);
+  const [walletTokens, setWalletTokens] = React.useState<Array<WholeToken>>([]);
 
   const setStorageInNEAR = (e: any) => {
     const amount = Number(e) * ONE_NEAR_IN_YOCTO;
     const completeAmount = toFixed(amount).toString();
     setAmountForStorage(completeAmount);
+  };
+
+  const changePreferredView = () => {
+    setChangeView(!changeView);
   };
 
   const getGalleryData = async () => {
@@ -38,7 +46,7 @@ export default function Profile() {
         limit: 20,
       })
     );
-    wholeData();
+    // wholeData();
     // @ts-ignore: Unreachable code error
     const balance_yocto = (
       await nearContext.contracts.nftContract.account.getAccountBalance()
@@ -52,8 +60,6 @@ export default function Profile() {
       });
 
     setStorage(await toNEAR(available_storage));
-    console.log('Gallery Data');
-    console.log(tokens);
   };
 
   const getSalesData = async () => {
@@ -68,53 +74,65 @@ export default function Profile() {
         limit: 10,
       });
     setSales(currentSales);
-    // console.log('sales data');
-    // console.log(sales);
-    wholeData();
   };
 
-  const wholeData = () => {
-    let wholeDataArray = [];
-    if (sales?.length > 0) {
-      for (let j = 0; j < tokens.length; j++) {
-        for (let index = 0; index < sales.length; index++) {
-          if (sales[index].token_id === tokens[j].token_id) {
-            let wholeToken: WholeToken = {
-              sale: sales[index],
-              token: tokens[j],
+  const getMarketTokens = async () => {
+    const market = [];
+    const saleTokenIds = [];
+    const walletTokenIds = [];
+    for (let x = 0; x < sales.length; x++) {
+      saleTokenIds.push(sales[x].token_id);
+    }
+    for (let i = 0; i < tokens.length; i++) {
+      walletTokenIds.push(tokens[i].token_id);
+    }
+    const intersection = walletTokenIds.filter((tokenId) =>
+      saleTokenIds.includes(tokenId)
+    );
+    for (let index = 0; index < tokens.length; index++) {
+      for (let x = 0; x < sales.length; x++) {
+        for (let i = 0; i < intersection.length; i++) {
+          if (
+            tokens[index].token_id === intersection[i] &&
+            tokens[index].token_id === sales[x].token_id
+          ) {
+            const f: WholeToken = {
+              token: tokens[index],
+              sale: sales[x],
             };
-            wholeDataArray.push(wholeToken);
-          } else {
-            let wholeToken: WholeToken = {
-              token: tokens[j],
-              sale: {
-                token_id: null,
-                account_id: null,
-                sale_conditions: null,
-                approval_id: null,
-                nft_contract_id: null,
-              },
-            };
-            wholeDataArray.push(wholeToken);
+            market.push(f);
           }
         }
       }
-    } else {
-      for (let j = 0; j < tokens.length; j++) {
-        let wholeToken: WholeToken = {
-          token: tokens[j],
-          sale: {
-            token_id: null,
-            account_id: null,
-            sale_conditions: null,
-            approval_id: null,
-            nft_contract_id: null,
-          },
-        };
-        wholeDataArray.push(wholeToken);
+      setMarketTokens(market);
+    }
+  };
+
+  const getWalletTokens = async () => {
+    const wallet = [];
+    const saleTokenIds = [];
+    const walletTokenIds = [];
+    for (let x = 0; x < sales.length; x++) {
+      saleTokenIds.push(sales[x].token_id);
+    }
+    for (let i = 0; i < tokens.length; i++) {
+      walletTokenIds.push(tokens[i].token_id);
+    }
+    const intersection = walletTokenIds.filter(
+      (tokenId) => !saleTokenIds.includes(tokenId)
+    );
+    for (let index = 0; index < tokens.length; index++) {
+      for (let i = 0; i < intersection.length; i++) {
+        if (tokens[index].token_id === intersection[i]) {
+          const f: WholeToken = {
+            token: tokens[index],
+            sale: null,
+          };
+          wallet.push(f);
+        }
       }
     }
-    setWholeDataSet(wholeDataArray);
+    setWalletTokens(wallet);
   };
 
   const addStorageDeposit = async () => {
@@ -133,7 +151,8 @@ export default function Profile() {
       getGalleryData();
     }
     getSalesData();
-    wholeData();
+    getMarketTokens();
+    getWalletTokens();
   }, [sales]);
 
   return (
@@ -165,7 +184,7 @@ export default function Profile() {
               </button>
             </div>
           </div>
-          <div className="mt-6 px-4 flex justify-between mb-2">
+          <div className="mt-6 px-4 flex justify-between mb-2 md:px-9">
             <h2 className="font-semibold text-2xl">My NFTs</h2>
             <button
               type="button"
@@ -175,8 +194,59 @@ export default function Profile() {
               Mint
             </button>
           </div>
-          <div className="md:grid md:grid-cols-2 md:gap-4 text-center">
-            {wholeDataSet ? (
+          <div className="flex justify-center space-x-12">
+            <button
+              className={`${
+                changeView === true
+                  ? 'underline decoration text-figma-100 text-semibold transition duration-300'
+                  : ''
+              }`}
+              onClick={() => changePreferredView()}
+            >
+              Market
+            </button>
+            <button
+              className={`${
+                changeView === false
+                  ? 'underline decoration text-figma-100 text-semibold transition duration-300'
+                  : ''
+              }`}
+              onClick={() => changePreferredView()}
+            >
+              Wallet
+            </button>
+          </div>
+          <div className="">
+            {changeView ? (
+              <div className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center lg:grid-cols-3 xl:grid-cols-4">
+                {marketTokens.map((nft) => (
+                  <div key={nft?.token?.token_id} className="pt-4">
+                    <NFTGalleryPreview
+                      data={nft}
+                      key={nft?.token?.token_id}
+                      className="h-72 w-72"
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div>
+                {walletTokens.map((nft) => (
+                  <div
+                    key={nft?.token?.token_id}
+                    className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center lg:grid-cols-3 xl:grid-cols-4"
+                  >
+                    <NFTGalleryPreview
+                      data={nft}
+                      key={nft?.token?.token_id}
+                      className="h-72 w-72"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* {wholeDataSet ? (
               wholeDataSet.map((nft, i) => (
                 <div key={i} className="px-6 py-3">
                   <NFTGalleryPreview data={nft} key={i} className="h-72 w-72" />
@@ -184,7 +254,7 @@ export default function Profile() {
               ))
             ) : (
               <div>Nothing to show yet...</div>
-            )}
+            )} */}
           </div>
         </div>
       </div>
