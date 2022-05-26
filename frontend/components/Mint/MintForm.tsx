@@ -41,18 +41,13 @@ export default function MintForm() {
 
   const confirmRoyalty = () => {
     royalties.push({
-      key: royaltyAccount,
+      accountId: royaltyAccount,
       value: royaltyAmount,
     });
     setRoyaltyBool(false);
     setRoyaltyAccount('');
     setRoyaltyAmount(0);
   };
-
-  // const stringifyRoyalties = () => {
-  //   const stringified = JSON.stringify(royalties);
-  //   console.log(stringified);
-  // };
 
   const addNewRoyalty = () => {
     setRoyaltyBool(true);
@@ -93,12 +88,31 @@ export default function MintForm() {
   };
 
   const handleSubmit = async () => {
+    if (royalties.length > 0) {
+      let formattedRoyalties = {};
+      royalties.forEach((r) => {
+        formattedRoyalties[r.accountId] = parseFloat(String(r.value * 100));
+      });
+      console.log(formattedRoyalties);
+      // @ts-ignore: Unreachable code error
+      await nearContext.contracts.nftContract.nft_mint(
+        {
+          token_id: token.token_id,
+          metadata: token.metadata,
+          receiver_id: token.owner_id,
+          perpetual_royalties: formattedRoyalties,
+        },
+        '300000000000000',
+        '465000000000000000000000'
+      );
+    }
     // @ts-ignore: Unreachable code error
     await nearContext.contracts.nftContract.nft_mint(
       {
         token_id: token.token_id,
         metadata: token.metadata,
         receiver_id: token.owner_id,
+        perpetual_royalties: { 'mzterdox.testnet': 10 },
       },
       '300000000000000',
       '465000000000000000000000'
@@ -182,11 +196,10 @@ export default function MintForm() {
           }}
         />
 
-<<<<<<< HEAD
         <div>
           {royalties.map((r, index) => (
             <h2 key={index}>
-              {index + 1}.- {r.key}: {r.value}
+              {index + 1}.- {r.accountId}: {r.value}
             </h2>
           ))}
         </div>
@@ -246,27 +259,7 @@ export default function MintForm() {
           >
             Mint NFT
           </button>
-          <button
-            type="button"
-            className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
-            onClick={() => {
-              console.log(royalties);
-            }}
-          >
-            TEST ROY
-          </button>
         </div>
-=======
-        <button
-          type="button"
-          className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
-          onClick={() => {
-            handleSubmit();
-          }}
-        >
-          Mint NFT
-        </button>
->>>>>>> b1efdc32662ba837e575105353a9d0b5da76c354
       </div>
       <div className="mt-7"></div>
     </div>
