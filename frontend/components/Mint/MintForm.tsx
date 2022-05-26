@@ -6,6 +6,8 @@ import Token from '../../models/Token';
 import ExtraMetadata from '../../models/ExtraMetadata';
 import useUser from '../../hooks/useUser';
 import { ONE_NEAR_IN_YOCTO, toFixed } from '../utils';
+import Royalties from '../../models/Royalties';
+import { stringify } from 'querystring';
 
 export default function MintForm() {
   const [name, setName] = React.useState('');
@@ -19,6 +21,14 @@ export default function MintForm() {
   const [uploaded, setUploaded] = React.useState(false);
   const [tokensSupply, setTokensSupply] = React.useState<string>('');
   const [category, setCategory] = React.useState<string>('');
+  const [royaltiesList, setRoyaltiesList] = React.useState<Array<Royalties>>(
+    []
+  );
+  const [royaltyBool, setRoyaltyBool] = React.useState<boolean>(false);
+  const [royaltyAccount, setRoyaltyAccount] = React.useState<string>();
+  const [royaltyAmount, setRoyaltyAmount] = React.useState<number>();
+
+  const [royalties] = React.useState([]);
 
   // @ts-ignore: Unreachable code error
   const client = create('https://ipfs.infura.io:5001/api/v0');
@@ -27,6 +37,20 @@ export default function MintForm() {
     // @ts-ignore: Unreachable code error
     var tokenId = await nearContext.contracts.nftContract.nft_total_supply();
     setTokensSupply(tokenId);
+  };
+
+  const confirmRoyalty = () => {
+    royalties.push({
+      accountId: royaltyAccount,
+      value: royaltyAmount,
+    });
+    setRoyaltyBool(false);
+    setRoyaltyAccount('');
+    setRoyaltyAmount(0);
+  };
+
+  const addNewRoyalty = () => {
+    setRoyaltyBool(true);
   };
 
   const retrieveFile = async (e) => {
@@ -64,12 +88,31 @@ export default function MintForm() {
   };
 
   const handleSubmit = async () => {
+    if (royalties.length > 0) {
+      let formattedRoyalties = {};
+      royalties.forEach((r) => {
+        formattedRoyalties[r.accountId] = parseFloat(String(r.value * 100));
+      });
+      console.log(formattedRoyalties);
+      // @ts-ignore: Unreachable code error
+      await nearContext.contracts.nftContract.nft_mint(
+        {
+          token_id: token.token_id,
+          metadata: token.metadata,
+          receiver_id: token.owner_id,
+          perpetual_royalties: formattedRoyalties,
+        },
+        '300000000000000',
+        '465000000000000000000000'
+      );
+    }
     // @ts-ignore: Unreachable code error
     await nearContext.contracts.nftContract.nft_mint(
       {
         token_id: token.token_id,
         metadata: token.metadata,
         receiver_id: token.owner_id,
+        perpetual_royalties: { 'mzterdox.testnet': 10 },
       },
       '300000000000000',
       '465000000000000000000000'
@@ -153,15 +196,70 @@ export default function MintForm() {
           }}
         />
 
-        <button
-          type="button"
-          className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
-          onClick={() => {
-            handleSubmit();
-          }}
-        >
-          Mint NFT
-        </button>
+        <div>
+          {royalties.map((r, index) => (
+            <h2 key={index}>
+              {index + 1}.- {r.accountId}: {r.value}
+            </h2>
+          ))}
+        </div>
+
+        <div>
+          {royaltyBool ? (
+            <div className="flex space-x-5">
+              <Input
+                required
+                label="Account *"
+                name="Account"
+                type="text"
+                onChange={(e) => {
+                  e.preventDefault();
+                  setRoyaltyAccount(e.target.value);
+                }}
+              />
+              <Input
+                required
+                label="Amount *"
+                name="Amount"
+                type="number"
+                onChange={(e) => {
+                  e.preventDefault();
+                  setRoyaltyAmount(e.target.value);
+                }}
+              />
+              <button
+                type="button"
+                className="bg-figma-100 px-8 rounded-lg text-figma-300"
+                onClick={() => {
+                  confirmRoyalty();
+                }}
+              >
+                Add royalty
+              </button>
+            </div>
+          ) : null}
+        </div>
+
+        <div className="lg:flex">
+          <button
+            type="button"
+            className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
+            onClick={() => {
+              addNewRoyalty();
+            }}
+          >
+            New Royalty
+          </button>
+          <button
+            type="button"
+            className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
+            onClick={() => {
+              handleSubmit();
+            }}
+          >
+            Mint NFT
+          </button>
+        </div>
       </div>
       <div className="mt-7"></div>
     </div>

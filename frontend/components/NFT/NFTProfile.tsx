@@ -8,6 +8,7 @@ import { useNear } from '../../hooks/useNear';
 import WholeToken from '../../models/WholeToken';
 import Input from '../inputs/Input';
 import { useRouter } from 'next/router';
+import { stringify } from 'querystring';
 
 interface NFTProfileProps {
   data: WholeToken;
