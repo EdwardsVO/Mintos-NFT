@@ -10,8 +10,12 @@
     "format": "prettier --write \"**/*.{js,jsx,css,ts,tsx}\""
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.1.2",
+    "@chakra-ui/toast": "^2.0.5",
     "@deadcoder0904/react-typical": "^0.1.2",
-    "framer-motion": "^6.2.10",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "framer-motion": "^6.3.4",
     "ipfs-http-client": "^56.0.2",
     "near-api-js": "^0.44.2",
     "next": "12.1.4",
