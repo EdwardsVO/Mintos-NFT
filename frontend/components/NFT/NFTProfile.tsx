@@ -8,7 +8,7 @@ import { useNear } from '../../hooks/useNear';
 import WholeToken from '../../models/WholeToken';
 import Input from '../inputs/Input';
 import { useRouter } from 'next/router';
-import { stringify } from 'querystring';
+import useUser from '../../hooks/useUser';
 
 interface NFTProfileProps {
   data: WholeToken;
@@ -20,9 +20,9 @@ export default function NFTProfile({ data }: NFTProfileProps) {
   const [newPrice, setNewPrice] = React.useState<number>(0);
   const [loaded, setLoaded] = React.useState<boolean>(false);
   const [nearContext, setNearContext] = useNear();
-  const [saleData, setSaleData] = React.useState<Sale>();
   const [currentPrice, setCurrentPrice] = React.useState('');
   const router = useRouter();
+  const [user] = useUser();
 
   const loadUserData = async () => {
     const NEAR = await initContract();
@@ -34,6 +34,10 @@ export default function NFTProfile({ data }: NFTProfileProps) {
     } catch (e) {
       router.push('/app/profile');
     }
+  };
+
+  const logIn = async () => {
+    await nearContext.walletConnection.requestSignIn();
   };
 
   const setPrice = (price) => {
@@ -91,7 +95,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
     loadUserData();
   }, []);
   return (
-    <div>
+    <div className="min-h-screen">
       <div className="lg:hidden">
         <img src="/logo.png" alt="logo" className="w-36" />
       </div>
@@ -202,17 +206,33 @@ export default function NFTProfile({ data }: NFTProfileProps) {
           </div>
         ) : (
           <div>
-            <div className="mt-8 lg:w-full lg:text-center">
-              <button
-                type="button"
-                className="bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl"
-                onClick={() => {
-                  purchaseToken();
-                }}
-              >
-                <p className="text-figma-500 text-lg font-semibold">Buy Now</p>
-              </button>
-            </div>
+            {user ? (
+              <div className="mt-8 lg:w-full lg:text-center">
+                <button
+                  type="button"
+                  className="bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl"
+                  onClick={() => {
+                    purchaseToken();
+                  }}
+                >
+                  <p className="text-figma-500 text-lg font-semibold">
+                    Buy Now
+                  </p>
+                </button>
+              </div>
+            ) : (
+              <div className="mt-8 lg:w-full lg:text-center">
+                <button
+                  type="button"
+                  className="bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl"
+                  onClick={logIn}
+                >
+                  <p className="text-figma-500 text-lg font-semibold">
+                    Connect Wallet
+                  </p>
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

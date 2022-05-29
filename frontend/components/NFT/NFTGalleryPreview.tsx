@@ -1,9 +1,11 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import WholeToken from '../../models/WholeToken';
-import Token from '../../models/Token';
-import { ONE_NEAR_IN_YOCTO, toFixed } from '../utils';
+import { ONE_NEAR_IN_YOCTO } from '../utils';
 import useUser from '../../hooks/useUser';
+import { useNear } from '../../hooks/useNear';
+import { CopyIcon } from '../icons';
+import { useToast } from '@chakra-ui/toast';
 
 interface NFTGalleryPreviewProps {
   data?: WholeToken;
@@ -17,6 +19,8 @@ export default function NFTGalleryPreview({
   const router = useRouter();
   const [user] = useUser();
   const [isLogged, setIsLogged] = React.useState(true);
+  const [nearContext] = useNear();
+  const toast = useToast();
 
   const checkUser = () => {
     if (user) {
@@ -26,18 +30,27 @@ export default function NFTGalleryPreview({
     }
   };
 
-  // React.useEffect(() => {
-  //   if (user) {
-  //     setIsLogged(true);
-  //   } else {
-  //     setIsLogged(false);
-  //   }
-  // }, []);
+  const logIn = async () => {
+    await nearContext.walletConnection.requestSignIn();
+  };
+
+  const copy = () => {
+    navigator.clipboard.writeText(
+      `https://mintosnft.app/app/nft/${data?.token?.token_id}`
+    );
+    toast({
+      title: 'Copied to clipboard.',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+      position: 'top-right'
+    });
+  };
+
   return (
     <button
       type="button"
       className="group"
-      onClick={() => router.push(`/app/nft/${data?.token?.token_id}`)}
       onMouseEnter={() => checkUser()}
       onMouseLeave={() => setIsLogged(true)}
     >
@@ -50,9 +63,13 @@ export default function NFTGalleryPreview({
             }
             alt="peng"
             className={`rounded-lg object-cover lg:max-h-56 lg:w-56 md:object-cover lg:object-fill lg:mx-auto ${className}`}
+            onClick={() => router.push(`/app/nft/${data?.token?.token_id}`)}
           />
           <div className="lg:mx-2">
-            <div className="mt-1">
+            <div
+              className="mt-1"
+              onClick={() => router.push(`/app/nft/${data?.token?.token_id}`)}
+            >
               <h1 className="font-semibold text-md text-left">
                 {data?.token?.metadata?.title}
               </h1>
@@ -83,10 +100,22 @@ export default function NFTGalleryPreview({
                   </div>
                 </div>
               ) : (
-                <div className="flex justify-start">
-                  <button className="text-figma-100 font-semibold text-md py-1.5">
-                    Connect
-                  </button>
+                <div>
+                  <div className="flex justify-between">
+                    <button
+                      className="text-figma-100 font-semibold text-md py-1.5 hover:text-figma-900 "
+                      onClick={logIn}
+                    >
+                      Connect
+                    </button>
+                    <button
+                      className="hover:bg-gray-600/[.05] px-3 rounded-md text-center"
+                      onClick={() => copy()}
+                      title="Copy Link"
+                    >
+                      <CopyIcon className="w-5" />
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
