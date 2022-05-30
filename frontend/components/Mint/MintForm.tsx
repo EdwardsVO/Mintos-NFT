@@ -7,7 +7,8 @@ import ExtraMetadata from '../../models/ExtraMetadata';
 import useUser from '../../hooks/useUser';
 import { ONE_NEAR_IN_YOCTO, toFixed } from '../utils';
 import Royalties from '../../models/Royalties';
-import { stringify } from 'querystring';
+import { useRouter } from 'next/router';
+import useMint  from '../../hooks/useMint';
 
 export default function MintForm() {
   const [name, setName] = React.useState('');
@@ -27,8 +28,9 @@ export default function MintForm() {
   const [royaltyBool, setRoyaltyBool] = React.useState<boolean>(false);
   const [royaltyAccount, setRoyaltyAccount] = React.useState<string>();
   const [royaltyAmount, setRoyaltyAmount] = React.useState<number>();
-
   const [royalties] = React.useState([]);
+  const [mintContext, setMintContext] = useMint();
+  const router = useRouter();
 
   // @ts-ignore: Unreachable code error
   const client = create('https://ipfs.infura.io:5001/api/v0');
@@ -93,7 +95,6 @@ export default function MintForm() {
       royalties.forEach((r) => {
         formattedRoyalties[r.accountId] = parseFloat(String(r.value * 100));
       });
-      console.log(formattedRoyalties);
       // @ts-ignore: Unreachable code error
       await nearContext.contracts.nftContract.nft_mint(
         {
@@ -120,6 +121,7 @@ export default function MintForm() {
   };
 
   React.useEffect(() => {
+    console.log(mintContext)
     getTotalSupply();
   });
 
