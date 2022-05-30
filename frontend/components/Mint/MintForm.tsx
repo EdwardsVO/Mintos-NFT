@@ -124,7 +124,7 @@ export default function MintForm() {
   });
 
   return (
-    <div className="lg:flex lg:justify-center lg:items-center lg:align-middle lg:p-9">
+    <div className="lg:flex lg:justify-center lg:items-center lg:align-middle lg:p-9 h-screen">
       <div className="flex lg:justify-center lg:items-center lg:align-middle">
         <div className="mb-3 w-96">
           <div className={`${uploaded ? 'flex' : 'hidden'}`}>
