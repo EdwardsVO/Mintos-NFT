@@ -8,7 +8,7 @@ export default function Mint() {
   return (
     <div className="p-4">
       <div className="mt-5">
-        <h2 className="text-figma-100 font-semibold text-xl">Mint NFT</h2>
+        <h2 className="text-figma-100 font-semibold p-6 text-4xl">Mint NFT</h2>
       </div>
       <div className="mt-3">
         {user != '' ? (

@@ -105,7 +105,7 @@ export default function GalleryInfo() {
     <div>
       <div className="min-h-screen min-w-full mb-20">
         <div className="p-4">
-          <div className="mt-6 lg:hidden flex bg-red-300">
+          <div className="mt-6 lg:hidden flex ">
             <SearchBar />
           </div>
           <div className="flex justify-between mt-5">
