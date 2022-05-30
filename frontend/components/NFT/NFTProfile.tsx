@@ -92,9 +92,6 @@ export default function NFTProfile({ data }: NFTProfileProps) {
   }, []);
   return (
     <div>
-      <div className="lg:hidden">
-        <img src="/logo.png" alt="logo" className="w-36" />
-      </div>
       <div className="mt-6 mx-3 lg:px-4 lg:w-full lg:text-center">
         <h2 className="text-figma-100 font-bold text-xl">
           {
