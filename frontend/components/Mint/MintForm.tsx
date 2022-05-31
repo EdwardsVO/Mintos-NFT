@@ -124,9 +124,9 @@ export default function MintForm() {
   });
 
   return (
-    <div className="lg:flex lg:justify-center lg:items-center lg:align-middle lg:p-9">
+    <div className="lg:flex lg:justify-center lg:items-center lg:align-middle lg:p-9 h-screen">
       <div className="flex lg:justify-center lg:items-center lg:align-middle">
-        <div className="mb-3 w-96">
+        <div className="mb-3 w-96 lg:mr-12">
           <div className={`${uploaded ? 'flex' : 'hidden'}`}>
             <img src={urlArr} alt="" className="w-72 h-72" />
           </div>
@@ -196,7 +196,7 @@ export default function MintForm() {
           }}
         />
 
-        <div>
+        <div className="p-6">
           {royalties.map((r, index) => (
             <h2 key={index}>
               {index + 1}.- {r.accountId}: {r.value}
@@ -206,10 +206,11 @@ export default function MintForm() {
 
         <div>
           {royaltyBool ? (
-            <div className="flex space-x-5">
+            <div className="flex justify-center self-center align-middle items-center p-3">
               <Input
                 required
-                label="Account *"
+                label=""
+                placeholder="mintos.near"
                 name="Account"
                 type="text"
                 onChange={(e) => {
@@ -218,8 +219,10 @@ export default function MintForm() {
                 }}
               />
               <Input
+                className="w-11 mx-4"
                 required
-                label="Amount *"
+                label=""
+                placeholder="%"
                 name="Amount"
                 type="number"
                 onChange={(e) => {
@@ -227,39 +230,41 @@ export default function MintForm() {
                   setRoyaltyAmount(e.target.value);
                 }}
               />
-              <button
-                type="button"
-                className="bg-figma-100 px-8 rounded-lg text-figma-300"
-                onClick={() => {
-                  confirmRoyalty();
-                }}
-              >
-                Add royalty
-              </button>
+              <div>
+                <button
+                  type="button"
+                  className="bg-figma-100  text-figma-300 rounded-full text-center h-9 w-9 font-bold hover:bg-figma-900"
+                  onClick={() => {
+                    confirmRoyalty();
+                  }}
+                >
+                  +
+                </button>
+              </div>
             </div>
           ) : null}
         </div>
 
-        <div className="lg:flex">
+        <div className="lg:flex lg:justify-center lg:items-center lg:align-middle">
           <button
             type="button"
-            className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
+            className="w-full lg:w-60 lg:p-3 text-figma-100  font-semibold p-1 rounded-lg border border-solid border-figma-100 drop-shadow-lg"
             onClick={() => {
               addNewRoyalty();
             }}
           >
-            New Royalty
-          </button>
-          <button
-            type="button"
-            className="w-full lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
-            onClick={() => {
-              handleSubmit();
-            }}
-          >
-            Mint NFT
+            Add Perpetual Royalties
           </button>
         </div>
+        <button
+          type="button"
+          className="w-full mt-4 h-16 lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
+          onClick={() => {
+            handleSubmit();
+          }}
+        >
+          Mint NFT
+        </button>
       </div>
       <div className="mt-7"></div>
     </div>

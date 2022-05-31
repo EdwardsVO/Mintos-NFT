@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # TODO: Change the fake sitemap hostname "mintos-nft.com" for the official hostname
-Sitemap: https://mintos-nft.com/api/sitemap
+Sitemap: https://mintosnft.app/api/sitemap

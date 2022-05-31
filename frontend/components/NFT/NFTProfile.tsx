@@ -8,7 +8,7 @@ import { useNear } from '../../hooks/useNear';
 import WholeToken from '../../models/WholeToken';
 import Input from '../inputs/Input';
 import { useRouter } from 'next/router';
-import { stringify } from 'querystring';
+import useUser from '../../hooks/useUser';
 
 interface NFTProfileProps {
   data: WholeToken;
@@ -20,9 +20,9 @@ export default function NFTProfile({ data }: NFTProfileProps) {
   const [newPrice, setNewPrice] = React.useState<number>(0);
   const [loaded, setLoaded] = React.useState<boolean>(false);
   const [nearContext, setNearContext] = useNear();
-  const [saleData, setSaleData] = React.useState<Sale>();
   const [currentPrice, setCurrentPrice] = React.useState('');
   const router = useRouter();
+  const [user] = useUser();
 
   const loadUserData = async () => {
     const NEAR = await initContract();
@@ -34,6 +34,10 @@ export default function NFTProfile({ data }: NFTProfileProps) {
     } catch (e) {
       router.push('/app/profile');
     }
+  };
+
+  const logIn = async () => {
+    await nearContext.walletConnection.requestSignIn();
   };
 
   const setPrice = (price) => {
@@ -91,8 +95,8 @@ export default function NFTProfile({ data }: NFTProfileProps) {
     loadUserData();
   }, []);
   return (
-    <div>
-      <div className="mt-6 mx-3 lg:px-4 lg:w-full lg:text-center">
+    <div className="min-h-screen">
+      <div className="mt-3 mx-3 lg:px-4 lg:w-full lg:text-center">
         <h2 className="text-figma-100 font-bold text-xl">
           {
             // @ts-ignore: Unreachable code error
@@ -100,26 +104,38 @@ export default function NFTProfile({ data }: NFTProfileProps) {
           }
         </h2>
       </div>
-      <div className="lg:w-full">
-        <div className=" bg-figma-300 rounded-3xl drop-shadow-lg shadow-black p-5 mx-3 mt-2 lg:max-w-xl lg:mx-auto">
-          <img
-            src={data?.token?.metadata?.media}
-            alt={data?.token?.metadata?.title}
-            className="rounded-3xl object-cover"
-          />
+      <div className="lg:w-full lg:flex lg:flex-col">
+        <div className="lg:flex lg:align-middle lg:justify-center lg:items-center lg:flex-col">
+          <div className="p-6">
+            <div className="flex items-center align-middle">
+              <h2 className="text-xl font-light mr-3 text-figma-400">
+                ID#{data?.token?.token_id}
+              </h2>
+              <h2 className="text-2xl font-semibold lg:text-3xl text-figma-400">
+                {data?.token?.metadata?.title}
+              </h2>
+            </div>
+            <h2 className="text-xl font-semibold text-figma-100">
+              {data?.token?.owner_id}
+            </h2>
+          </div>
+          <div className=" bg-figma-300 rounded-3xl lg:flex drop-shadow-lg shadow-black p-5 mx-3 mt-2 lg:max-w-xl lg:mx-auto">
+            <img
+              src={data?.token?.metadata?.media}
+              alt={data?.token?.metadata?.title}
+              className="rounded-3xl object-cover"
+            />
+          </div>
+          <div className="w-full text-center text-lg p-3">
+            {data?.token?.metadata?.description}
+          </div>
+          <div>{data?.token?.perpetual_royalties}</div>
         </div>
         <div className="flex mx-3 lg:mx-0 justify-between mt-3 lg:w-full lg:justify-center">
           <div className="flex w-full lg:w-1/3 justify-between lg:px-8">
-            <div className="mt-2">
-              <h2 className="text-xl font-semibold text-figma-400">
-                {data?.token?.metadata?.title}
-              </h2>
-              <h2 className="text-xl font-semibold text-figma-100">
-                {data?.token?.owner_id}
-              </h2>
-            </div>
-            <div className="mt-2">
-              <h2 className="text-xl font-bold text-figma-400 ">
+            <div className="flex w-full mt-2 items-center align-middle border-t-2 justify-between pt-5">
+              <div className="text-xl font-semibold">Price</div>
+              <h2 className="text-xl font-bold text-figma-400 border-gray-200 border-2 rounded-lg p-1">
                 {Number(data?.sale?.sale_conditions) / ONE_NEAR_IN_YOCTO || '0'}{' '}
                 NEAR
               </h2>
@@ -199,17 +215,33 @@ export default function NFTProfile({ data }: NFTProfileProps) {
           </div>
         ) : (
           <div>
-            <div className="mt-8 lg:w-full lg:text-center">
-              <button
-                type="button"
-                className="bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl"
-                onClick={() => {
-                  purchaseToken();
-                }}
-              >
-                <p className="text-figma-500 text-lg font-semibold">Buy Now</p>
-              </button>
-            </div>
+            {user ? (
+              <div className="mt-8 lg:w-full lg:text-center">
+                <button
+                  type="button"
+                  className="bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl"
+                  onClick={() => {
+                    purchaseToken();
+                  }}
+                >
+                  <p className="text-figma-500 text-lg font-semibold">
+                    Buy Now
+                  </p>
+                </button>
+              </div>
+            ) : (
+              <div className="mt-8 lg:w-full lg:text-center">
+                <button
+                  type="button"
+                  className="bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl"
+                  onClick={logIn}
+                >
+                  <p className="text-figma-500 text-lg font-semibold">
+                    Connect Wallet
+                  </p>
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
