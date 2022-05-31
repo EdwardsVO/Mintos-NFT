@@ -129,16 +129,12 @@ export default function NFTProfile({ data }: NFTProfileProps) {
           <div className="w-full text-center text-lg p-3">
             {data?.token?.metadata?.description}
           </div>
-          <div>
-            {data?.token?.perpetual_royalties}
-          </div>
+          <div>{data?.token?.perpetual_royalties}</div>
         </div>
         <div className="flex mx-3 lg:mx-0 justify-between mt-3 lg:w-full lg:justify-center">
           <div className="flex w-full lg:w-1/3 justify-between lg:px-8">
             <div className="flex w-full mt-2 items-center align-middle border-t-2 justify-between pt-5">
-              <div className='text-xl font-semibold'>
-                Price
-              </div>
+              <div className="text-xl font-semibold">Price</div>
               <h2 className="text-xl font-bold text-figma-400 border-gray-200 border-2 rounded-lg p-1">
                 {Number(data?.sale?.sale_conditions) / ONE_NEAR_IN_YOCTO || '0'}{' '}
                 NEAR

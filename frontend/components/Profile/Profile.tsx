@@ -4,15 +4,17 @@ import { useNear } from '../../hooks/useNear';
 import Sale from '../../models/Sale';
 import Token from '../../models/Token';
 import WholeToken from '../../models/WholeToken';
+import Loader from '../common/Loader';
+import FilterDropdown from '../dropdowns/FilterDropdown';
 import { initContract } from '../near/near';
 import NFTGalleryPreview from '../NFT/NFTGalleryPreview';
 import { ONE_NEAR_IN_YOCTO, toNEAR, toFixed } from '../utils';
+import { motion } from 'framer-motion';
 
 export default function Profile() {
   const router = useRouter();
   const [tokens, setTokens] = React.useState<Array<Token>>([]);
   const [sales, setSales] = React.useState<Array<Sale>>([]);
-  const [wholeDataSet, setWholeDataSet] = React.useState<Array<WholeToken>>([]);
   const [username, setUsername] = React.useState(null);
   const [balance, setBalance] = React.useState('');
   const [storage, setStorage] = React.useState('');
@@ -22,15 +24,12 @@ export default function Profile() {
   const [changeView, setChangeView] = React.useState(true);
   const [marketTokens, setMarketTokens] = React.useState<Array<WholeToken>>([]);
   const [walletTokens, setWalletTokens] = React.useState<Array<WholeToken>>([]);
+  const [filter, setFilter] = React.useState(0);
 
   const setStorageInNEAR = (e: any) => {
     const amount = Number(e) * ONE_NEAR_IN_YOCTO;
     const completeAmount = toFixed(amount).toString();
     setAmountForStorage(completeAmount);
-  };
-
-  const changePreferredView = () => {
-    setChangeView(!changeView);
   };
 
   const getGalleryData = async () => {
@@ -157,107 +156,106 @@ export default function Profile() {
 
   return (
     <div>
-      <div className="min-h-screen min-w-full mb-20">
-        <div className="p-4">
-          <div className="w-full my-7">
-            <img src="/profile.png" alt="profile" className="w-40 mx-auto" />
-          </div>
-          <div className="text-center">
-            <h2>User: {username}</h2>
-            <h2>Email: email@mail.com</h2>
-            <h2>Available Balance: {balance} NEAR</h2>
-            <h2>Available Storage: {storage} NEAR</h2>
+      {tokens.length > 0 ? (
+        <div className="min-h-screen min-w-full mb-20">
+          <div className="p-4">
+            <div className="w-full my-7">
+              <img src="/profile.png" alt="profile" className="w-40 mx-auto" />
+            </div>
             <div className="text-center">
-              <input
-                type="text"
-                placeholder="AGREGAR MONTO"
-                onChange={(e) => {
-                  setStorageInNEAR(e.target.value);
-                }}
-              />
+              <h2>User: {username}</h2>
+              <h2>Email: email@mail.com</h2>
+              <h2>Available Balance: {balance} NEAR</h2>
+              <h2>Available Storage: {storage} NEAR</h2>
+              <div className="text-center">
+                <input
+                  type="text"
+                  placeholder="AGREGAR MONTO"
+                  onChange={(e) => {
+                    setStorageInNEAR(e.target.value);
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => addStorageDeposit()}
+                  className="underline text-center"
+                >
+                  add more storage
+                </button>
+              </div>
+            </div>
+            <div className="mt-6 px-4 flex justify-between mb-2 md:px-9">
+              <h2 className="font-semibold text-2xl">My NFTs</h2>
               <button
                 type="button"
-                onClick={() => addStorageDeposit()}
-                className="underline text-center"
+                className="bg-figma-100 rounded text-figma-300 px-4 py-1 drop-shadow-md font-semibold"
+                onClick={() => router.push('/app/mint')}
               >
-                add more storage
+                Mint
               </button>
             </div>
-          </div>
-          <div className="mt-6 px-4 flex justify-between mb-2 md:px-9">
-            <h2 className="font-semibold text-2xl">My NFTs</h2>
-            <button
-              type="button"
-              className="bg-figma-100 rounded text-figma-300 px-4 py-1 drop-shadow-md font-semibold"
-              onClick={() => router.push('/app/mint')}
-            >
-              Mint
-            </button>
-          </div>
-          <div className="flex justify-center space-x-12">
-            <button
-              className={`${
-                changeView === true
-                  ? 'underline decoration text-figma-100 text-semibold transition duration-300'
-                  : ''
-              }`}
-              onClick={() => changePreferredView()}
-            >
-              Market
-            </button>
-            <button
-              className={`${
-                changeView === false
-                  ? 'underline decoration text-figma-100 text-semibold transition duration-300'
-                  : ''
-              }`}
-              onClick={() => changePreferredView()}
-            >
-              Wallet
-            </button>
-          </div>
-          <div className="">
-            {changeView ? (
-              <div className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center lg:grid-cols-3 xl:grid-cols-4">
-                {marketTokens.map((nft) => (
-                  <div key={nft?.token?.token_id} className="pt-4">
-                    <NFTGalleryPreview
-                      data={nft}
-                      key={nft?.token?.token_id}
-                      className="h-72 w-72"
-                    />
-                  </div>
-                ))}
-              </div>
-            ) : (
+            <div className="flex w-full justify-start px-4 mb-2 md:px-9 lg:px-8">
               <div>
-                {walletTokens.map((nft) => (
-                  <div
-                    key={nft?.token?.token_id}
-                    className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center lg:grid-cols-3 xl:grid-cols-4"
-                  >
-                    <NFTGalleryPreview
-                      data={nft}
-                      key={nft?.token?.token_id}
-                      className="h-72 w-72"
-                    />
-                  </div>
-                ))}
+                <FilterDropdown filter={filter} setFilter={setFilter} />
               </div>
-            )}
-
-            {/* {wholeDataSet ? (
-              wholeDataSet.map((nft, i) => (
-                <div key={i} className="px-6 py-3">
-                  <NFTGalleryPreview data={nft} key={i} className="h-72 w-72" />
+            </div>
+            <div className="">
+              {filter === 0 ? (
+                <div className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
+                  {marketTokens.map((nft) => (
+                    <div key={nft?.token?.token_id} className="pt-4">
+                      <NFTGalleryPreview
+                        data={nft}
+                        key={nft?.token?.token_id}
+                        className="h-72 w-72"
+                      />
+                    </div>
+                  ))}
+                  {walletTokens.map((nft) => (
+                    <div key={nft?.token?.token_id} className="2xl:my-5">
+                      <NFTGalleryPreview
+                        data={nft}
+                        key={nft?.token?.token_id}
+                        className="h-72 w-72"
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))
-            ) : (
-              <div>Nothing to show yet...</div>
-            )} */}
+              ) : null}
+              {filter === 1 ? (
+                <div className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
+                  {marketTokens.map((nft) => (
+                    <div key={nft?.token?.token_id} className="pt-4">
+                      <NFTGalleryPreview
+                        data={nft}
+                        key={nft?.token?.token_id}
+                        className="h-72 w-72"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+              {filter === 2 ? (
+                <div className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
+                  {walletTokens.map((nft) => (
+                    <div key={nft?.token?.token_id} className="pt-4">
+                      <NFTGalleryPreview
+                        data={nft}
+                        key={nft?.token?.token_id}
+                        className="h-72 w-72"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex justify-center w-full">
+          <Loader />
+        </div>
+      )}
     </div>
   );
 }
