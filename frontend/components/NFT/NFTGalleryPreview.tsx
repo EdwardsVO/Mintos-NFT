@@ -103,7 +103,7 @@ export default function NFTGalleryPreview({
                       router.push(`/app/nft/${data?.token?.token_id}`)
                     }
                   >
-                    <h1 className="font-semibold text-md text-left">
+                    <h1 className="font-semibold text-md text-xl text-left">
                       {data?.token?.metadata?.title}
                     </h1>
                     <h1 className="font-medium text-left text-sm">
@@ -119,14 +119,17 @@ export default function NFTGalleryPreview({
                   </div>
                   <div>
                     {isLogged ? (
-                      <div className="mt-2">
-                        <div className="w-full p-px bg-figma-800 rounded-2xl drop-shadow-lg border border-figma-300 group-hover:bg-gray-100/[.7] group-hover:border-gray-600/[.05]">
+                      <div className="mt-4 flex justify-between align-middle items-center">
+                        <button className='font-bold p-1 border border-gray-100 rounded-md hover:border-figma-900'>
+                          See Details
+                        </button>
+                        <div className="">
                           {data?.sale?.sale_conditions ? (
-                            <div>
+                            <div className='font-bold text-lg text-figma-900'>
                               {`${
                                 Number(data?.sale?.sale_conditions) /
                                 ONE_NEAR_IN_YOCTO
-                              } N`}
+                              } Ⓝ`}
                             </div>
                           ) : (
                             <button>Put On Sale</button>
@@ -137,13 +140,13 @@ export default function NFTGalleryPreview({
                       <div>
                         <div className="flex justify-between">
                           <a
-                            className="text-figma-100 font-semibold text-md py-1.5 hover:text-figma-900"
+                            className="text-figma-100 mt-4 font-semibold text-md py-1.5 hover:text-figma-900"
                             onClick={logIn}
                           >
                             Connect
                           </a>
                           <a
-                            className="hover:bg-gray-600/[.05] px-3 rounded-md text-center"
+                            className="hover:bg-gray-600/[.05] mt-4 align-middle flex items-center justify-center px-3 rounded-md text-center"
                             onClick={() => copy()}
                             title="Copy Link"
                           >
