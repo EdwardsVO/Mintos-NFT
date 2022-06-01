@@ -129,13 +129,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
           <div className="w-full text-center text-lg p-3">
             {data?.token?.metadata?.description}
           </div>
-          <div>
-            {data?.token?.royalty ? (
-              <div>{JSON.stringify(data?.token?.royalty)}</div>
-            ) : (
-              <div>"sin royal"</div>
-            )}
-          </div>
+          <div>{JSON.stringify(data?.token?.royalty)}</div>
         </div>
         <div className="flex mx-3 lg:mx-0 justify-between mt-3 lg:w-full lg:justify-center">
           <div className="flex w-full lg:w-1/3 justify-between lg:px-8">
