@@ -12,7 +12,7 @@ export function LogOutModal({ setOpen, isOpen }: AuthorModalProps) {
   const [user, setUser] = useUser();
   const [nearContext] = useNear();
   const logOut = async () => {
-    await setUser('');
+    await setUser(null);
     await nearContext.walletConnection.signOut();
     setOpen(false);
   };

@@ -76,7 +76,7 @@ export default function MintForm() {
   };
 
   const token: Token = {
-    owner_id: user,
+    owner_id: user.username,
     token_id: tokensSupply,
     metadata: {
       title: name,
