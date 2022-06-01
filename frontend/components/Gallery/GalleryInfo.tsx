@@ -84,8 +84,12 @@ export default function GalleryInfo() {
   };
 
   const calculateLastPage = () => {
-    const lastPage = Math.round(Number(maxSales) / tokensPerPage);
-    setLastPage(lastPage);
+    const lastPage = Number(maxSales) / tokensPerPage;
+    if (lastPage % 1 === 0) {
+      setLastPage(lastPage);
+    } else {
+      setLastPage(Math.round(lastPage + 1));
+    }
   };
 
   React.useEffect(() => {
@@ -96,6 +100,12 @@ export default function GalleryInfo() {
     getTokens();
     calculateLastPage();
   }, [sales]);
+
+  React.useEffect(() => {
+    window.onbeforeunload = function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+  }, [currentPage]);
 
   return (
     <div className="min-h-screen">

@@ -162,44 +162,45 @@ export default function Profile() {
               <img src="/profile.png" alt="profile" className="w-40 mx-auto" />
             </div>
             <div className="flex flex-col justify-center align-middle items-center p-3 text-lg lg:border-2 lg:w-1/2">
-              <div className='flex justify-between w-full'>
-                <div className='font-semibold text-figma-100'>User</div> <div className='font-bold'>{username}</div>
+              <div className="flex justify-between w-full">
+                <div className="font-semibold text-figma-100">User</div>{' '}
+                <div className="font-bold">{username}</div>
               </div>
-              <div className='flex justify-between w-full'>
-                <div className='font-semibold text-figma-100'>Email </div> <div>email@mail.com</div>
+              <div className="flex justify-between w-full">
+                <div className="font-semibold text-figma-100">Email </div>{' '}
+                <div>email@mail.com</div>
               </div>
-              <div className='flex justify-between w-full lg:hidden mt-5 border-t-2 pt-5'>
-                <div className='font-light'>Available Balance </div> <div className='font-bold'>{balance} NEAR Ⓝ</div>
+              <div className="flex justify-between w-full lg:hidden mt-5 border-t-2 pt-5">
+                <div className="font-light">Available Balance </div>{' '}
+                <div className="font-bold">{balance} NEAR Ⓝ</div>
               </div>
-              <div className='flex justify-between w-full'>
-                <div className='font-light'>Reserve Storage</div> <div className='font-bold'> {storage} NEAR Ⓝ</div>
+              <div className="flex justify-between w-full">
+                <div className="font-light">Reserve Storage</div>{' '}
+                <div className="font-bold"> {storage} NEAR Ⓝ</div>
               </div>
               <div className="text-center mt-8 border-2 p-6">
-                <p>
-                  NFT mint Storage
-                </p>
-                <div className='flex justify-center align-middle items-center'>
-                <input
-                  type="text"
-                  placeholder="Reserve Storage Ⓝ"
-                  onChange={(e) => {
-                    setStorageInNEAR(e.target.value);
-                  }}
-                  className='mr-6'
-                />
-                <button
-                  type="button"
-                  onClick={() => addStorageDeposit()}
-                  className=" text-center bg-figma-100 rounded-full w-9 h-9 text-white hover:bg-figma-900"
-                >
-                  +
-                </button>
-              </div>
+                <p>NFT mint Storage</p>
+                <div className="flex justify-center align-middle items-center">
+                  <input
+                    type="text"
+                    placeholder="Reserve Storage Ⓝ"
+                    onChange={(e) => {
+                      setStorageInNEAR(e.target.value);
+                    }}
+                    className="mr-6"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => addStorageDeposit()}
+                    className=" text-center bg-figma-100 rounded-full w-9 h-9 text-white hover:bg-figma-900"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
             <div className="mt-6 px-4 flex justify-between mb-2 md:px-9">
               <h2 className="font-semibold text-2xl">My NFTs</h2>
-              
             </div>
             <div className="flex w-full justify-start px-4 mb-2 md:px-9 lg:px-8">
               <div>
@@ -208,7 +209,7 @@ export default function Profile() {
             </div>
             <div className="">
               {filter === 0 ? (
-                <div className="flex justify-center items-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
+                <div className="flex justify-center items-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 lg:justify-between 2xl:grid-cols-6 2xl:justify-between">
                   {marketTokens.map((nft) => (
                     <div key={nft?.token?.token_id} className="pt-4">
                       <NFTGalleryPreview
