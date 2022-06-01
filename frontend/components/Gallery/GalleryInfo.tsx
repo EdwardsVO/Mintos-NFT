@@ -117,8 +117,8 @@ export default function GalleryInfo() {
             </div>
             <div className="flex justify-between mt-5">
               <div>
-                <h2 className="text-figma-400 font-semibold text-xl 2xl:px-12">
-                  NFT Gallery
+                <h2 className="text-black lg:text-4xl lg:p-6 font-bold text-xl 2xl:px-12">
+                  NFT Gallery Latest 
                 </h2>
               </div>
               <div className="self-center flex space-x-2 md:hidden">
