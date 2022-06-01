@@ -157,11 +157,11 @@ export default function Profile() {
     <div>
       {tokens.length > 0 ? (
         <div className="min-h-screen min-w-full mb-20">
-          <div className="p-4 flex flex-col lg:justify-center lg:items-center lg:align-middle">
+          <div className="p-4 flex flex-col">
             <div className="w-full my-7">
               <img src="/profile.png" alt="profile" className="w-40 mx-auto" />
             </div>
-            <div className="flex flex-col justify-center align-middle items-center p-3 text-lg lg:border-2 lg:w-1/2">
+            <div className="flex flex-col justify-center align-middle items-center self-center p-3 text-lg lg:border-2 lg:w-1/2">
               <div className="flex justify-between w-full">
                 <div className="font-semibold text-figma-100">User</div>{' '}
                 <div className="font-bold">{username}</div>
