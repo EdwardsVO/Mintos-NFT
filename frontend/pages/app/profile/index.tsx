@@ -14,6 +14,7 @@ export default function index() {
 
   return (
     <Layout>
+
       <Seo
         metaTitle="My NFTs"
         metaDescription="My profile screen"

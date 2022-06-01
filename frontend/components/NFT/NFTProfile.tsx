@@ -111,7 +111,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
               <h2 className="text-xl font-light mr-3 text-figma-400">
                 ID#{data?.token?.token_id}
               </h2>
-              <h2 className="text-2xl font-semibold lg:text-3xl text-figma-400">
+              <h2 className="text-2xl font-semibold lg:text-5xl text-figma-400">
                 {data?.token?.metadata?.title}
               </h2>
             </div>
