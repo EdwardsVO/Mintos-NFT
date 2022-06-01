@@ -45,7 +45,6 @@ export default function Profile() {
         limit: 20,
       })
     );
-    // wholeData();
     // @ts-ignore: Unreachable code error
     const balance_yocto = (
       await nearContext.contracts.nftContract.account.getAccountBalance()
@@ -158,41 +157,49 @@ export default function Profile() {
     <div>
       {tokens.length > 0 ? (
         <div className="min-h-screen min-w-full mb-20">
-          <div className="p-4">
+          <div className="p-4 flex flex-col lg:justify-center lg:items-center lg:align-middle">
             <div className="w-full my-7">
               <img src="/profile.png" alt="profile" className="w-40 mx-auto" />
             </div>
-            <div className="text-center">
-              <h2>User: {username}</h2>
-              <h2>Email: email@mail.com</h2>
-              <h2>Available Balance: {balance} NEAR</h2>
-              <h2>Available Storage: {storage} NEAR</h2>
-              <div className="text-center">
+            <div className="flex flex-col justify-center align-middle items-center p-3 text-lg lg:border-2 lg:w-1/2">
+              <div className='flex justify-between w-full'>
+                <div className='font-semibold text-figma-100'>User</div> <div className='font-bold'>{username}</div>
+              </div>
+              <div className='flex justify-between w-full'>
+                <div className='font-semibold text-figma-100'>Email </div> <div>email@mail.com</div>
+              </div>
+              <div className='flex justify-between w-full lg:hidden mt-5 border-t-2 pt-5'>
+                <div className='font-light'>Available Balance </div> <div className='font-bold'>{balance} NEAR Ⓝ</div>
+              </div>
+              <div className='flex justify-between w-full'>
+                <div className='font-light'>Reserve Storage</div> <div className='font-bold'> {storage} NEAR Ⓝ</div>
+              </div>
+              <div className="text-center mt-8 border-2 p-6">
+                <p>
+                  NFT mint Storage
+                </p>
+                <div className='flex justify-center align-middle items-center'>
                 <input
                   type="text"
-                  placeholder="AGREGAR MONTO"
+                  placeholder="Reserve Storage Ⓝ"
                   onChange={(e) => {
                     setStorageInNEAR(e.target.value);
                   }}
+                  className='mr-6'
                 />
                 <button
                   type="button"
                   onClick={() => addStorageDeposit()}
-                  className="underline text-center"
+                  className=" text-center bg-figma-100 rounded-full w-9 h-9 text-white hover:bg-figma-900"
                 >
-                  add more storage
+                  +
                 </button>
+              </div>
               </div>
             </div>
             <div className="mt-6 px-4 flex justify-between mb-2 md:px-9">
               <h2 className="font-semibold text-2xl">My NFTs</h2>
-              <button
-                type="button"
-                className="bg-figma-100 rounded text-figma-300 px-4 py-1 drop-shadow-md font-semibold"
-                onClick={() => router.push('/app/mint')}
-              >
-                Mint
-              </button>
+              
             </div>
             <div className="flex w-full justify-start px-4 mb-2 md:px-9 lg:px-8">
               <div>
@@ -201,7 +208,7 @@ export default function Profile() {
             </div>
             <div className="">
               {filter === 0 ? (
-                <div className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
+                <div className="flex justify-center items-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
                   {marketTokens.map((nft) => (
                     <div key={nft?.token?.token_id} className="pt-4">
                       <NFTGalleryPreview

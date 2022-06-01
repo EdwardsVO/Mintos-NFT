@@ -5,19 +5,16 @@ import { useNear } from '../../hooks/useNear';
 import useUser from '../../hooks/useUser';
 import LogOutIcon from '../icons/LogOutIcon';
 import Token from '../../models/Token';
-//
+import { toNEAR } from '../utils';
+import { initContract } from '../near/near';
 
 export default function Navbar() {
   const router = useRouter();
-  const [nearContext] = useNear();
+  const [nearContext, setNearContext] = useNear();
   const [user, setUser] = useUser();
   const [tokens, setTokens] = React.useState<Array<Token>>(null);
 
   const currentPage = router.route;
-
-  React.useEffect(() => {
-    initSearchBar();
-  }, []);
 
   const logIn = async () => {
     await nearContext.walletConnection.requestSignIn(
@@ -26,16 +23,11 @@ export default function Navbar() {
   };
 
   const logOut = async () => {
-    await setUser('');
+    await setUser(null);
     router.push('/');
     await nearContext.walletConnection.signOut();
   };
 
-  const initSearchBar = async () => {
-    //const { contract } = await initContract();
-    // @ts-ignore: Unreachable code error
-    // setTokens(await contract.obtener_pagina_v2({ from_index: 0, limit: 10 }));
-  };
 
   return (
     <div className="bg-white w-full drop-shadow-md fixed z-50">
@@ -90,14 +82,13 @@ export default function Navbar() {
           </div>
         </div>
         <div className="self-center">
-          <SearchBar
-          />
+          <SearchBar />
         </div>
         <div>
-          {user == '' ? (
+          {user == null ? (
             <button
               type="button"
-              className="px-4 py-2 bg-figma-900 shadow-lg font-bold hover:bg-figma-100 text-white rounded-lg"
+              className="p-3 bg-figma-900 shadow-lg font-bold hover:bg-figma-100 text-white rounded-lg"
               onClick={() => {
                 logIn();
               }}
@@ -105,15 +96,18 @@ export default function Navbar() {
               Connect
             </button>
           ) : (
-            <div className="p-3 bg-figma-900 rounded-lg text-white flex justify-between align-middle items-center font-bold">
-              <div className="h-full">{user}</div>
+            <div className=" bg-figma-900 rounded-lg text-white flex justify-between align-middle items-center font-bold pr-3">
+              <div className="p-3 border-gray-400 text-black border-y-2 border-l-2 rounded-tl-lg rounded-bl-lg mr-6 bg-white">
+                {user.balance}Ⓝ
+              </div>
+              <div className=" p-3 h-full">{user.username}</div>
               <button
                 className=" hover:text-gray-400 text-white w-5 h-full ml-3"
                 onClick={() => {
                   logOut();
                 }}
               >
-                <LogOutIcon />
+                <LogOutIcon className="" />
               </button>
             </div>
           )}

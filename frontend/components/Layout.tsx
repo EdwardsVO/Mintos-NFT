@@ -5,6 +5,9 @@ import MobileNav from './common/MobileNav';
 import { useNear } from '../hooks/useNear';
 import useUser from '../hooks/useUser';
 import { initContract } from './near/near';
+import User from '../models/User';
+import { toNEAR } from './utils'
+
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -18,9 +21,17 @@ function Layout({ children }: LayoutProps) {
     await setNearContext(near);
     try {
       const userId = await near.walletConnection.getAccountId();
+      const userBalance = (await near.walletConnection.account().state()).amount;
+      const balance = '0'
       if (typeof userId == 'string') {
+
+        const user: User = {
+          username: userId,
+          balance: toNEAR(userBalance).toString(),
+        }
+
         try {
-          setUser(userId);
+          setUser(user);
           return;
         } catch (e) {
           return;
