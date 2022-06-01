@@ -5,30 +5,25 @@ import { useNear } from '../../hooks/useNear';
 import Token from '../../models/Token';
 import ExtraMetadata from '../../models/ExtraMetadata';
 import useUser from '../../hooks/useUser';
-import { ONE_NEAR_IN_YOCTO, toFixed } from '../utils';
-import Royalties from '../../models/Royalties';
-import { stringify } from 'querystring';
+import { useToast } from '@chakra-ui/react';
 
 export default function MintForm() {
-  const [name, setName] = React.useState('');
-  const [price, setPrice] = React.useState(0);
-  const [collection, setCollection] = React.useState('');
-  const [description, setDescription] = React.useState('');
+  const [name, setName] = React.useState<string>(null);
+  const [collection, setCollection] = React.useState<string>(null);
+  const [description, setDescription] = React.useState<string>(null);
   const [file, setFile] = React.useState([]);
-  const [urlArr, setUrlArr] = React.useState<string>('');
+  const [urlArr, setUrlArr] = React.useState<string>(null);
   const [nearContext] = useNear();
   const [user] = useUser();
   const [uploaded, setUploaded] = React.useState(false);
   const [tokensSupply, setTokensSupply] = React.useState<string>('');
   const [category, setCategory] = React.useState<string>('');
-  const [royaltiesList, setRoyaltiesList] = React.useState<Array<Royalties>>(
-    []
-  );
+
   const [royaltyBool, setRoyaltyBool] = React.useState<boolean>(false);
   const [royaltyAccount, setRoyaltyAccount] = React.useState<string>();
   const [royaltyAmount, setRoyaltyAmount] = React.useState<number>();
-
   const [royalties] = React.useState([]);
+  const toast = useToast();
 
   // @ts-ignore: Unreachable code error
   const client = create('https://ipfs.infura.io:5001/api/v0');
@@ -63,8 +58,13 @@ export default function MintForm() {
       setUploaded(true);
       const url = `https://ipfs.infura.io/ipfs/${created.path}`;
       setUrlArr(url);
-      console.log('File uploaded ', url);
-      console.log(file);
+      toast({
+        title: 'File Uploaded Successfully.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -88,35 +88,63 @@ export default function MintForm() {
   };
 
   const handleSubmit = async () => {
-    if (royalties.length > 0) {
-      let formattedRoyalties = {};
-      royalties.forEach((r) => {
-        formattedRoyalties[r.accountId] = parseFloat(String(r.value * 100));
+    try {
+      if (
+        name === '' ||
+        name === null ||
+        description === '' ||
+        description === null ||
+        urlArr === '' ||
+        urlArr === null
+      ) {
+        toast({
+          title: 'Error',
+          description: 'Please fill out every field before proceeding.',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      } else {
+        if (royalties.length > 0) {
+          let formattedRoyalties = {};
+          royalties.forEach((r) => {
+            formattedRoyalties[r.accountId] = parseFloat(String(r.value * 100));
+          });
+          console.log(formattedRoyalties);
+          // @ts-ignore: Unreachable code error
+          await nearContext.contracts.nftContract.nft_mint(
+            {
+              token_id: token.token_id,
+              metadata: token.metadata,
+              receiver_id: token.owner_id,
+              perpetual_royalties: formattedRoyalties,
+            },
+            '300000000000000',
+            '465000000000000000000000'
+          );
+        }
+        // @ts-ignore: Unreachable code error
+        await nearContext.contracts.nftContract.nft_mint(
+          {
+            token_id: token.token_id,
+            metadata: token.metadata,
+            receiver_id: token.owner_id,
+            perpetual_royalties: {},
+          },
+          '300000000000000',
+          '465000000000000000000000'
+        );
+      }
+    } catch (error) {
+      toast({
+        title: error,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
       });
-      console.log(formattedRoyalties);
-      // @ts-ignore: Unreachable code error
-      await nearContext.contracts.nftContract.nft_mint(
-        {
-          token_id: token.token_id,
-          metadata: token.metadata,
-          receiver_id: token.owner_id,
-          perpetual_royalties: formattedRoyalties,
-        },
-        '300000000000000',
-        '465000000000000000000000'
-      );
     }
-    // @ts-ignore: Unreachable code error
-    await nearContext.contracts.nftContract.nft_mint(
-      {
-        token_id: token.token_id,
-        metadata: token.metadata,
-        receiver_id: token.owner_id,
-        perpetual_royalties: { 'mzterdox.testnet': 10 },
-      },
-      '300000000000000',
-      '465000000000000000000000'
-    );
   };
 
   React.useEffect(() => {
@@ -160,19 +188,6 @@ export default function MintForm() {
             setName(e.target.value);
           }}
         />
-
-        <Input
-          required
-          label="Price *"
-          name="price"
-          type="number"
-          placeholder="Enter NFT's Price in NEAR"
-          value={price}
-          onChange={(e) => {
-            e.preventDefault();
-            setPrice(e.target.value);
-          }}
-        />
         <Input
           label="Collection"
           name="collection"
@@ -195,7 +210,6 @@ export default function MintForm() {
             setDescription(e.target.value);
           }}
         />
-
         <div className="p-6">
           {royalties.map((r, index) => (
             <h2 key={index}>
@@ -256,12 +270,11 @@ export default function MintForm() {
             Add Perpetual Royalties
           </button>
         </div>
+
         <button
           type="button"
           className="w-full mt-4 h-16 lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
-          onClick={() => {
-            handleSubmit();
-          }}
+          onClick={() => handleSubmit()}
         >
           Mint NFT
         </button>

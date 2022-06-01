@@ -44,7 +44,7 @@ export default function Modal({
   };
 
   return (
-    <AnimatePresence>
+    <div>
       {isOpen ? (
         <motion.section
           id="overlay"
@@ -82,6 +82,6 @@ export default function Modal({
           </motion.div>
         </motion.section>
       ) : null}
-    </AnimatePresence>
+    </div>
   );
 }
