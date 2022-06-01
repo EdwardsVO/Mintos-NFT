@@ -1,4 +1,4 @@
 export default interface User {
-  username?: String;
-  balance?: String;
+  username?: string;
+  balance?: string;
 }
