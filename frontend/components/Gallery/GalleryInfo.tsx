@@ -101,12 +101,6 @@ export default function GalleryInfo() {
     calculateLastPage();
   }, [sales]);
 
-  React.useEffect(() => {
-    window.onbeforeunload = function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-  }, [currentPage]);
-
   return (
     <div className="min-h-screen">
       {wholeDataSet.length > 0 ? (
@@ -118,7 +112,8 @@ export default function GalleryInfo() {
             <div className="flex justify-between mt-5">
               <div>
                 <h2 className="text-black flex lg:text-4xl lg:p-6 font-bold text-xl 2xl:px-12">
-                  NFT Gallery <div className='font-thin ml-5 text-figma-900'>Latest</div> 
+                  NFT Gallery{' '}
+                  <div className="font-thin ml-5 text-figma-900">Latest</div>
                 </h2>
               </div>
               <div className="self-center flex space-x-2 md:hidden">
@@ -223,6 +218,8 @@ export default function GalleryInfo() {
               type="button"
               onClick={next}
               className="bg-figma-100 p-2 text-xl rounded-md text-figma-300 font-bold"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
             >
               <RightArrowIcon className="w-6 h-6" />
             </motion.button>

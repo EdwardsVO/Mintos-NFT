@@ -6,6 +6,7 @@ import Token from '../../models/Token';
 import ExtraMetadata from '../../models/ExtraMetadata';
 import useUser from '../../hooks/useUser';
 import { useToast } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 
 export default function MintForm() {
   const [name, setName] = React.useState<string>(null);
@@ -101,7 +102,7 @@ export default function MintForm() {
           title: 'Error',
           description: 'Please fill out every field before proceeding.',
           status: 'error',
-          duration: 3000,
+          duration: 5000,
           isClosable: true,
           position: 'top-right',
         });
@@ -140,7 +141,7 @@ export default function MintForm() {
       toast({
         title: error,
         status: 'error',
-        duration: 3000,
+        duration: 5000,
         isClosable: true,
         position: 'top-right',
       });
@@ -152,9 +153,9 @@ export default function MintForm() {
   });
 
   return (
-    <div className="lg:flex lg:justify-center lg:items-center lg:align-middle lg:p-9 h-screen">
+    <div className="lg:flex lg:justify-center  lg:px-9 lg:items-center">
       <div className="flex lg:justify-center lg:items-center lg:align-middle">
-        <div className="mb-3 w-96 lg:mr-12">
+        <div className="w-96 lg:mr-12">
           <div className={`${uploaded ? 'flex' : 'hidden'}`}>
             <img src={urlArr} alt="" className="w-72 h-72" />
           </div>
@@ -271,13 +272,15 @@ export default function MintForm() {
           </button>
         </div>
 
-        <button
+        <motion.button
           type="button"
           className="w-full mt-4 h-16 lg:p-3  bg-figma-100 text-figma-300 font-semibold p-1 rounded-lg border border-solid drop-shadow-lg"
           onClick={() => handleSubmit()}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.9 }}
         >
           Mint NFT
-        </button>
+        </motion.button>
       </div>
       <div className="mt-7"></div>
     </div>

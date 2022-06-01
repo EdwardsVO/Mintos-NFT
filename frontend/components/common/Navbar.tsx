@@ -5,14 +5,12 @@ import { useNear } from '../../hooks/useNear';
 import useUser from '../../hooks/useUser';
 import LogOutIcon from '../icons/LogOutIcon';
 import Token from '../../models/Token';
-import { toNEAR } from '../utils';
-import { initContract } from '../near/near';
+import { motion } from 'framer-motion';
 
 export default function Navbar() {
   const router = useRouter();
   const [nearContext, setNearContext] = useNear();
   const [user, setUser] = useUser();
-  const [tokens, setTokens] = React.useState<Array<Token>>(null);
 
   const currentPage = router.route;
 
@@ -28,18 +26,21 @@ export default function Navbar() {
     await nearContext.walletConnection.signOut();
   };
 
-
   return (
     <div className="bg-white w-full drop-shadow-md fixed z-50">
       <div className="flex justify-between p-4">
         <div className="mr-44">
-          <img src="/logo.png" alt="logo" className="w-36" />
+          <img src="/logo.png" alt="logo" className="w-40" />
         </div>
         <div className="self-center">
           <div className="flex space-x-8">
-            <button type="button" onClick={() => router.push('/app/')}>
+            <motion.button
+              type="button"
+              onClick={() => router.push('/app/')}
+              whileTap={{ scale: 0.9 }}
+            >
               <h2
-                className={`font-semibold  ${
+                className={`font-semibold hover:bg-gray-200/[.4] p-2  ${
                   currentPage === '/app'
                     ? ' underline underline-offset-8 decoration-figma-100 decoration-4'
                     : ''
@@ -47,10 +48,14 @@ export default function Navbar() {
               >
                 Home
               </h2>
-            </button>
-            <button type="button" onClick={() => router.push('/app/gallery')}>
+            </motion.button>
+            <motion.button
+              type="button"
+              onClick={() => router.push('/app/gallery')}
+              whileTap={{ scale: 0.9 }}
+            >
               <h2
-                className={`font-semibold ${
+                className={`font-semibold hover:bg-gray-200/[.4] p-2 ${
                   currentPage === '/app/gallery'
                     ? ' underline underline-offset-8 decoration-figma-100 decoration-4'
                     : ''
@@ -58,10 +63,14 @@ export default function Navbar() {
               >
                 Gallery
               </h2>
-            </button>
-            <button type="button" onClick={() => router.push('/app/profile')}>
+            </motion.button>
+            <motion.button
+              type="button"
+              onClick={() => router.push('/app/profile')}
+              whileTap={{ scale: 0.9 }}
+            >
               <h2
-                className={`font-semibold ${
+                className={`font-semibold hover:bg-gray-200/[.4] p-2 ${
                   currentPage === '/app/profile'
                     ? ' underline underline-offset-8 decoration-figma-100 decoration-4'
                     : ''
@@ -69,8 +78,13 @@ export default function Navbar() {
               >
                 My NFTs
               </h2>
-            </button>
-            <button type="button" onClick={() => router.push('/app/mint')}>
+            </motion.button>
+            <motion.button
+              type="button"
+              onClick={() => router.push('/app/mint')}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
               <h2
                 className={`font-bold px-4 py-2 mx-7 rounded-lg shadow-lg border-2 border-figma-900 hover:bg-figma-900 hover:text-white ${
                   currentPage === '/app/mint' ? ' bg-figma-900 text-white' : ''
@@ -78,7 +92,7 @@ export default function Navbar() {
               >
                 Mint My NFT
               </h2>
-            </button>
+            </motion.button>
           </div>
         </div>
         <div className="self-center">
