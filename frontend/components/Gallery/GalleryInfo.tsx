@@ -93,6 +93,10 @@ export default function GalleryInfo() {
   };
 
   React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
+
+  React.useEffect(() => {
     if (tokens.length === 0) {
       getTokens();
     }
@@ -196,7 +200,7 @@ export default function GalleryInfo() {
             </motion.button>
           )}
         </div>
-        <div>
+        <div className="my-8">
           {currentPage === lastPage ? (
             <motion.button
               type="button"
