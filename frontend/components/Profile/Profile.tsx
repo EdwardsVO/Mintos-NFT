@@ -165,7 +165,7 @@ export default function Profile() {
                 className="w-40 lg:w-60 mx-auto"
               />
             </div>
-            <div className="flex flex-col justify-center align-middle items-center self-center p-3 text-lg lg:border-2 lg:rounded-lg  lg:w-1/2 shadow-2xl">
+            <div className="flex flex-col justify-center align-middle items-center self-center p-3 text-lg lg:border-2 rounded-lg  lg:w-1/2 shadow-2xl">
               <div className="w-full lg:flex lg:justify-between">
                 <div className='lg:w-1/2 lg:p-6'>
                   <div className="text-4xl font-semibold text-center mb-5">
@@ -188,27 +188,39 @@ export default function Profile() {
                     <div>Comming Soon</div>
                   </div>
                   <div className="flex justify-between w-full pb-2">
-                    <div className="font-semibold text-figma-100">Market Cap</div>{' '}
+                    <div className="font-semibold text-figma-100">Range</div>{' '}
                     <div>Comming Soon</div>
                   </div>
                   <div className="flex justify-between w-full pb-2">
-                    <div className="font-semibold text-figma-100">Range </div>{' '}
+                    <div className="font-semibold text-figma-100">Init Date</div>{' '}
                     <div>Comming Soon</div>
                   </div>
                 </div>
                 <div className='lg:w-1/2 lg:p-6'>
-                  <div className=" text-4xl font-semibold mb-5 text-center">
-                    Init Date
+                  <div className="text-4xl font-semibold mb-5 text-center mt-5 lg:mt-0">
+                    Market Data
                   </div>
-                  <div className="flex justify-between w-full">
+                  <div className="flex justify-between w-full pb-2">
                     <div className="font-semibold text-figma-100">
-                      Minted NFTs{' '}
+                      NFTs Minted{' '}
                     </div>{' '}
                     <div>Comming Soon</div>
                   </div>
-                  <div className="flex justify-between w-full">
+                  <div className="flex justify-between w-full pb-2">
                     <div className="font-semibold text-figma-100">
-                      Sold NFTs{' '}
+                      NFTs Sold{' '}
+                    </div>{' '}
+                    <div>Comming Soon</div>
+                  </div>
+                  <div className="flex justify-between w-full pb-2">
+                    <div className="font-semibold text-figma-100">
+                      Total Sales{' '}
+                    </div>{' '}
+                    <div>Comming Soon</div>
+                  </div>
+                  <div className="flex justify-between w-full pb-2">
+                    <div className="font-semibold text-figma-100">
+                      Total Profit {' '}
                     </div>{' '}
                     <div>Comming Soon</div>
                   </div>
