@@ -120,9 +120,16 @@ export default function NFTGalleryPreview({
                   <div>
                     {isLogged ? (
                       <div className="mt-4 flex justify-between align-middle items-center">
+                        { 
+                        data?.sale?.sale_conditions ?(
                         <button className='font-bold p-1 border border-gray-100 rounded-md hover:border-figma-900'>
                           See Details
-                        </button>
+                        </button>)
+                      : 
+                      (
+                        <div></div>
+                      )  
+                      }
                         <div className="">
                           {data?.sale?.sale_conditions ? (
                             <div className='font-bold text-lg text-figma-900'>
@@ -132,7 +139,7 @@ export default function NFTGalleryPreview({
                               } Ⓝ`}
                             </div>
                           ) : (
-                            <button>Put On Sale</button>
+                            <button className=''>Put On Sale</button>
                           )}
                         </div>
                       </div>

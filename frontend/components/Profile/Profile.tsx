@@ -159,27 +159,69 @@ export default function Profile() {
         <div className="min-h-screen min-w-full mb-20">
           <div className="p-4 flex flex-col">
             <div className="w-full my-7">
-              <img src="/profile.png" alt="profile" className="w-40 mx-auto" />
+              <img
+                src="/profile.png"
+                alt="profile"
+                className="w-40 lg:w-60 mx-auto"
+              />
             </div>
-            <div className="flex flex-col justify-center align-middle items-center self-center p-3 text-lg lg:border-2 lg:w-1/2">
-              <div className="flex justify-between w-full">
-                <div className="font-semibold text-figma-100">User</div>{' '}
-                <div className="font-bold">{username}</div>
-              </div>
-              <div className="flex justify-between w-full">
-                <div className="font-semibold text-figma-100">Email </div>{' '}
-                <div>email@mail.com</div>
-              </div>
-              <div className="flex justify-between w-full lg:hidden mt-5 border-t-2 pt-5">
-                <div className="font-light">Available Balance </div>{' '}
-                <div className="font-bold">{balance} NEAR Ⓝ</div>
-              </div>
-              <div className="flex justify-between w-full">
-                <div className="font-light">Reserve Storage</div>{' '}
-                <div className="font-bold"> {storage} NEAR Ⓝ</div>
-              </div>
+            <div className="flex flex-col justify-center align-middle items-center self-center p-3 text-lg lg:border-2 lg:rounded-lg  lg:w-1/2 shadow-2xl">
+              <div className="w-full lg:flex lg:justify-between">
+                <div className='lg:w-1/2 lg:p-6'>
+                  <div className="text-4xl font-semibold text-center mb-5">
+                    User Data
+                  </div>
+                  <div className="flex justify-between w-full pb-2">
+                    <div className="font-semibold text-figma-100">User</div>{' '}
+                    <div className="font-bold">{username}</div>
+                  </div>
+                  <div className="flex justify-between w-full pb-2">
+                    <div className="font-semibold text-figma-100">Email </div>{' '}
+                    <div>Comming Soon</div>
+                  </div>
+                  <div className="flex justify-between w-full pb-2">
+                    <div className="font-semibold text-figma-100">Artist Name </div>{' '}
+                    <div>Comming Soon</div>
+                  </div>
+                  <div className="flex justify-between w-full pb-2">
+                    <div className="font-semibold text-figma-100">Role</div>{' '}
+                    <div>Comming Soon</div>
+                  </div>
+                  <div className="flex justify-between w-full pb-2">
+                    <div className="font-semibold text-figma-100">Market Cap</div>{' '}
+                    <div>Comming Soon</div>
+                  </div>
+                  <div className="flex justify-between w-full pb-2">
+                    <div className="font-semibold text-figma-100">Range </div>{' '}
+                    <div>Comming Soon</div>
+                  </div>
+                </div>
+                <div className='lg:w-1/2 lg:p-6'>
+                  <div className=" text-4xl font-semibold mb-5 text-center">
+                    Init Date
+                  </div>
+                  <div className="flex justify-between w-full">
+                    <div className="font-semibold text-figma-100">
+                      Minted NFTs{' '}
+                    </div>{' '}
+                    <div>Comming Soon</div>
+                  </div>
+                  <div className="flex justify-between w-full">
+                    <div className="font-semibold text-figma-100">
+                      Sold NFTs{' '}
+                    </div>{' '}
+                    <div>Comming Soon</div>
+                  </div>
+                  <div className="flex justify-between w-full lg:hidden mt-5 border-t-2 pt-5">
+                    <div className="font-light">Available Balance </div>{' '}
+                    <div className="font-bold">{balance} NEAR Ⓝ</div>
+                  </div>
+                  <div className="flex justify-between w-full">
+                    <div className="font-light">Reserved Storage</div>{' '}
+                    <div className="font-bold"> {storage} NEAR Ⓝ</div>
+                  </div>
               <div className="text-center mt-8 border-2 p-6">
-                <p>NFT mint Storage</p>
+                <p>Reserve Storage for Minting</p>
                 <div className="flex justify-center align-middle items-center">
                   <input
                     type="text"
@@ -196,6 +238,8 @@ export default function Profile() {
                   >
                     +
                   </button>
+                </div>
+              </div>
                 </div>
               </div>
             </div>
