@@ -79,8 +79,9 @@ export default function NFTGalleryPreview({
             // onClick={() => setModalOpen(true)}
           >
             <motion.div
-              className="bg-figma-700 rounded-md drop-shadow-lg shadow-black "
+              className="bg-figma-700 rounded-md drop-shadow-lg shadow-black hover:bg-gray-400/[.1]"
               variants={cardVariants}
+              whileHover={{ scale: 1.1 }}
             >
               <div className="p-4">
                 <img
@@ -120,19 +121,23 @@ export default function NFTGalleryPreview({
                   <div>
                     {isLogged ? (
                       <div className="mt-4 flex justify-between align-middle items-center">
-                        <button className='font-bold p-1 border border-gray-100 rounded-md hover:border-figma-900'>
-                          See Details
-                        </button>
+                        {data?.sale?.sale_conditions ? (
+                          <button className="font-bold p-1 border border-gray-100 rounded-md hover:border-figma-900">
+                            See Details
+                          </button>
+                        ) : (
+                          <div></div>
+                        )}
                         <div className="">
                           {data?.sale?.sale_conditions ? (
-                            <div className='font-bold text-lg text-figma-900'>
+                            <div className="font-bold text-lg text-figma-900">
                               {`${
                                 Number(data?.sale?.sale_conditions) /
                                 ONE_NEAR_IN_YOCTO
                               } Ⓝ`}
                             </div>
                           ) : (
-                            <button>Put On Sale</button>
+                            <button className="">Put On Sale</button>
                           )}
                         </div>
                       </div>

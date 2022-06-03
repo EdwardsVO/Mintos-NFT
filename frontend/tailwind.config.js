@@ -13,6 +13,10 @@ module.exports = {
       '2xl': '1504px',
     },
     extend: {
+      spacing: {
+        imheight: '670px',
+        imwidth: '576px',
+      },
       colors: {
         primary: {
           50: '#4C5564',
