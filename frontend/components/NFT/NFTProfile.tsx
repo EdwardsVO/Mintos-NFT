@@ -106,7 +106,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
       </div>
       <div className="lg:w-full lg:flex lg:flex-col lg:mt-16">
         <div className="lg:flex lg:align-middle lg:justify-center lg:items-center lg:flex-col">
-          <div className="lg:flex lg:justify-between lg:w-10/12">
+          <div className="lg:flex lg:justify-between lg:w-10/12 lg:h-imheight">
             <div className="border-b-2 mb-5 lg:hidden p-6">
               <div className="flex flex-col">
                 <h2 className="text-2xl font-light mr-3 text-figma-400 ">
@@ -120,14 +120,14 @@ export default function NFTProfile({ data }: NFTProfileProps) {
                 {data?.token?.owner_id}
               </h2>
             </div>
-            <div className="rounded-xl lg:flex drop-shadow-lg shadow-black shadow-2xl mx-3 lg:max-w-xl lg:mx-auto">
+            <div className="rounded-xl lg:flex drop-shadow-lg shadow-black shadow-2xl mx-3 lg:w-imwidth lg:h-imheight lg:mx-auto">
               <img
                 src={data?.token?.metadata?.media}
                 alt={data?.token?.metadata?.title}
-                className="rounded-xl object-cover"
+                className="rounded-xl object-fill lg:w-imwidth lg:h-imheight"
               />
             </div>
-            <div className="w-full lg:w-1/2 text-left text-lg p-3 lg:p-16 lg:flex lg:flex-col mt-5 lg:mt-0 rounded-md bg-figma-300 shadow-lg">
+            <div className="w-full lg:w-1/2 text-left text-lg p-3 lg:p-10 lg:flex lg:flex-col mt-5 lg:mt-0 rounded-md bg-figma-300 shadow-lg overflow-scroll">
               <div className=" border-b-2 border-figma-900 mb-5 hidden lg:flex lg:flex-col lg:pb-5">
                 <div className="flex flex-col">
                   <h2 className="text-4xl font-semibold lg:text-6xl text-figma-400">
@@ -142,11 +142,11 @@ export default function NFTProfile({ data }: NFTProfileProps) {
                 </h2>
               </div>
               <div className="text-2xl font-semibold ">Description</div>
-              <div className="lg:w-full lg:text-2xl lg:mt-4 lg:flex lg:items-center lg:align-middle">
+              <div className="lg:w-full lg:text-2xl lg:mt-2 lg:flex lg:items-center lg:align-middle">
                 <div>{data?.token?.metadata?.description}</div>
               </div>
-              <div className="w-full flex mt-5 h-full align-middle items-center">
-                <div className="text-2xl lg:text-2xl font-semibold mr-5">
+              <div className="w-full flex align-middle items-center mt-5">
+                <div className="text-2xl lg:text-2xl font-semibold mr-2">
                   Copies:
                 </div>
                 <div>
@@ -154,45 +154,51 @@ export default function NFTProfile({ data }: NFTProfileProps) {
                     <div>{data?.token?.metadata?.copies}</div>
                   ) : (
                     <div className="lg:text-2xl text-center align-middle">
-                      Unique
+                      <p>Unique</p>
                     </div>
                   )}
                 </div>
               </div>
-              <div className=" font-semibold text-2xl mt-5 ">
+              <div className=" font-semibold text-2xl mt-5">
                 Perpetual Royalties
               </div>
-              <div className="flex mt-5">
+              <div className="flex">
                 {data?.token?.royalty ? (
                   <div className="lg:text-2xl">
-                    {JSON.stringify(data?.token?.royalty)}
+                    {Object.keys(data?.token?.royalty).map((accountId, idx) => {
+                      return (
+                        <div className="flex mt-2 space-x-8" key={idx}>
+                          <div className="w-2/3 flex ">
+                            <p>{accountId}:</p>
+                          </div>
+                          <div className="w-1/3 text-right pr-6">
+                            <p>{data?.token?.royalty[accountId] / 100}%</p>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 ) : (
                   <div>No Perpetual Royalties</div>
                 )}
               </div>
               <div>
-                <div className="flex mx-3 lg:mx-0 mt-3 lg:w-full lg:align-middle lg:items-center">
-                  <div className="text-2xl align-middle font-bold">Price</div>
-                  <h2 className="text-3xl font-bold text-figma-900 border-gray-200 border-2 rounded-lg p-1">
+                <div className="flex mx-3 lg:mx-0 mt-5 lg:w-full lg:items-center justify-between">
+                  <div className="text-2xl align-middle font-bold">
+                    Current Price
+                  </div>
+                  <h2 className="text-2xl font-bold text-figma-900 border-gray-200 border-2 rounded-lg p-1">
                     {Number(data?.sale?.sale_conditions) / ONE_NEAR_IN_YOCTO ||
                       '0'}{' '}
                     NEAR Ⓝ
                   </h2>
                 </div>
+              </div>
+              <div className="">
                 {data?.token?.owner_id === username && loaded ? (
-                  <div className="bg-red-200">
+                  <>
                     {data?.sale ? (
-                      <div className="flex justify-between mt-4 mx-3 lg:justify-center lg:space-x-64">
-                        <div>
-                          <button
-                            type="button"
-                            className="w-full px-5 py-2 bg-figma-100 text-figma-300 font-semibold rounded-lg"
-                            onClick={() => changeUpdateStatus()}
-                          >
-                            Update Sale
-                          </button>
-                        </div>
+                      <div className="flex justify-between mt-4">
                         <div>
                           <button
                             type="button"
@@ -200,6 +206,15 @@ export default function NFTProfile({ data }: NFTProfileProps) {
                             onClick={() => removeFromSale()}
                           >
                             Remove from Sale
+                          </button>
+                        </div>
+                        <div>
+                          <button
+                            type="button"
+                            className="w-full px-5 py-2 bg-figma-100 text-figma-300 font-semibold rounded-lg"
+                            onClick={() => changeUpdateStatus()}
+                          >
+                            Update Sale
                           </button>
                         </div>
                       </div>
@@ -250,7 +265,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
                     ) : (
                       <div></div>
                     )}
-                  </div>
+                  </>
                 ) : (
                   <div>
                     {user ? (
