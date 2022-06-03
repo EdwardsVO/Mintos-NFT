@@ -165,7 +165,7 @@ export default function Profile() {
                 className="w-40 lg:w-60 mx-auto"
               />
             </div>
-            <div className="flex flex-col justify-center align-middle items-center self-center p-3 text-lg lg:border-2 rounded-lg  lg:w-1/2 shadow-2xl">
+            <div className="flex flex-col justify-center align-middle items-center self-center p-3 text-lg lg:border-2 xrounded-lg  lg:w-1/2 shadow-2xl">
               <div className="w-full lg:flex lg:justify-between">
                 <div className='lg:w-1/2 lg:p-6'>
                   <div className="text-4xl font-semibold text-center mb-5">

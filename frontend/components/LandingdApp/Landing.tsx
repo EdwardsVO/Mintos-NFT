@@ -51,18 +51,24 @@ export default function Landing() {
         <div className="mt-2 lg:hidden">
           <SearchBar />
         </div>
-        <h2 className="px-4 font-semibold p-6 text-5xl text-figma-400">
-          Last Collections 
-        </h2>
+        <div className='flex align-middle items-center'>
+          <h2 className="px-4 font-semibold p-6 text-5xl text-figma-400">
+            Last Collections
+          </h2>
+          <div className='font-thin text-figma-900 text-5xl'>Comming Soon</div>
+        </div>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
           {categories.map((category, i) => (
             <NFTPreview key={i} data={category} />
           ))}
         </div>
         <div className="mt-5">
-          <h2 className="px-4 font-semibold p-6 text-5xl text-figma-400">
-            Top Selling Collections
-          </h2>
+          <div className='flex align-middle items-center'>
+            <h2 className="px-4 font-semibold p-6 text-5xl text-figma-400">
+              Top Selling Collections
+            </h2>
+            <div className='font-thin text-figma-900 text-5xl'>Comming Soon</div>
+          </div>
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
             {collections.map((collection, i) => (
               <NFTPreview key={i} data={collection} isCollection />
