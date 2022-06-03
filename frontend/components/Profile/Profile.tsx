@@ -287,7 +287,7 @@ export default function Profile() {
                 </div>
               ) : null}
               {filter === 1 ? (
-                <div className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
+                <div className="flex justify-center items-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
                   {marketTokens.map((nft) => (
                     <div key={nft?.token?.token_id} className="pt-4">
                       <NFTGalleryPreview
@@ -300,7 +300,7 @@ export default function Profile() {
                 </div>
               ) : null}
               {filter === 2 ? (
-                <div className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
+                <div className="flex justify-center items-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
                   {walletTokens.map((nft) => (
                     <div key={nft?.token?.token_id} className="pt-4">
                       <NFTGalleryPreview
