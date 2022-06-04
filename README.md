@@ -13,12 +13,12 @@ Mint and Sell NFTs never been so easy until now.
 ## Project Structure ⚙
 In the root you'll find three folders 
 
--Blockchain 
-    -NEARprotocol 
-        -nft-mintos-contract --> Core NFT contract
-        -market-mintos-contract --> Marketplace Contract that allow the NFTs trade
+-- Blockchain 
+    -- NEARprotocol 
+        -- nft-mintos-contract --> Core NFT contract
+        -- market-mintos-contract --> Marketplace Contract that allow the NFTs trade
 
--Frontend --> Where the UI lives
+-- Frontend --> Where the UI lives
 
--Scripts --> Here you'll find usefull development scripts
+-- Scripts --> Here you'll find usefull development scripts
 
