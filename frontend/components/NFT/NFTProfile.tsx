@@ -190,7 +190,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
                   <h2 className="text-2xl font-bold text-figma-900 border-gray-200 border-2 rounded-lg p-1">
                     {Number(data?.sale?.sale_conditions) / ONE_NEAR_IN_YOCTO ||
                       '0'}{' '}
-                    NEAR Ⓝ
+                    Ⓝ
                   </h2>
                 </div>
               </div>

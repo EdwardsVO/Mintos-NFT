@@ -165,7 +165,7 @@ export default function Profile() {
                 className="w-40 lg:w-60 mx-auto"
               />
             </div>
-            <div className="flex flex-col justify-center align-middle items-center self-center p-3 text-lg lg:border-2 rounded-lg  lg:w-1/2 shadow-2xl">
+            <div className="flex flex-col justify-center align-middle items-center self-center p-3 text-lg lg:border-2 xrounded-lg  lg:w-1/2 shadow-2xl">
               <div className="w-full lg:flex lg:justify-between">
                 <div className='lg:w-1/2 lg:p-6'>
                   <div className="text-4xl font-semibold text-center mb-5">
@@ -287,7 +287,7 @@ export default function Profile() {
                 </div>
               ) : null}
               {filter === 1 ? (
-                <div className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
+                <div className="flex justify-center items-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
                   {marketTokens.map((nft) => (
                     <div key={nft?.token?.token_id} className="pt-4">
                       <NFTGalleryPreview
@@ -300,7 +300,7 @@ export default function Profile() {
                 </div>
               ) : null}
               {filter === 2 ? (
-                <div className="flex justify-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
+                <div className="flex justify-center items-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
                   {walletTokens.map((nft) => (
                     <div key={nft?.token?.token_id} className="pt-4">
                       <NFTGalleryPreview
