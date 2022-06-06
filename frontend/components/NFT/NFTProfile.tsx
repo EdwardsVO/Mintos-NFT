@@ -107,9 +107,6 @@ export default function NFTProfile({ data }: NFTProfileProps) {
     const neededRersevedCapacity = (Number(currentSalesSupply) + 1) * 0.01;
     if ( await (Number(currentReservedBalance)/ONE_NEAR_IN_YOCTO) >= neededRersevedCapacity) {
       setPutSale(true);
-      console.log('current: '+Number(currentReservedBalance)/ONE_NEAR_IN_YOCTO);
-      console.log('needed: ' + neededRersevedCapacity)
-      console.log('sales: ' + currentSalesSupply)
     } else {
       toast({
         title: "You need to cover storage per sale.",
