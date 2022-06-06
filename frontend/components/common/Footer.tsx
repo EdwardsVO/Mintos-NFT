@@ -54,18 +54,20 @@ export default function Footer() {
       <div className="hidden lg:block md:w-80 w-20 h-40 md:flex flex-col justify-center">
         <p className="text-white font-semibold text-xl mb-2">Follow Us</p>
         <div className="flex flex-row gap-x-3">
-          <button onClick={()=>{alert('cliock')}} className="w-10 h-10 hover:text-black">
-            <InstagramIcon className="text-white hover:text-blue-100 " />
+          <button className="w-10 h-10 hover:text-black">
+            <a href="https://www.instagram.com/mintosnft/" target={'_black'}>
+              <InstagramIcon className="text-white hover:text-blue-100 " />
+            </a>
           </button>
           <button className="w-10 h-10">
-            <TwitterIcon className="text-white hover:text-blue-100" />
+            <a
+              href="https://twitter.com/MintosNFTs/"
+              target={'_blank'}
+            >
+              <TwitterIcon className="text-white hover:text-blue-100" />
+            </a>
           </button>
         </div>
-      </div>
-      <div className="w-full h-full absolute flex items-end justify-end">
-        <p className="text-white mb-5 text-xs mr-20">
-          MintosNFT Marketplace 🚀 - Near Protocol 2022 Ⓝ
-        </p>
       </div>
     </div>
   );
