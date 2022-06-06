@@ -236,7 +236,7 @@ export default function Profile() {
                 <p>Reserve Storage for Minting</p>
                 <div className="flex justify-center align-middle items-center">
                   <input
-                    type="text"
+                    type="number"
                     placeholder="Reserve Storage Ⓝ"
                     onChange={(e) => {
                       setStorageInNEAR(e.target.value);
@@ -318,12 +318,12 @@ export default function Profile() {
           </div>
         ) : (
           <div className="w-full flex flex-col justify-center items-center align-middle p-11">
-            <div className="text-bold text-2xl flex text-center">
+            <div className="font-bold lg:text-2xl flex text-center">
               <img src="/planet_logo.png" className='w-10' alt="" />
               <div className=''>No NFTs created or bought</div>
               <img src="/planet_logo.png" className='w-10' alt="" />
             </div>
-            <div className="mt-5 font-thin text-xl">
+            <div className="mt-5 font-thin text-xl text-center">
               Reserve Storage and Start Minting 
             </div>
           </div>

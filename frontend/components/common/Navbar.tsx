@@ -4,14 +4,14 @@ import SearchBar from '../Searchbar/SearchBarDesktop';
 import { useNear } from '../../hooks/useNear';
 import useUser from '../../hooks/useUser';
 import LogOutIcon from '../icons/LogOutIcon';
-import Token from '../../models/Token';
 import { motion } from 'framer-motion';
+import { useToast } from '@chakra-ui/react';
 
 export default function Navbar() {
   const router = useRouter();
   const [nearContext, setNearContext] = useNear();
   const [user, setUser] = useUser();
-
+  const toast = useToast();
   const currentPage = router.route;
 
   const logIn = async () => {
@@ -25,6 +25,10 @@ export default function Navbar() {
     router.push('/');
     await nearContext.walletConnection.signOut();
   };
+
+  const canMint = async() => {
+      router.push('/app/mint')
+  }
 
   return (
     <div className="bg-white w-full drop-shadow-md fixed z-50">
@@ -81,7 +85,7 @@ export default function Navbar() {
             </motion.button>
             <motion.button
               type="button"
-              onClick={() => router.push('/app/mint')}
+              onClick={() => {canMint()}}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
