@@ -23,7 +23,7 @@ export default function Footer() {
           <EmailIcon className="md:w-5 w-3 text-white" />
           <Link href="/">
             <p className="text-white md:text-base text-sm font-extralight md:ml-2 ml-1 cursor-pointer hover:underline">
-              info@mintos.com
+              Comming Soon
             </p>
           </Link>
         </div>
@@ -31,31 +31,31 @@ export default function Footer() {
           <PhoneIcon className="md:w-5 w-3 text-white" />
           <Link href="/">
             <p className="text-white font-extralight ml-2 cursor-pointer md:mt-2 mt-1 hover:underline md:text-base text-sm">
-              +1 000 000000
+              Comming Soon
             </p>
           </Link>
         </div>
       </div>
       <div className="md:w-80 w-32 h-40 flex flex-col justify-center">
         <p className="text-white font-semibold md:text-xl text-md mb-2">
-          Information:
+          Information
         </p>
         <Link href="/">
           <p className="text-white font-extralight cursor-pointer hover:underline md:text-base text-sm">
-            Terms & Conditions
+            Comming Soon
           </p>
         </Link>
         <Link href="/">
           <p className="text-white font-extralight cursor-pointer hover:underline md:text-base text-sm">
-            Privacy Policy
+            {/* //Privacy Policy */}
           </p>
         </Link>
       </div>
       <div className="hidden lg:block md:w-80 w-20 h-40 md:flex flex-col justify-center">
-        <p className="text-white font-semibold text-xl mb-2">Follow Us:</p>
+        <p className="text-white font-semibold text-xl mb-2">Follow Us</p>
         <div className="flex flex-row gap-x-3">
-          <button className="w-10 h-10">
-            <InstagramIcon className="text-white hover:text-blue-100" />
+          <button onClick={()=>{alert('cliock')}} className="w-10 h-10 hover:text-black">
+            <InstagramIcon className="text-white hover:text-blue-100 " />
           </button>
           <button className="w-10 h-10">
             <TwitterIcon className="text-white hover:text-blue-100" />

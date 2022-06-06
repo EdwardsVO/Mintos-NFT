@@ -9,6 +9,7 @@ import WholeToken from '../../models/WholeToken';
 import Input from '../inputs/Input';
 import { useRouter } from 'next/router';
 import useUser from '../../hooks/useUser';
+import { useToast } from '@chakra-ui/react';
 
 interface NFTProfileProps {
   data: WholeToken;
@@ -23,7 +24,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
   const [currentPrice, setCurrentPrice] = React.useState('');
   const router = useRouter();
   const [user] = useUser();
-
+  const toast = useToast();
   const loadUserData = async () => {
     const NEAR = await initContract();
     setNearContext(NEAR);
@@ -89,6 +90,36 @@ export default function NFTProfile({ data }: NFTProfileProps) {
       '300000000000000',
       data.sale.sale_conditions
     );
+  };
+
+  const putOnSale = async () => {
+    const currentReservedBalance =
+    // @ts-ignore: Unreachable code error
+      await nearContext.contracts.marketContract.storage_balance_of({
+        account_id: user.username,
+      });
+      const currentSalesSupply =
+      // @ts-ignore: Unreachable code error
+      await nearContext.contracts.marketContract.get_supply_by_owner_id({
+        account_id: user.username,
+      });
+
+    const neededRersevedCapacity = (Number(currentSalesSupply) + 1) * 0.01;
+    if ( await (Number(currentReservedBalance)/ONE_NEAR_IN_YOCTO) >= neededRersevedCapacity) {
+      setPutSale(true);
+      console.log('current: '+Number(currentReservedBalance)/ONE_NEAR_IN_YOCTO);
+      console.log('needed: ' + neededRersevedCapacity)
+      console.log('sales: ' + currentSalesSupply)
+    } else {
+      toast({
+        title: "You need to cover storage per sale.",
+        description: `Currently you have ${currentReservedBalance/ONE_NEAR_IN_YOCTO}NEARs for storage, needed ${neededRersevedCapacity}NEARs. Go to 'MyNFTs' page`,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    }
   };
 
   React.useEffect(() => {
@@ -202,7 +233,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
                         <div>
                           <button
                             type="button"
-                            className="w-full px-5 py-2 bg-figma-100 text-figma-300 font-semibold rounded-lg"
+                            className="w-full px-5 py-2 bg-figma-900 text-figma-300 font-semibold rounded-sm"
                             onClick={() => removeFromSale()}
                           >
                             Remove from Sale
@@ -211,7 +242,7 @@ export default function NFTProfile({ data }: NFTProfileProps) {
                         <div>
                           <button
                             type="button"
-                            className="w-full px-5 py-2 bg-figma-100 text-figma-300 font-semibold rounded-lg"
+                            className="w-full px-5 py-2 bg-figma-900 text-figma-300 font-semibold rounded-sm"
                             onClick={() => changeUpdateStatus()}
                           >
                             Update Sale
@@ -219,29 +250,17 @@ export default function NFTProfile({ data }: NFTProfileProps) {
                         </div>
                       </div>
                     ) : (
-                      <div className="mt-8 lg:w-full lg:text-center">
-                        <button
-                          type="button"
-                          className={`bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl`}
-                          onClick={() => setPutSale(true)}
-                        >
-                          <p className="text-figma-500 text-lg font-semibold">
-                            Put on Sale!
-                          </p>
-                        </button>
-                      </div>
+                      <div></div>
                     )}
-                    {putSale ? (
+                    {putSale  ? (
                       <div className="text-center justify-between mt-4">
                         <div className="flex justify-center">
                           <Input
-                            type="text"
+                            type="number"
                             id="price"
                             label="NFT Price"
                             className="lg:w-auto"
-                            placeholder={(
-                              Number(currentPrice) / ONE_NEAR_IN_YOCTO
-                            ).toString()}
+                            placeholder={'NEAR Ⓝ'}
                             onChange={(e) => {
                               e.preventDefault();
                               setPrice(e.target.value);
@@ -251,19 +270,34 @@ export default function NFTProfile({ data }: NFTProfileProps) {
                         <div className="mt-4">
                           <button
                             type="button"
-                            className="bg-figma-100 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl"
+                            className="bg-figma-900 rounded-xl w-full lg:w-1/3 p-2 drop-shadow-2xl hover:shadow-figma-900 shadow-lg"
                             onClick={() => {
                               confirmSale();
                             }}
                           >
-                            <p className="text-figma-500 text-lg font-semibold">
+                            <p className="text-white  text-lg font-semibold">
                               Confirm Sale
                             </p>
                           </button>
                         </div>
                       </div>
                     ) : (
-                      <div></div>
+                      !data?.sale ? (
+                      <div>
+                        <div className="mt-8 lg:w-full lg:text-center">
+                        <button
+                          type="button"
+                          className={`bg-figma-900 rounded-lg hover:shadow-figma-900 shadow-lg w-full lg:w-1/3 p-6 drop-shadow-2xl`}
+                          onClick={() => {
+                            putOnSale();
+                          }}
+                        >
+                          <p className="text-figma-500 text-lg font-bold">
+                            Put on Sale
+                          </p>
+                        </button>
+                      </div>
+                      </div>) : (<></>)
                     )}
                   </>
                 ) : (

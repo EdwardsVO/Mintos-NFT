@@ -122,7 +122,7 @@ export default function MintForm() {
               perpetual_royalties: formattedRoyalties,
             },
             '300000000000000',
-            '6430000000000000000000'
+            '100000000000000000000000'
           );
         }
         // @ts-ignore: Unreachable code error
@@ -134,7 +134,7 @@ export default function MintForm() {
             perpetual_royalties: {},
           },
           '300000000000000',
-          '6430000000000000000000'
+          '100000000000000000000000'
         );
       }
     } catch (error) {

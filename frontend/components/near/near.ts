@@ -70,6 +70,7 @@ export const initContract = async () => {
         'get_supply_sales',
         'get_supply_by_nft_contract_id',
         'get_sales_by_nft_contract_id',
+        'get_supply_by_owner_id',
         'storage_balance_of',
         'get_sale',
         'get_sales_by_owner_id',
