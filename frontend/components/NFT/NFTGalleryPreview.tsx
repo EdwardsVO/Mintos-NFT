@@ -14,20 +14,6 @@ interface NFTGalleryPreviewProps {
   className?: string;
 }
 
-const cardVariants: Variants = {
-  offscreen: {
-    y: 300,
-  },
-  onscreen: {
-    y: 0,
-    transition: {
-      type: 'spring',
-      bounce: 0.4,
-      duration: 0.8,
-    },
-  },
-};
-
 export default function NFTGalleryPreview({
   data,
   className,
@@ -66,11 +52,7 @@ export default function NFTGalleryPreview({
   return (
     <div>
       {data !== undefined ? (
-        <motion.div
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: true, amount: 0.8 }}
-        >
+        <motion.div>
           <button
             type="button"
             className="group mt-0"
@@ -80,7 +62,6 @@ export default function NFTGalleryPreview({
           >
             <motion.div
               className="bg-figma-700 rounded-md drop-shadow-lg shadow-black hover:bg-gray-400/[.1]"
-              variants={cardVariants}
               whileHover={{ scale: 1.1 }}
             >
               <div className="p-4">
@@ -137,7 +118,9 @@ export default function NFTGalleryPreview({
                               } Ⓝ`}
                             </div>
                           ) : (
-                            <button className="">Put On Sale</button>
+                            <button className="font-bold p-1">
+                              Put on Sale
+                            </button>
                           )}
                         </div>
                       </div>
@@ -171,15 +154,6 @@ export default function NFTGalleryPreview({
           <h2>null</h2>
         </div>
       )}
-      {/* <AnimatePresence
-        initial={false}
-        exitBeforeEnter
-        onExitComplete={() => null}
-      >
-        {modalOpen && (
-          <NFTModal data={data} isOpen={modalOpen} setOpen={setModalOpen} />
-        )}
-      </AnimatePresence> */}
     </div>
   );
 }

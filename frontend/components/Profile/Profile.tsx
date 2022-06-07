@@ -269,7 +269,7 @@ export default function Profile() {
               {filter === 0 ? (
                 <div className="flex justify-center items-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 lg:justify-between 2xl:grid-cols-6 2xl:justify-between">
                   {marketTokens.map((nft) => (
-                    <div key={nft?.token?.token_id} className="pt-4">
+                    <div key={nft?.token?.token_id} className="2xl:my-3 pt-4">
                       <NFTGalleryPreview
                         data={nft}
                         key={nft?.token?.token_id}
@@ -278,7 +278,7 @@ export default function Profile() {
                     </div>
                   ))}
                   {walletTokens.map((nft) => (
-                    <div key={nft?.token?.token_id} className="2xl:my-5">
+                    <div key={nft?.token?.token_id} className="2xl:my-3 pt-4">
                       <NFTGalleryPreview
                         data={nft}
                         key={nft?.token?.token_id}
@@ -289,9 +289,9 @@ export default function Profile() {
                 </div>
               ) : null}
               {filter === 1 ? (
-                <div className="flex justify-center items-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
+                <div className="flex justify-center items-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 lg:justify-between 2xl:grid-cols-6 2xl:justify-between">
                   {marketTokens.map((nft) => (
-                    <div key={nft?.token?.token_id} className="pt-4">
+                    <div key={nft?.token?.token_id} className="2xl:my-3 pt-4">
                       <NFTGalleryPreview
                         data={nft}
                         key={nft?.token?.token_id}
@@ -304,7 +304,7 @@ export default function Profile() {
               {filter === 2 ? (
                 <div className="flex justify-center items-center flex-col md:grid md:grid-cols-2 md:justify-items-center md:justify-between lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 2xl:justify-between">
                   {walletTokens.map((nft) => (
-                    <div key={nft?.token?.token_id} className="pt-4">
+                    <div key={nft?.token?.token_id} className="2xl:my-3 pt-4">
                       <NFTGalleryPreview
                         data={nft}
                         key={nft?.token?.token_id}
@@ -319,12 +319,12 @@ export default function Profile() {
         ) : (
           <div className="w-full flex flex-col justify-center items-center align-middle p-11">
             <div className="font-bold lg:text-2xl flex text-center">
-              <img src="/planet_logo.png" className='w-10' alt="" />
-              <div className=''>No NFTs created or bought</div>
-              <img src="/planet_logo.png" className='w-10' alt="" />
+              <img src="/planet_logo.png" className="w-10" alt="" />
+              <div className="">No NFTs created or bought</div>
+              <img src="/planet_logo.png" className="w-10" alt="" />
             </div>
             <div className="mt-5 font-thin text-xl text-center">
-              Reserve Storage and Start Minting 
+              Reserve Storage and Start Minting
             </div>
           </div>
         )}
