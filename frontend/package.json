@@ -23,6 +23,7 @@
     "prettier": "^2.6.2",
     "react": "18.0.0",
     "react-dom": "18.0.0",
+    "react-reveal": "^1.2.2",
     "sitemap": "^7.1.1",
     "tailwind-scrollbar-hide": "^1.1.7"
   },
