@@ -1,5 +1,7 @@
 import { ReactTypical } from '@deadcoder0904/react-typical';
 import React from 'react';
+import Footer from '../common/Footer';
+import FAQ from './FAQ';
 import Steps from './Steps';
 
 export default function Landing() {
@@ -43,8 +45,10 @@ export default function Landing() {
               extra="Sell it!"
             />
           </div>
+          <FAQ></FAQ>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 }
